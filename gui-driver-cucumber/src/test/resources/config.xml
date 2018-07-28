@@ -1,0 +1,153 @@
+<!--
+    the global relative root is the location from which this file is loaded
+-->
+<context>
+    <properties>
+        <entry key="javaCommand">C:/Java/jdk1.8.0_161/bin/java</entry>
+    </properties>
+    <!--
+        shared resource used to import and adapt JSON models
+    -->
+    <modeller
+            xslt="xslt/generate-model.xslt"
+            adapterBase="js/template.model-base.js"
+            adapter="js/template.model.js"/>
+    <!--
+        used for label translations etc.
+
+		NB: this has to be on the classpath
+    -->
+    <i18n
+            bundle="swingset2/swingset"
+            languageTag="EN"/>
+    <!--
+        append cucumber glue to the
+    -->
+    <cucumber>
+        js/generic.step-definitions.js,
+        swingset2/SwingSet2.step-definitions.js
+    </cucumber>
+    <!-- -->
+    <session name="SwingSet2" dir="." mbean-ref="com.brentcroft.gtd.camera:type=CameraController"  onStarted="
+                driver.logNotifications( 0 );
+
+                driver.hashCache( 1 );
+                driver.notifyAWTEvents( 3801 );
+                driver.notifyFXEvents( 'NONE' );
+                driver.notifyDOMEvents( 'NONE' );
+            ">
+        <driver
+                rmxUri="service:jmx:rmi:///jndi/rmi://:9909/jmxrmi"
+                pollDelay="1.0"
+                timeout="3.0"
+                relax="0.5"/>
+        <properties src="swingset2/swingset2-model.properties"/>
+        <model
+                name="ss2"
+                xml="swingset2/SwingSet2.object-model.xml"/>
+        <login
+				timeout-seconds="30"
+				adapter="com.brentcroft.gtd.swingset2.SwingSet2GuiAdapter">
+            <properties>
+                <entry key="username">alfredo</entry>
+                <entry key="password">montana</entry>
+            </properties>
+        </login>
+        <launcher
+                echoTimeout="5.0"
+                command="cmd /C ${ javaCommand }"
+                directory=".">
+            <java shutdownHook="true">
+                <vmOptions>
+                    -Xmx1024m
+                    -Dsun.awt.disablegrab=true
+                    -Dcom.sun.management.jmxremote.port=9909
+                    -Dcom.sun.management.jmxremote.authenticate=false
+                    -Dcom.sun.management.jmxremote.ssl=false
+                </vmOptions>
+                <classpath root="">lib/*</classpath>
+                <application
+                        main="javax.demos.jfc.swingset2.SwingSet2"
+                        service="com.brentcroft.gtd.camera.Camera"
+                        notify="664"
+                />
+            </java>
+        </launcher>
+    </session>
+    <!--
+
+
+
+    <session name="BrentcroftGitHub" mbean-ref="com.brentcroft.gtd.camera:type=CameraController" onStarted="
+				driver.logNotifications( 0 );
+				driver.hashCache( 1 );
+				driver.notifyAWTEvents( 0 );
+				driver.notifyFXEvents( 'NONE' );
+				driver.notifyDOMEvents( 'NONE' );
+			">
+		<properties src="brentcroft/brentcroft-git-hub.properties"/>
+        <model
+                name="brentcroftGitHib"
+                xml="brentcroft/brentcroft-git-hub.xml"
+        />
+        <login adapter="com.brentcroft.gtd.driver.client.BrowserAdapter">
+            <properties>
+                <entry key="initial-uri">${ brentcroftGitHib_url }</entry>
+            </properties>
+        </login>
+        <driver rmxUri="service:jmx:rmi:///jndi/rmi://:${ brentcroftGitHib_jmx_port }/jmxrmi"/>
+        <launcher command="cmd /C ${ javaCommand }">
+            <java shutdownHook="true">
+                <vmOptions>
+                    -Xmx1024m
+                    -Dsun.awt.disablegrab=true
+                    -Dcom.sun.management.jmxremote.port=${ brentcroftGitHib_jmx_port }
+                    -Dcom.sun.management.jmxremote.authenticate=false
+                    -Dcom.sun.management.jmxremote.ssl=false
+					-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${ brentcroftGitHib_debug_port }
+                </vmOptions>
+                <classpath root="">lib/*</classpath>
+                <application main="com.brentcroft.gtd.browser.Browser"
+                             service="com.brentcroft.gtd.camera.Camera" />
+            </java>
+        </launcher>
+    </session>
+        -->
+    <!--
+
+
+
+    <session name="Google" mbean-ref="com.brentcroft.gtd.camera:type=CameraController" onStarted="
+				driver.logNotifications( 0 );
+				driver.hashCache( 1 );
+				driver.notifyAWTEvents( 0 );
+				driver.notifyFXEvents( 'NONE' );
+				driver.notifyDOMEvents( '*' );
+				'OK'
+			">
+		<properties src="google/google.properties"/>
+        <model name="google" xml="google/google.model.xml" />
+        <login adapter="com.brentcroft.gtd.driver.client.BrowserAdapter">
+            <properties>
+                <entry key="initial-uri">https://www.google.co.uk</entry>
+            </properties>
+        </login>
+        <driver rmxUri="service:jmx:rmi:///jndi/rmi://:8103/jmxrmi"/>
+        <launcher command="cmd /C ${ javaCommand }">
+            <java shutdownHook="true">
+                <vmOptions>
+                    -Xmx1024m
+                    -Dsun.awt.disablegrab=true
+                    -Dcom.sun.management.jmxremote.port=8103
+                    -Dcom.sun.management.jmxremote.authenticate=false
+                    -Dcom.sun.management.jmxremote.ssl=false
+					-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8903
+                </vmOptions>
+                <classpath root="">lib/*</classpath>
+                <application main="com.brentcroft.gtd.browser.Browser" service="com.brentcroft.gtd.camera.Camera" />
+            </java>
+        </launcher>
+    </session>
+    -->
+    
+</context>

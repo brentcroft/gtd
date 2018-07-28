@@ -1,0 +1,583 @@
+<history>
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="5" hash="2056234351" seq="5" timestamp="2018-01-11T23:04:03.786">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" selected="true" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="Tree Demo" tab-tooltip="JTree demo" visible="true">
+                                <JPanel hash="77613668" visible="true">
+                                    <JScrollPane hash="853079435" visible="true">
+                                        <JViewport hash="1657551264" visible="true">
+                                            <TreeDemo-1 a:actions="tree" hash="2111055197" visible="true">
+                                                <model type="tree">
+                                                    <n path="1" text="[DefaultMutableTreeNode]Music">
+                                                        <n path="1:1" text="[DefaultMutableTreeNode]Classical">
+                                                            <n path="1:1:1" text="[DefaultMutableTreeNode]Beethoven"/>
+                                                            <n path="1:1:2" text="[DefaultMutableTreeNode]Brahms"/>
+                                                            <n path="1:1:3" text="[DefaultMutableTreeNode]Mozart"/>
+                                                        </n>
+                                                        <n path="1:2" text="[DefaultMutableTreeNode]Jazz">
+                                                            <n path="1:2:1" text="[DefaultMutableTreeNode]Albert Ayler"/>
+                                                            <n path="1:2:2" text="[DefaultMutableTreeNode]Chet Baker"/>
+                                                            <n path="1:2:3" text="[DefaultMutableTreeNode]John Coltrane"/>
+                                                            <n path="1:2:4" text="[DefaultMutableTreeNode]Miles Davis"/>
+                                                        </n>
+                                                        <n path="1:3" text="[DefaultMutableTreeNode]Rock">
+                                                            <n path="1:3:1" text="[DefaultMutableTreeNode]The Beatles"/>
+                                                            <n path="1:3:2" text="[DefaultMutableTreeNode]Crowded House"/>
+                                                            <n path="1:3:3" text="[DefaultMutableTreeNode]The Fixx"/>
+                                                            <n path="1:3:4" text="[DefaultMutableTreeNode]Harvin Garvel"/>
+                                                            <n path="1:3:5" text="[DefaultMutableTreeNode]Komeda"/>
+                                                            <n path="1:3:6" text="[DefaultMutableTreeNode]Steve Miller Band"/>
+                                                        </n>
+                                                    </n>
+                                                </model>
+                                            </TreeDemo-1>
+                                        </JViewport>
+                                    </JScrollPane>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="3" hash="1287009443" seq="6" timestamp="2018-01-11T23:04:12.907">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" selected="true" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="ToolTip Demo" tab-tooltip="ToolTip demo" visible="true">
+                                <JPanel hash="513570574" visible="true">
+                                    <Box-Filler hash="408789237" visible="true"/>
+                                    <ToolTipDemo-Cow hash="622071187" icon="cow.gif" tooltip="Cow." visible="true"/>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" disabled="true" duration="8" hash="2072225284" seq="7" timestamp="2018-01-11T23:04:19.608">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" selected="true" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="Table Demo" tab-tooltip="JTable demo" visible="true">
+                                <JPanel hash="821162518" visible="true">
+                                    <JPanel hash="212011382" visible="true">
+                                        <JPanel hash="649339255" visible="true">
+                                            <JPanel hash="829976843" visible="true">
+                                                <JCheckBox a:actions="click" hash="2136224857" selected="true" text="Reordering allowed" visible="true"/>
+                                                <JCheckBox a:actions="click" hash="103119345" selected="true" text="Row selection" visible="true"/>
+                                                <JCheckBox a:actions="click" hash="1079898456" selected="true" text="Horiz. Lines" visible="true"/>
+                                                <JCheckBox a:actions="click" hash="1477272464" text="Column selection" visible="true"/>
+                                                <JCheckBox a:actions="click" hash="845095025" selected="true" text="Vert. Lines" visible="true"/>
+                                            </JPanel>
+                                            <JPanel hash="918573514" visible="true">
+                                                <TableDemo-1 hash="2004193016" visible="true">
+                                                    <JLabel for-hash="2036256994" hash="287664195" text="Inter-cell spacing:" visible="true"/>
+                                                    <JLabel for-hash="1454737178" hash="570923028" text="Row height:" visible="true"/>
+                                                </TableDemo-1>
+                                                <TableDemo-2 hash="1013081295" visible="true">
+                                                    <JSlider a:actions="index" hash="2036256994" selected-index="1" size="0" visible="true"/>
+                                                    <JSlider a:actions="index" hash="1454737178" selected-index="33" size="0" visible="true"/>
+                                                </TableDemo-2>
+                                                <Box-Filler hash="1594986775" visible="true"/>
+                                            </JPanel>
+                                        </JPanel>
+                                        <JPanel hash="426383093" visible="true">
+                                            <JPanel hash="1827179263" title="Selection mode" visible="true">
+                                                <Box-Filler hash="2103930666" visible="true"/>
+                                                <TableDemo-10 a:actions="index" hash="126925515" selected-index="2" size="3" text="Multiple ranges" visible="true">
+                                                    <MetalComboBoxButton a:actions="click" hash="797407156" visible="true"/>
+                                                    <model type="select">
+                                                        <c index="0" text="[String]Single"/>
+                                                        <c index="1" text="[String]One range"/>
+                                                        <c index="2" text="[String]Multiple ranges"/>
+                                                    </model>
+                                                </TableDemo-10>
+                                                <Box-Filler hash="600365949" visible="true"/>
+                                            </JPanel>
+                                            <JPanel hash="1915840590" title="Autoresize mode" visible="true">
+                                                <Box-Filler hash="1452083474" visible="true"/>
+                                                <TableDemo-12 a:actions="index" hash="282407638" selected-index="2" size="5" text="Subsequent columns" visible="true">
+                                                    <MetalComboBoxButton a:actions="click" hash="303138021" visible="true"/>
+                                                    <model type="select">
+                                                        <c index="0" text="[String]Off"/>
+                                                        <c index="1" text="[String]Column boundaries"/>
+                                                        <c index="2" text="[String]Subsequent columns"/>
+                                                        <c index="3" text="[String]Last column"/>
+                                                        <c index="4" text="[String]All columns"/>
+                                                    </model>
+                                                </TableDemo-12>
+                                                <Box-Filler hash="1086283262" visible="true"/>
+                                            </JPanel>
+                                        </JPanel>
+                                        <JPanel hash="219563031" title="Printing" visible="true">
+                                            <JLabel hash="113208260" text="Header" visible="true"/>
+                                            <JTextField a:actions="text" hash="952379288" text="JTable Printing" visible="true"/>
+                                            <JLabel hash="29286868" text="Footer" visible="true"/>
+                                            <JTextField a:actions="text" hash="521567146" text="Page {0}" visible="true"/>
+                                            <JPanel hash="1653260999" visible="true">
+                                                <JCheckBox a:actions="click" hash="2070659561" selected="true" text="Fit Width" visible="true"/>
+                                                <JButton a:actions="click" hash="221064977" text="Print" visible="true"/>
+                                            </JPanel>
+                                        </JPanel>
+                                    </JPanel>
+                                    <JScrollPane hash="962639432" visible="true">
+                                        <JViewport hash="155926605" visible="true">
+                                            <JTable a:actions="table" hash="367176753" visible="true">
+                                                <model columns="6" rows="46" type="table">
+                                                    <r index="0">
+                                                        <c index="0" text="[String]Mike"/>
+                                                        <c index="1" text="[String]Albers"/>
+                                                        <c index="2" text="[NamedColor]Green"/>
+                                                    </r>
+                                                    <r index="1">
+                                                        <c index="0" text="[String]Mark"/>
+                                                        <c index="1" text="[String]Andrews"/>
+                                                        <c index="2" text="[NamedColor]Blue"/>
+                                                    </r>
+                                                    <r index="2">
+                                                        <c index="0" text="[String]Brian"/>
+                                                        <c index="1" text="[String]Beck"/>
+                                                        <c index="2" text="[NamedColor]Black"/>
+                                                    </r>
+                                                </model>
+                                            </JTable>
+                                        </JViewport>
+                                        <JScrollPane-ScrollBar hash="566939189" visible="true">
+                                            <MetalScrollButton a:actions="click" hash="601780366" visible="true"/>
+                                            <MetalScrollButton a:actions="click" hash="1410508639" visible="true"/>
+                                        </JScrollPane-ScrollBar>
+                                        <JViewport hash="601740256" visible="true">
+                                            <JTableHeader hash="328305496" visible="true"/>
+                                        </JViewport>
+                                    </JScrollPane>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="2" hash="809453607" seq="8" timestamp="2018-01-11T23:04:39.736">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" selected="true" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="TabbedPane Demo" tab-tooltip="JTabbedPane demo" visible="true">
+                                <JPanel hash="1668137386" visible="true">
+                                    <JPanel hash="1908745819" visible="true">
+                                        <JLabel hash="799256032" text="Tab Placement:" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="575559983" selected="true" text="Top" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="2061583555" text="Left" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1137613555" text="Bottom" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1899029447" text="Right" visible="true"/>
+                                    </JPanel>
+                                    <JTabbedPane a:actions="tabs" hash="1634406331" selected-index="0" size="4" visible="true">
+                                        <JLabel a:actions="tab" hash="560421871" icon="laine.jpg" tab-title="Laine" visible="true"/>
+                                    </JTabbedPane>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="2" hash="636835119" seq="9" timestamp="2018-01-11T23:04:46.647">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" selected="true" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="TabbedPane Demo" tab-tooltip="JTabbedPane demo" visible="true">
+                                <JPanel hash="1668137386" visible="true">
+                                    <JPanel hash="1908745819" visible="true">
+                                        <JLabel hash="799256032" text="Tab Placement:" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="575559983" selected="true" text="Top" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="2061583555" text="Left" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1137613555" text="Bottom" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1899029447" text="Right" visible="true"/>
+                                    </JPanel>
+                                    <JTabbedPane a:actions="tabs" hash="1634406331" selected-index="1" size="4" visible="true">
+                                        <JLabel a:actions="tab" hash="1897007810" icon="ewan.jpg" tab-title="Ewan" visible="true"/>
+                                    </JTabbedPane>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="1" hash="1440511166" seq="10" timestamp="2018-01-11T23:04:50.999">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" selected="true" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="TabbedPane Demo" tab-tooltip="JTabbedPane demo" visible="true">
+                                <JPanel hash="1668137386" visible="true">
+                                    <JPanel hash="1908745819" visible="true">
+                                        <JLabel hash="799256032" text="Tab Placement:" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="575559983" selected="true" text="Top" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="2061583555" text="Left" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1137613555" text="Bottom" visible="true"/>
+                                        <JRadioButton a:actions="click" hash="1899029447" text="Right" visible="true"/>
+                                    </JPanel>
+                                    <JTabbedPane a:actions="tabs" hash="1634406331" selected-index="2" size="4" visible="true">
+                                        <JLabel a:actions="tab" hash="1019308029" icon="hania.jpg" tab-title="Hania" visible="true"/>
+                                    </JTabbedPane>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+
+
+<ss2 xmlns:a="com.brentcroft.gtd.model" duration="3" hash="1524958732" seq="11" timestamp="2018-01-11T23:05:04.336">
+    <JFrame hash="93877779" name="frame0" title="SwingSet2" visible="true">
+        <JRootPane hash="928102311" visible="true">
+            <JLayeredPane hash="1064154722" name="null.layeredPane" visible="true">
+                <JPanel hash="1975091325" name="null.contentPane" visible="true">
+                    <SwingSet2 hash="933020829" visible="true">
+                        <JPanel hash="1064481226" visible="true">
+                            <SwingSet2-ToolBarPanel hash="957006773" visible="true">
+                                <SwingSet2-ToggleButtonToolBar hash="1937823591" visible="true">
+                                    <JToggleButton a:actions="click" hash="1257880" icon="JDesktop.gif" tooltip="JInternalFrame demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2135395318" icon="JButton.gif" tooltip="JButton, JRadioButton, JToggleButton, JCheckbox demos" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="217847477" icon="JColorChooser.gif" tooltip="JColorChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="978643387" icon="JComboBox.gif" selected="true" tooltip="JComboBox demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1053106113" icon="JFileChooser.gif" tooltip="JFileChooser demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1848033141" icon="JEditorPane.gif" tooltip="JEditorPane HTML demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1684820706" icon="JList.gif" tooltip="JList demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1285195858" icon="JOptionPane.gif" tooltip="JOptionPane Demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1462810736" icon="JProgressBar.gif" tooltip="JProgressBar demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="332876743" icon="JScrollPane.gif" tooltip="JScrollPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="2083204389" icon="JSlider.gif" tooltip="JSlider demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="992888289" icon="JSplitPane.gif" tooltip="JSplitPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1578813349" icon="JTabbedPane.gif" tooltip="JTabbedPane demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1922882219" icon="JTable.gif" tooltip="JTable demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="1875273685" icon="ToolTip.gif" tooltip="ToolTip demo" visible="true"/>
+                                    <JToggleButton a:actions="click" hash="303538802" icon="JTree.gif" tooltip="JTree demo" visible="true"/>
+                                </SwingSet2-ToggleButtonToolBar>
+                            </SwingSet2-ToolBarPanel>
+                        </JPanel>
+                        <JTabbedPane a:actions="tabs" hash="113211386" selected-index="0" size="2" visible="true">
+                            <JPanel a:actions="tab" hash="1259388828" tab-title="ComboBox Demo" tab-tooltip="JComboBox demo" visible="true">
+                                <JPanel hash="1572569449" visible="true">
+                                    <Box-Filler hash="769980762" visible="true"/>
+                                    <JPanel hash="1414298898" visible="true">
+                                        <Box-Filler hash="767567371" visible="true"/>
+                                        <ComboBoxDemo-1 hash="660874432" visible="true">
+                                            <Box-Filler hash="485086208" visible="true"/>
+                                            <JLabel for-hash="142461235" hash="939237295" text="Presets:" visible="true"/>
+                                            <JComboBox a:actions="index" hash="142461235" selected-index="0" size="10" text="Philip, Howard, Jeff" visible="true">
+                                                <MetalComboBoxButton a:actions="click" hash="137379890" visible="true"/>
+                                                <model type="select">
+                                                    <c index="0" text="[String]Philip, Howard, Jeff"/>
+                                                    <c index="1" text="[String]Jeff, Larry, Philip"/>
+                                                    <c index="2" text="[String]Howard, Scott, Hans"/>
+                                                    <c index="3" text="[String]Philip, Jeff, Hans"/>
+                                                    <c index="4" text="[String]Brent, Jon, Scott"/>
+                                                    <c index="5" text="[String]Lara, Larry, Lisa"/>
+                                                    <c index="6" text="[String]James, Philip, Michael"/>
+                                                    <c index="7" text="[String]Philip, Lisa, Brent"/>
+                                                    <c index="8" text="[String]James, Philip, Jon"/>
+                                                    <c index="9" text="[String]Lara, Jon, Scott"/>
+                                                </model>
+                                            </JComboBox>
+                                            <Box-Filler hash="2141896996" visible="true"/>
+                                            <JLabel for-hash="1188866027" hash="758203141" text="Hair:" visible="true"/>
+                                            <JComboBox a:actions="index" hash="1188866027" selected-index="11" size="13" text="Philip" visible="true">
+                                                <MetalComboBoxButton a:actions="click" hash="303046060" visible="true"/>
+                                                <model type="select">
+                                                    <c index="0" text="[String]Brent"/>
+                                                    <c index="1" text="[String]Georges"/>
+                                                    <c index="2" text="[String]Hans"/>
+                                                    <c index="3" text="[String]Howard"/>
+                                                    <c index="4" text="[String]James"/>
+                                                    <c index="5" text="[String]Jeff"/>
+                                                    <c index="6" text="[String]Jon"/>
+                                                    <c index="7" text="[String]Lara"/>
+                                                    <c index="8" text="[String]Larry"/>
+                                                    <c index="9" text="[String]Lisa"/>
+                                                </model>
+                                            </JComboBox>
+                                            <Box-Filler hash="546232914" visible="true"/>
+                                            <JLabel for-hash="772460504" hash="159681670" text="Eyes &amp; Nose:" visible="true"/>
+                                            <JComboBox a:actions="index" hash="772460504" selected-index="3" size="13" text="Howard" visible="true">
+                                                <MetalComboBoxButton a:actions="click" hash="328147509" visible="true"/>
+                                                <model type="select">
+                                                    <c index="0" text="[String]Brent"/>
+                                                    <c index="1" text="[String]Georges"/>
+                                                    <c index="2" text="[String]Hans"/>
+                                                    <c index="3" text="[String]Howard"/>
+                                                    <c index="4" text="[String]James"/>
+                                                    <c index="5" text="[String]Jeff"/>
+                                                    <c index="6" text="[String]Jon"/>
+                                                    <c index="7" text="[String]Lara"/>
+                                                    <c index="8" text="[String]Larry"/>
+                                                    <c index="9" text="[String]Lisa"/>
+                                                </model>
+                                            </JComboBox>
+                                            <Box-Filler hash="231392781" visible="true"/>
+                                            <JLabel for-hash="1988990718" hash="1530970540" text="Mouth:" visible="true"/>
+                                            <JComboBox a:actions="index" hash="1988990718" selected-index="5" size="13" text="Jeff" visible="true">
+                                                <MetalComboBoxButton a:actions="click" hash="1137400481" visible="true"/>
+                                                <model type="select">
+                                                    <c index="0" text="[String]Brent"/>
+                                                    <c index="1" text="[String]Georges"/>
+                                                    <c index="2" text="[String]Hans"/>
+                                                    <c index="3" text="[String]Howard"/>
+                                                    <c index="4" text="[String]James"/>
+                                                    <c index="5" text="[String]Jeff"/>
+                                                    <c index="6" text="[String]Jon"/>
+                                                    <c index="7" text="[String]Lara"/>
+                                                    <c index="8" text="[String]Larry"/>
+                                                    <c index="9" text="[String]Lisa"/>
+                                                </model>
+                                            </JComboBox>
+                                            <Box-Filler hash="235004920" visible="true"/>
+                                            <JPanel hash="1428203163" visible="true"/>
+                                        </ComboBoxDemo-1>
+                                        <Box-Filler hash="276265427" visible="true"/>
+                                        <JPanel hash="921778442" visible="true">
+                                            <JLabel hash="1232118586" icon="javax.demos.jfc.swingset2.ComboBoxDemo$Face" visible="true"/>
+                                        </JPanel>
+                                        <Box-Filler hash="439202209" visible="true"/>
+                                    </JPanel>
+                                    <Box-Filler hash="754010677" visible="true"/>
+                                </JPanel>
+                            </JPanel>
+                        </JTabbedPane>
+                        <JTextField a:actions="text" hash="921551859" text="Loading:Tree Demo" visible="true"/>
+                    </SwingSet2>
+                </JPanel>
+                <JMenuBar hash="970337757" visible="true">
+                    <JMenu a:actions="click" hash="1903297683" text="File" visible="true"/>
+                    <JMenu a:actions="click" hash="491131428" text="Look &amp; Feel" visible="true"/>
+                    <JMenu a:actions="click" disabled="true" hash="619876045" text="Themes" visible="true"/>
+                    <JMenu a:actions="click" hash="1973096162" text="Options" visible="true"/>
+                    <JMenu a:actions="click" hash="346868318" text="Multiscreen" visible="true"/>
+                </JMenuBar>
+            </JLayeredPane>
+        </JRootPane>
+    </JFrame>
+</ss2>
+</history>
