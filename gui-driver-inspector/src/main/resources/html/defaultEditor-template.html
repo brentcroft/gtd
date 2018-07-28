@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+			html, body, form {
+				height: 100%;
+			}
+
+			#code {
+				display:block;
+				width:100%;
+				height: 100%;
+				padding:0%;
+				-webkit-box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+						box-sizing: border-box;
+			}
+		</style>
+</head>
+<body>
+<form>
+    <textarea id="transfer" name="transfer" style="display: none;"></textarea>
+    <textarea id="code" name="code">
+<alpha id="100">
+	<beta id="101">omega</beta>
+</alpha>
+			</textarea>
+</form>
+<script>
+			var editor = {
+				"getValue": function(){ return document.getElementById( 'code' ).val(); },
+				"setValue": function( value ){ document.getElementById( 'transfer' ).val( value ) ) }
+			};
+        </script>
+</body>
+</html>

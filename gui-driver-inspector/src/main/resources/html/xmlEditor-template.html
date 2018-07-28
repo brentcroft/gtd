@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<script src="codemirror/lib/codemirror.js"></script>
+		<!--
+
+		-->
+        <script src="codemirror/mode/xml/xml.js"></script>
+		<!--
+
+
+		<link rel="stylesheet" href="codemirror/addon/lint/lint.css">
+		<script src="codemirror/addon/lint/lint.js"></script>
+		<script src="codemirror/addon/lint/w3c-lint.js"></script>
+		-->
+		<!--
+
+		-->
+        <link rel="stylesheet" href="codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="codemirror/addon/search/matchesonscrollbar.css">
+        <script src="codemirror/addon/dialog/dialog.js"></script>
+		<script src="codemirror/addon/scroll/annotatescrollbar.js"></script>
+        <script src="codemirror/addon/search/matchesonscrollbar.js"></script>
+        <script src="codemirror/addon/search/jump-to-line.js"></script>
+        <script src="codemirror/addon/search/searchcursor.js"></script>
+        <script src="codemirror/addon/search/search.js"></script>
+		<!--
+
+		-->
+        <style>
+            .CodeMirror { border: 1px solid #eee; height: auto; width: auto; }
+            dt {font-family: monospace; color: #666;}
+        </style>
+    </head>
+    <body>
+        <form>
+            <textarea id="transfer" name="transfer" style="display: none;"></textarea>
+            <textarea id="code" name="code">
+<alpha id="100">
+	<beta id="101">omega</beta>
+</alpha>
+			</textarea>
+        </form>
+        <script>
+            var editor = CodeMirror.fromTextArea(
+                document.getElementById('code'),
+                {
+                    mode: {
+						name: "xml"
+					},
+					undoDepth: 0,
+                    lineNumbers: true,
+					matchBrackets: true,
+					lint: false,
+                    gutters: [
+						"CodeMirror-lint-markers"
+					],
+                    foldGutter: true,
+                    extraKeys: {
+						"Alt-F": "findPersistent"
+					}
+                }
+             );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<script src="codemirror/lib/codemirror.js"></script>
+		<!--
+
+		-->
+		<script src="codemirror/mode/properties/properties.js"></script>
+		<!--
+
+		-->
+        <style>.CodeMirror { border: 1px solid #eee; height: auto; }</style>
+	</head>
+	<body>
+	<form>
+		<textarea id="transfer" name="transfer" style="display: none;"></textarea>
+		<textarea id="code" name="code">
+# This is a properties file
+a.key = A value
+another.key = http://example.com
+! Exclamation mark as comment
+but.not=Within ! A value # indeed
+   # Spaces at the beginning of a line
+   spaces.before.key=value
+backslash=Used for multi\
+          line entries,\
+          that's convenient.
+# Unicode sequences
+unicode.key=This is \u0020 Unicode
+no.multiline=here
+# Colons
+colons : can be used too
+# Spaces
+spaces\ in\ keys=Not very common...
+		</textarea></form>
+		<script>
+			var editor = CodeMirror.fromTextArea( document.getElementById( "code" ) );
+        </script>
+	</body>
+</html>

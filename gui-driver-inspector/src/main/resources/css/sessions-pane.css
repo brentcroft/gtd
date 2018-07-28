@@ -1,0 +1,49 @@
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
+}
+
+
+.session-status-name { -fx-font-size: 1.2em; -fx-font-weight: bold;}
+.session-status-icon { -fx-text-fill: #444444; -fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 3, 0.0, 1, 1);}
+.session-status-icon:before { content: "\f075"; }
+.session-status-icon-spin fa-spin { -fx-text-fill: #000000;}
+.session-status-icon-spin:before { content: "\f075"; }
+
+
+.session-status-unknown { -fx-text-fill: #000000;}
+.session-status-starting { -fx-text-fill: #0000ff;}
+.session-status-started { -fx-text-fill: #00bb00;}
+.session-status-stopping { -fx-text-fill: #bbbb00;}
+.session-status-stopped { -fx-text-fill: #008888;}
+.session-status-failed { -fx-text-fill: #ff0000;}
+
+
+
+.list-cell:selected {
+    -fx-background-color: linear-gradient( #9A9A9A 0%, #CACACA 25%, #E0E0EF 75%, #E4E4EF 100% );
+    -fx-text-fill: white;
+}
+
+
+/*
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
+*/

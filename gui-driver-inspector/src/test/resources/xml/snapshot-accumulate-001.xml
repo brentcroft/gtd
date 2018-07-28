@@ -1,0 +1,11 @@
+<xml xmlns:a="com.brentcroft.gtd.model" serial="73">
+    <html a:name="html" a:xpath="html[( @itemtype='http://schema.org/WebPage' )]" hash="623982296" itemtype="http://schema.org/WebPage">
+        <form a:name="search" a:xpath="form[contains( @action, '/search' ) and ( @name='f' )]" action="/search" hash="625803926" name="f">
+            <input a:actions="text" a:name="Google_Search" a:xpath="input[( @class='lst' ) and ( @dir='ltr' ) and ( @maxlength='2048' ) and ( @name='q' ) and ( @title='Google Search' )]" class="lst" dir="ltr" hash="627364050" maxlength="2048" name="q" size="57" title="Google Search"/>
+            <input a:actions="click" a:name="btnG" a:xpath="input[( @class='lsb' ) and ( @name='btnG' ) and ( @type='submit' )]" class="lsb" hash="627359218" name="btnG" type="submit" value="Google Search"/>
+            <input a:actions="click" a:name="btnI" a:xpath="input[( @class='lsb' ) and ( @name='btnI' ) and ( starts-with( @onclick, 'if(this.form.q.value)this.checked=1; else top.location=' ) and contains( @onclick, '/doodles/' ) ) and ( @type='submit' )]" class="lsb" hash="627351746" name="btnI" onclick="if(this.form.q.value)this.checked=1; else top.location='/doodles/'" type="submit" value="I'm Feeling Lucky"/>
+            <a a:actions="click" a:name="Advanced_search" a:xpath="a[contains( @href, '/advanced_search' ) and contains( @href, 'hl=en-GB&amp;authuser=0' )]" hash="625994311" href="https://www.google.co.uk/advanced_search?hl=en-GB&amp;authuser=0"/>
+            <a a:actions="click" a:name="Language_tools" a:xpath="a[contains( @href, '/language_tools' ) and contains( @href, 'hl=en-GB&amp;authuser=0' )]" hash="625993927" href="https://www.google.co.uk/language_tools?hl=en-GB&amp;authuser=0"/>
+        </form>
+    </html>
+</xml>

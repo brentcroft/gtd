@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+		<script src="codemirror/lib/codemirror.js"></script>
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<!--
+
+		-->
+		<script src="codemirror/mode/gherkin/gherkin.js"  charset="UTF-8"></script>
+		<!--
+
+		-->
+		<link rel="stylesheet" href="codemirror/addon/lint/lint.css">
+		<script src="codemirror/addon/lint/lint.js"></script>
+		<!--
+			gherkin-lint.js needs gherkin.min.js
+		-->
+		<script src="codemirror/mode/gherkin/gherkin.min.js"></script>
+		<script src="codemirror/addon/lint/gherkin-lint.js"></script>
+		<!--
+
+		-->
+		<link rel="stylesheet" href="codemirror/addon/dialog/dialog.css">
+		<link rel="stylesheet" href="codemirror/addon/search/matchesonscrollbar.css">
+		<script src="codemirror/addon/dialog/dialog.js"></script>
+		<script src="codemirror/addon/scroll/annotatescrollbar.js"></script>
+		<script src="codemirror/addon/search/matchesonscrollbar.js"></script>
+		<script src="codemirror/addon/search/jump-to-line.js"></script>
+		<script src="codemirror/addon/search/searchcursor.js"></script>
+		<script src="codemirror/addon/search/search.js"></script>
+		<!--
+
+		-->
+        <style>
+        	.CodeMirror { border: 1px solid #eee; height: auto; }
+		</style>
+	</head>
+	<body>
+		<form>
+			<textarea id="transfer" name="transfer" style="display: none;"></textarea>
+			<textarea id="code" name="code"># new feature
+Feature: Example Using Object Paths
+
+Background: Logged In
+
+  Given I'm logged in using "config.properties"
+
+Scenario: Do Something
+
+  # open the call router
+  Given I click on $gui.toolbar.Open_Something
+  And with object $gui.desktop.Something set data
+  """
+  {
+  	"$exists": 10.0,
+	"Combo": {
+		"$waitFor": 10.0,
+		"Alfredo"
+	},
+    "HTML_Editor": "Hello World"
+  }
+  """
+  Then something has happened
+
+</textarea>
+		</form>
+		<script>
+
+		  var editor = CodeMirror.fromTextArea(
+			document.getElementById('code'),
+			{
+				mode: "gherkin",
+				lineNumbers: true,
+				gutters: ["CodeMirror-lint-markers" ],
+				lint: true,
+				foldGutter: true
+			  });
+        </script>
+	</body>
+</html>
