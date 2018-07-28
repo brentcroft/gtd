@@ -1,0 +1,8 @@
+<c:choose xmlns:a="com.brentcroft.gtd.model" xmlns:c="jstl">
+	<c:when test="${ false }">
+		<CallRouterCustomerFrame/>
+	</c:when>
+	<c:otherwise>
+		<CallRouterInternalFrame/>
+	</c:otherwise>
+</c:choose>

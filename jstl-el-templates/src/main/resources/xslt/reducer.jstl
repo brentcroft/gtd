@@ -1,0 +1,61 @@
+<xsl:stylesheet
+		version="1.0"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:a="com.brentcroft.gtd.model"
+		xmlns:c="jstl">
+	<!--
+	-->
+	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+	<!--
+	-->
+	<xsl:param name="cycle"/>
+	<!--
+	-->
+	<xsl:template match="/">
+		<xsl:variable name="root" select="*"/>
+		<xsl:for-each select="$root">
+			<xsl:element name="{ name( $root ) }">
+				<xsl:copy-of select="$root/@*"/>
+				<xsl:attribute name="cycle"><xsl:value-of select="$cycle"/></xsl:attribute>
+				<xsl:apply-templates select="$root/*"/>
+			</xsl:element>
+		</xsl:for-each>
+	</xsl:template>
+
+
+	<c:comment> exclude text </c:comment>
+	<xsl:template match="text()"/>
+
+
+	<c:comment> includes </c:comment>
+	<c:foreach items="${ reducer.include }" var="item">
+		<xsl:template match="${ item }">
+			<xsl:choose>
+
+
+				<c:comment> excludes </c:comment>
+				<c:foreach items="${ reducer.exclude }" var="item">
+					<xsl:when test="count( self::${ item } ) &gt; 0" />
+				</c:foreach>
+
+
+				<c:comment> elisions </c:comment>
+				<c:foreach items="${ reducer.elide }" var="item">
+					<xsl:when test="count( self::${ item } ) &gt; 0" >
+						<xsl:apply-templates/>
+					</xsl:when>
+				</c:foreach>
+
+
+				<c:comment> include </c:comment>
+				<xsl:otherwise>
+					<xsl:element name="{ name() }">
+						<xsl:copy-of select="@a:* | @hash"/>
+						<xsl:apply-templates/>
+					</xsl:element>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:template>
+	</c:foreach>
+</xsl:stylesheet>

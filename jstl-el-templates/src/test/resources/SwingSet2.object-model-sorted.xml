@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gui>
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<JDialog key="#1049074729" name="Input" xpath="JDialog[ @title='Input' ]">
+		
+		
+		
+	<JButton actions="robot, click" key="#-1336284896" name="Cancel" xpath="JButton[ @text='Cancel' ]"/>
+        <BasicOptionPaneUI-MultiplexingTextField actions="robot, text" key="#1421611091" name="What_is_your_favorite_movie" xpath="BasicOptionPaneUI-MultiplexingTextField[ preceding-sibling::JLabel[ 1 ]/@text='What is your favorite movie?' ]"/>
+        <JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <ServiceDialog key="#-1052135877" name="Print" xpath="ServiceDialog[ @title='Print' ]">
+		
+		
+		
+	<JButton actions="robot, click" key="#-1407827757" name="Cancel" xpath="JButton[ @text='Cancel' ]"/>
+        <JButton actions="robot, click" key="#-1496511525" name="Print" xpath="JButton[ @text='Print' ]"/>
+        <JTabbedPane actions="robot, index" key="#-335193140" name="JTabbedPane" xpath="JTabbedPane[ 1 ]">
+			
+			
+			
+		<ServiceDialog-PageSetupPanel actions="index" key="#1757314035" name="Page_Setup" tab-index="1" tab-title="Page Setup" xpath="ServiceDialog-PageSetupPanel[ @tab-title='Page Setup' ]">
+				
+				
+				
+			<ServiceDialog-MarginsPanel actions="robot" key="#178373690" name="ServiceDialog_MarginsPanel" xpath="ServiceDialog-MarginsPanel[ 1 ]">
+					
+					
+					
+					
+				<JFormattedTextField actions="robot, text" key="#1746596746" name="bottom_(mm)" xpath="JFormattedTextField[ @hash=//JLabel[ @text='bottom (mm)' ]/@for-hash ]"/>
+                    <JFormattedTextField actions="robot, text" key="#-1784160915" name="left_(mm)" xpath="JFormattedTextField[ @hash=//JLabel[ @text='left (mm)' ]/@for-hash ]"/>
+                    <JFormattedTextField actions="robot, text" key="#2001333291" name="top_(mm)" xpath="JFormattedTextField[ @hash=//JLabel[ @text='top (mm)' ]/@for-hash ]"/>
+                    <JFormattedTextField actions="robot, text" key="#-2038897460" name="right_(mm)" xpath="JFormattedTextField[ @hash=//JLabel[ @text='right (mm)' ]/@for-hash ]"/>
+                </ServiceDialog-MarginsPanel>
+                <ServiceDialog-MediaPanel actions="robot" key="#1901885017" name="ServiceDialog_MediaPanel" xpath="ServiceDialog-MediaPanel[ 1 ]">
+					
+					
+				<JComboBox actions="robot, index" key="#1045780984" name="Source" xpath="JComboBox[ @hash=//JLabel[ @text='Source:' ]/@for-hash ]"/>
+                    <JComboBox actions="robot, index" key="#352679287" name="Size" xpath="JComboBox[ @hash=//JLabel[ @text='Size:' ]/@for-hash ]"/>
+                </ServiceDialog-MediaPanel>
+                <ServiceDialog-OrientationPanel actions="robot" key="#-242934651" name="ServiceDialog_OrientationPanel" xpath="ServiceDialog-OrientationPanel[ 1 ]">
+					
+					
+					
+					
+				<JRadioButton actions="robot, click" key="#-1056174811" name="Reverse_Landscape" xpath="JRadioButton[ @text='Reverse Landscape' ]"/>
+                    <JRadioButton actions="robot, click" key="#1349538695" name="Landscape" xpath="JRadioButton[ @text='Landscape' ]"/>
+                    <JRadioButton actions="robot, click" key="#-153035527" name="Portrait" xpath="JRadioButton[ @text='Portrait' ]"/>
+                    <JRadioButton actions="robot, click" key="#-784828517" name="Reverse_Portrait" xpath="JRadioButton[ @text='Reverse Portrait' ]"/>
+                </ServiceDialog-OrientationPanel>
+            </ServiceDialog-PageSetupPanel>
+            <ServiceDialog-GeneralPanel actions="index" key="#-1990537720" name="General" tab-index="0" tab-title="General" xpath="ServiceDialog-GeneralPanel[ @tab-title='General' ]">
+				
+				
+				
+			<ServiceDialog-CopiesPanel actions="robot" key="#1428826696" name="ServiceDialog_CopiesPanel" xpath="ServiceDialog-CopiesPanel[ 1 ]">
+					
+					
+				<JCheckBox actions="robot, click" key="#1728647912" name="Collate" xpath="JCheckBox[ @text='Collate' ]"/>
+                    <JSpinner actions="robot" key="#-532605262" name="Number_of_copies" xpath="JSpinner[ @hash=//JLabel[ @text='Number of copies:' ]/@for-hash ]">
+						
+					<JFormattedTextField actions="robot, text" key="#563665920" name="1" xpath="JFormattedTextField[ @text='1' ]"/>
+                    </JSpinner>
+                </ServiceDialog-CopiesPanel>
+                <ServiceDialog-PrintRangePanel actions="robot" key="#2143412741" name="ServiceDialog_PrintRangePanel" xpath="ServiceDialog-PrintRangePanel[ 1 ]">
+					
+					
+					
+					
+				<JFormattedTextField actions="robot, text" key="#-261183235" name="1" xpath="JFormattedTextField[ @text='1' ]"/>
+                    <JRadioButton actions="robot, click" key="#-463554216" name="Pages" xpath="JRadioButton[ @text='Pages' ]"/>
+                    <JFormattedTextField actions="robot, text" key="#-515919780" name="1" xpath="JFormattedTextField[ @text='1' ]"/>
+                    <JRadioButton actions="robot, click" key="#751274651" name="All" xpath="JRadioButton[ @text='All' ]"/>
+                </ServiceDialog-PrintRangePanel>
+                <ServiceDialog-PrintServicePanel actions="robot" key="#-393495683" name="ServiceDialog_PrintServicePanel" xpath="ServiceDialog-PrintServicePanel[ 1 ]">
+					
+					
+					
+				<JComboBox actions="robot, index" key="#-131293997" name="Name" xpath="JComboBox[ @hash=//JLabel[ @text='Name:' ]/@for-hash ]"/>
+                    <JCheckBox actions="robot, click" key="#-1393718485" name="Print_To_File" xpath="JCheckBox[ @text='Print To File' ]"/>
+                    <JButton actions="robot, click" key="#1407329933" name="Properties" xpath="JButton[ @text='Properties...' ]"/>
+                </ServiceDialog-PrintServicePanel>
+            </ServiceDialog-GeneralPanel>
+            <ServiceDialog-AppearancePanel actions="index" key="#-2123501928" name="Appearance" tab-index="2" tab-title="Appearance" xpath="ServiceDialog-AppearancePanel[ @tab-title='Appearance' ]">
+				
+				
+				
+				
+			<ServiceDialog-ChromaticityPanel actions="robot" key="#-1313399885" name="ServiceDialog_ChromaticityPanel" xpath="ServiceDialog-ChromaticityPanel[ 1 ]">
+					
+					
+				<JRadioButton actions="robot, click" key="#244864579" name="Color" xpath="JRadioButton[ @text='Color' ]"/>
+                    <JRadioButton actions="robot, click" key="#-821769484" name="Monochrome" xpath="JRadioButton[ @text='Monochrome' ]"/>
+                </ServiceDialog-ChromaticityPanel>
+                <ServiceDialog-SidesPanel actions="robot" key="#722868815" name="ServiceDialog_SidesPanel" xpath="ServiceDialog-SidesPanel[ 1 ]">
+					
+					
+					
+				<JRadioButton actions="robot, click" key="#1761493371" name="Tumble" xpath="JRadioButton[ @text='Tumble' ]"/>
+                    <JRadioButton actions="robot, click" key="#26665817" name="One_Side" xpath="JRadioButton[ @text='One Side' ]"/>
+                    <JRadioButton actions="robot, click" key="#-736069654" name="Duplex" xpath="JRadioButton[ @text='Duplex' ]"/>
+                </ServiceDialog-SidesPanel>
+                <ServiceDialog-QualityPanel actions="robot" key="#850990098" name="ServiceDialog_QualityPanel" xpath="ServiceDialog-QualityPanel[ 1 ]">
+					
+					
+					
+				<JRadioButton actions="robot, click" key="#125390499" name="Draft" xpath="JRadioButton[ @text='Draft' ]"/>
+                    <JRadioButton actions="robot, click" key="#-88971126" name="Normal" xpath="JRadioButton[ @text='Normal' ]"/>
+                    <JRadioButton actions="robot, click" key="#-993543858" name="High" xpath="JRadioButton[ @text='High' ]"/>
+                </ServiceDialog-QualityPanel>
+                <ServiceDialog-JobAttributesPanel actions="robot" key="#99190343" name="ServiceDialog_JobAttributesPanel" xpath="ServiceDialog-JobAttributesPanel[ 1 ]">
+					
+					
+					
+					
+				<JCheckBox actions="robot, click" key="#-1274888212" name="Banner_Page" xpath="JCheckBox[ @text='Banner Page' ]"/>
+                    <JTextField actions="robot, text" key="#-1807544802" name="Job_Name" xpath="JTextField[ @hash=//JLabel[ @text='Job Name:' ]/@for-hash ]"/>
+                    <JTextField actions="robot, text" key="#-2062281347" name="User_Name" xpath="JTextField[ @hash=//JLabel[ @text='User Name:' ]/@for-hash ]"/>
+                    <JSpinner actions="robot" key="#-2114334798" name="Priority" xpath="JSpinner[ @hash=//JLabel[ @text='Priority:' ]/@for-hash ]">
+						
+					<JFormattedTextField actions="robot, text" key="#-476343040" name="1" xpath="JFormattedTextField[ @text='1' ]"/>
+                    </JSpinner>
+                </ServiceDialog-JobAttributesPanel>
+            </ServiceDialog-AppearancePanel>
+        </JTabbedPane>
+    </ServiceDialog>
+    <JTabbedPane actions="robot, index" key="#-1070344294" name="demos" xpath="JTabbedPane[ 1 ]">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	<JPanel actions="index" key="#1497147191" name="ComboBox_Demo" tab-index="0" tab-title="ComboBox Demo" xpath="JPanel[ @tab-title='ComboBox Demo' ]">
+			
+			
+			
+			
+		<JComboBox actions="robot, index" key="#-1610270203" name="Hair" xpath="JComboBox[ @hash=//JLabel[ @text='Hair:' ]/@for-hash ]"/>
+            <JComboBox actions="robot, index" key="#1991595396" name="Presets" xpath="JComboBox[ @hash=//JLabel[ @text='Presets:' ]/@for-hash ]"/>
+            <JComboBox actions="robot, index" key="#-224066809" name="Mouth" xpath="JComboBox[ @hash=//JLabel[ @text='Mouth:' ]/@for-hash ]"/>
+            <JComboBox actions="robot, index" key="#-917168506" name="Eyes_And_Nose" xpath="JComboBox[ @hash=//JLabel[ @text='Eyes &amp; Nose:' ]/@for-hash ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#1525891067" name="Table_Demo" tab-index="0" tab-title="Table Demo" xpath="JPanel[ @tab-title='Table Demo' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JCheckBox actions="robot, click" key="#1233801829" name="Vert" xpath="JCheckBox[ @text='Vert. Lines' ]"/>
+            <JTextField actions="robot, text" key="#1355561710" name="Footer" xpath="JTextField[ preceding-sibling::JLabel[ 1 ]/@text='Footer' ]"/>
+            <JTable actions="robot, table" key="#-1448696452" name="table" xpath="JTable[ 1 ]"/>
+            <JCheckBox actions="robot, click" key="#1530947146" name="Reordering_allowed" xpath="JCheckBox[ @text='Reordering allowed' ]"/>
+            <JTextField actions="robot, text" key="#1610298255" name="Header" xpath="JTextField[ preceding-sibling::JLabel[ 1 ]/@text='Header' ]"/>
+            <JCheckBox actions="robot, click" key="#-1639100076" name="Column_selection" xpath="JCheckBox[ @text='Column selection' ]"/>
+            <JButton actions="robot, click" key="#-492587521" name="Print" xpath="JButton[ @text='Print' ]"/>
+            <JCheckBox actions="robot, click" key="#723205446" name="Fit_Width" xpath="JCheckBox[ @text='Fit Width' ]"/>
+            <JCheckBox actions="robot, click" key="#-818344794" name="Horiz" xpath="JCheckBox[ @text='Horiz. Lines' ]"/>
+            <JCheckBox actions="robot, click" key="#-996400904" name="Row_selection" xpath="JCheckBox[ @text='Row selection' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#-1540488645" name="ProgressBar_Demo" tab-index="0" tab-title="ProgressBar Demo" xpath="JPanel[ @tab-title='ProgressBar Demo' ]">
+			
+			
+		<JButton actions="robot, click" key="#1121572539" name="Start_Loading_Text" xpath="JButton[ @text='Start Loading Text' ]"/>
+            <JButton actions="robot, click" key="#1327051934" name="Stop_Loading_Text" xpath="JButton[ @text='Stop Loading Text' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#1740772031" name="Slider_Demo" tab-index="0" tab-title="Slider Demo" xpath="JPanel[ @tab-title='Slider Demo' ]"/>
+        <JPanel actions="index" key="#1904628711" name="Split_Pane_Demo" tab-index="0" tab-title="Split Pane Demo" xpath="JPanel[ @tab-title='Split Pane Demo' ]">
+			
+			
+			
+			
+			
+			
+			
+		<JCheckBox actions="robot, click" key="#1109248896" name="One_Touch_expandable" xpath="JCheckBox[ @text='One-Touch expandable' ]"/>
+            <JTextField actions="robot, text" key="#1610298255" name="Divider_Size" xpath="JTextField[ @hash=//JLabel[ @text='Divider Size' ]/@for-hash ]"/>
+            <JTextField actions="robot, text" key="#1610298255" name="First_Components_Minimum_Size" xpath="JTextField[ @hash=//JLabel[ contains( @text, 'First Component' ) and contains( @text, 'Minimum Size' ) ]/@for-hash ]"/>
+            <JTextField actions="robot, text" key="#1610298255" name="Second_Components_Minimum_Size" xpath="JTextField[ @hash=//JLabel[ contains( @text, 'Second Component') and contains( @text, 'Minimum Size' ) ]/@for-hash ]"/>
+            <JCheckBox actions="robot, click" key="#1716852510" name="Continuous_Layout" xpath="JCheckBox[ @text='Continuous Layout' ]"/>
+            <JRadioButton actions="robot, click" key="#-1970210149" name="Horizontally_Split" xpath="JRadioButton[ @text='Horizontally Split' ]"/>
+            <JRadioButton actions="robot, click" key="#-2083826838" name="Vertically_Split" xpath="JRadioButton[ @text='Vertically Split' ]"/>
+        </JPanel>
+        <JScrollPane actions="index" key="#-1972357604" name="Source_Code" tab-index="1" tab-title="Source Code" xpath="JScrollPane[ @tab-title='Source Code' ]"/>
+        <JPanel actions="index" key="#-203621435" name="Option_Pane_Demo" tab-index="0" tab-title="Option Pane Demo" xpath="JPanel[ @tab-title='Option Pane Demo' ]">
+			
+			
+			
+			
+			
+		<OptionPaneDemo-7 actions="robot, click" key="#-1238534214" name="Show_Confirmation_Dialog" xpath="OptionPaneDemo-7[ @text='Show Confirmation Dialog' ]"/>
+            <OptionPaneDemo-7 actions="robot, click" key="#144886311" name="Show_Input_Dialog" xpath="OptionPaneDemo-7[ @text='Show Input Dialog' ]"/>
+            <OptionPaneDemo-7 actions="robot, click" key="#1594846877" name="Show_Component_Dialog" xpath="OptionPaneDemo-7[ @text='Show Component Dialog' ]"/>
+            <OptionPaneDemo-7 actions="robot, click" key="#206131238" name="Show_Message_Dialog" xpath="OptionPaneDemo-7[ @text='Show Message Dialog' ]"/>
+            <OptionPaneDemo-7 actions="robot, click" key="#-912145094" name="Show_Warning_Dialog" xpath="OptionPaneDemo-7[ @text='Show Warning Dialog' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#210227385" name="Tree_Demo" tab-index="0" tab-title="Tree Demo" xpath="JPanel[ @tab-title='Tree Demo' ]">
+			
+		<TreeDemo-1 actions="robot, tree" key="#994021965" name="TreeDemo_1" xpath="TreeDemo-1[ 1 ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#-2138246043" name="TabbedPane_Demo" tab-index="0" tab-title="TabbedPane Demo" xpath="JPanel[ @tab-title='TabbedPane Demo' ]">
+			
+			
+			
+			
+			
+		<JRadioButton actions="robot, click" key="#1254803958" name="Top" xpath="JRadioButton[ @text='Top' ]"/>
+            <JRadioButton actions="robot, click" key="#-1458642478" name="Right" xpath="JRadioButton[ @text='Right' ]"/>
+            <JRadioButton actions="robot, click" key="#-1884500349" name="Left" xpath="JRadioButton[ @text='Left' ]"/>
+            <JTabbedPane actions="robot, index" key="#-1972993753" name="JTabbedPane" xpath="JTabbedPane[ 1 ]">
+				
+				
+				
+				
+			<JLabel actions="index" key="#1304494593" name="Hania" tab-index="2" tab-title="Hania" xpath="JLabel[ @tab-title='Hania' ]"/>
+                <JLabel actions="index" key="#1502216099" name="Laine" tab-index="0" tab-title="Laine" xpath="JLabel[ @tab-title='Laine' ]"/>
+                <TabbedPaneDemo-HeadSpin actions="index" key="#-668754583" name="Bouncing_Babies" tab-index="3" tab-title="&lt;html&gt;&lt;font color=blue&gt;&lt;bold&gt;&lt;center&gt;Bouncing Babies!&lt;/center&gt;&lt;/bold&gt;&lt;/font&gt;&lt;/html&gt;" xpath="TabbedPaneDemo-HeadSpin[ @tab-title='&lt;html&gt;&lt;font color=blue&gt;&lt;bold&gt;&lt;center&gt;Bouncing Babies!&lt;/center&gt;&lt;/bold&gt;&lt;/font&gt;&lt;/html&gt;' ]"/>
+                <JLabel actions="index" key="#-862593623" name="Ewan" tab-index="1" tab-title="Ewan" xpath="JLabel[ @tab-title='Ewan' ]"/>
+            </JTabbedPane>
+            <JRadioButton actions="robot, click" key="#1982351422" name="Bottom" xpath="JRadioButton[ @text='Bottom' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#489835193" name="List_Demo" tab-index="0" tab-title="List Demo" xpath="JPanel[ @tab-title='List Demo' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JCheckBox actions="robot, click" key="#-1029639415" name="Western" xpath="JCheckBox[ @text='Western' ]"/>
+            <JCheckBox actions="robot, click" key="#103036384" name="Tele" xpath="JCheckBox[ @text='Tele' ]"/>
+            <JCheckBox actions="robot, click" key="#-1056270922" name="Scape" xpath="JCheckBox[ @text='Scape' ]"/>
+            <JCheckBox actions="robot, click" key="#1079347858" name="Compu" xpath="JCheckBox[ @text='Compu' ]"/>
+            <JCheckBox actions="robot, click" key="#1163273978" name="Software" xpath="JCheckBox[ @text='Software' ]"/>
+            <JCheckBox actions="robot, click" key="#-1262871311" name="Media" xpath="JCheckBox[ @text='Media' ]"/>
+            <JCheckBox actions="robot, click" key="#1279605686" name="Neo" xpath="JCheckBox[ @text='Neo' ]"/>
+            <JCheckBox actions="robot, click" key="#-1326792807" name="Tech" xpath="JCheckBox[ @text='Tech' ]"/>
+            <JCheckBox actions="robot, click" key="#-1333498295" name="Eastern" xpath="JCheckBox[ @text='Eastern' ]"/>
+            <JCheckBox actions="robot, click" key="#-1340472360" name="Vers" xpath="JCheckBox[ @text='Vers' ]"/>
+            <JCheckBox actions="robot, click" key="#1357738960" name="Data" xpath="JCheckBox[ @text='Data' ]"/>
+            <JCheckBox actions="robot, click" key="#-1365280701" name="Micro" xpath="JCheckBox[ @text='Micro' ]"/>
+            <JCheckBox actions="robot, click" key="#-1397132326" name="Southern" xpath="JCheckBox[ @text='Southern' ]"/>
+            <JCheckBox actions="robot, click" key="#-1414060496" name="Tera" xpath="JCheckBox[ @text='Tera' ]"/>
+            <JCheckBox actions="robot, click" key="#-1424532032" name="YoYo" xpath="JCheckBox[ @text='YoYo' ]"/>
+            <JCheckBox actions="robot, click" key="#1430171466" name="Euro" xpath="JCheckBox[ @text='Euro' ]"/>
+            <JCheckBox actions="robot, click" key="#-1469019643" name="Widgets" xpath="JCheckBox[ @text='Widgets' ]"/>
+            <JCheckBox actions="robot, click" key="#14991948" name="Net" xpath="JCheckBox[ @text='Net' ]"/>
+            <JCheckBox actions="robot, click" key="#-1506359618" name="Dyne" xpath="JCheckBox[ @text='Dyne' ]"/>
+            <JCheckBox actions="robot, click" key="#-1514208709" name="Ware" xpath="JCheckBox[ @text='Ware' ]"/>
+            <JCheckBox actions="robot, click" key="#-1522977913" name="Computing" xpath="JCheckBox[ @text='Computing' ]"/>
+            <JCheckBox actions="robot, click" key="#-153704603" name="Computa" xpath="JCheckBox[ @text='Computa' ]"/>
+            <JCheckBox actions="robot, click" key="#-1688526581" name="Services" xpath="JCheckBox[ @text='Services' ]"/>
+            <JCheckBox actions="robot, click" key="#179053322" name="Serv" xpath="JCheckBox[ @text='Serv' ]"/>
+            <JCheckBox actions="robot, click" key="#-1800377538" name="Mobile" xpath="JCheckBox[ @text='Mobile' ]"/>
+            <JCheckBox actions="robot, click" key="#-1862371281" name="Northern" xpath="JCheckBox[ @text='Northern' ]"/>
+            <JCheckBox actions="robot, click" key="#1883873840" name="Solutions" xpath="JCheckBox[ @text='Solutions' ]"/>
+            <JCheckBox actions="robot, click" key="#1895091941" name="Gizmos" xpath="JCheckBox[ @text='Gizmos' ]"/>
+            <JCheckBox actions="robot, click" key="#1896107004" name="Net" xpath="JCheckBox[ @text='Net' ]"/>
+            <JCheckBox actions="robot, click" key="#1897268218" name="In" xpath="JCheckBox[ @text='In' ]"/>
+            <JCheckBox actions="robot, click" key="#-1919544495" name="Atlantic" xpath="JCheckBox[ @text='Atlantic' ]"/>
+            <JCheckBox actions="robot, click" key="#-199916179" name="National" xpath="JCheckBox[ @text='National' ]"/>
+            <JCheckBox actions="robot, click" key="#-2002748278" name="Dynamics" xpath="JCheckBox[ @text='Dynamics' ]"/>
+            <JCheckBox actions="robot, click" key="#-2026160014" name="Concepts" xpath="JCheckBox[ @text='Concepts' ]"/>
+            <JCheckBox actions="robot, click" key="#-2038888968" name="Meta" xpath="JCheckBox[ @text='Meta' ]"/>
+            <JCheckBox actions="robot, click" key="#258289591" name="Hardware" xpath="JCheckBox[ @text='Hardware' ]"/>
+            <JCheckBox actions="robot, click" key="#-266334451" name="Sys" xpath="JCheckBox[ @text='Sys' ]"/>
+            <JCheckBox actions="robot, click" key="#52485881" name="Digi" xpath="JCheckBox[ @text='Digi' ]"/>
+            <JCheckBox actions="robot, click" key="#-588787700" name="Pacific" xpath="JCheckBox[ @text='Pacific' ]"/>
+            <JCheckBox actions="robot, click" key="#608806294" name="Advanced" xpath="JCheckBox[ @text='Advanced' ]"/>
+            <JList actions="robot, index" key="#-709211220" name="list" xpath="JList[ 1 ]"/>
+            <JCheckBox actions="robot, click" key="#71273285" name="Computer" xpath="JCheckBox[ @text='Computer' ]"/>
+            <JCheckBox actions="robot, click" key="#-79205234" name="Info" xpath="JCheckBox[ @text='Info' ]"/>
+            <JCheckBox actions="robot, click" key="#-792569567" name="Digital" xpath="JCheckBox[ @text='Digital' ]"/>
+            <JCheckBox actions="robot, click" key="#-794550100" name="Analog" xpath="JCheckBox[ @text='Analog' ]"/>
+            <JCheckBox actions="robot, click" key="#-8283246" name="Telecom" xpath="JCheckBox[ @text='Telecom' ]"/>
+            <JCheckBox actions="robot, click" key="#839366930" name="Devices" xpath="JCheckBox[ @text='Devices' ]"/>
+            <JCheckBox actions="robot, click" key="#-853874359" name="Works" xpath="JCheckBox[ @text='Works' ]"/>
+            <JCheckBox actions="robot, click" key="#884036252" name="Com" xpath="JCheckBox[ @text='Com' ]"/>
+            <JCheckBox actions="robot, click" key="#-955295900" name="Soft" xpath="JCheckBox[ @text='Soft' ]"/>
+            <JCheckBox actions="robot, click" key="#978277779" name="Systems" xpath="JCheckBox[ @text='Systems' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#53270158" name="Button_Demo" tab-index="0" tab-title="Button Demo" xpath="JPanel[ @tab-title='Button Demo' ]">
+			
+		<JTabbedPane actions="robot, index" key="#-1973023544" name="tabs" xpath="JTabbedPane[ 1 ]">
+				
+				
+				
+			<JPanel actions="index" key="#1687618077" name="Check_Boxes" tab-index="2" tab-title="Check Boxes" xpath="JPanel[ @tab-title='Check Boxes' ]">
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				<JCheckBox actions="robot, click" key="#-1019249999" name="Paint_Border" xpath="JCheckBox[ @text='Paint Border' and @tooltip='Click here to turn border painting on or off.' ]"/>
+                    <JCheckBox actions="robot, click" key="#-1181507968" name="Enabled" xpath="JCheckBox[ @text='Enabled' and @tooltip='Click here to enable or disable the buttons.' ]"/>
+                    <JCheckBox actions="robot, click" key="#-1512763822" name="Three" xpath="JCheckBox[ @text='Three' ]"/>
+                    <DirectionPanel actions="robot" key="#-1594803566" name="Content_Alignment" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Content Alignment:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                    <JRadioButton actions="robot, click" key="#-1733288978" name="Pad_10px" xpath="JRadioButton[ @text='10' and @tooltip='Uses a 10 pixel pad between the border and label.' ]"/>
+                    <JCheckBox actions="robot, click" key="#1840274760" name="One" xpath="JCheckBox[ @text='One' ]"/>
+                    <JRadioButton actions="robot, click" key="#-1960323732" name="Default" xpath="JRadioButton[ @text='Default' and @tooltip='Uses the default padding between the border and label.' ]"/>
+                    <JCheckBox actions="robot, click" key="#202203666" name="Paint_Focus" xpath="JCheckBox[ @text='Paint Focus' and @tooltip='Click here to turn focus painting on or off.' ]"/>
+                    <JCheckBox actions="robot, click" key="#2037221612" name="Content_Filled" xpath="JCheckBox[ @text='Content Filled' and @tooltip='Click here to control the filling of the content area.' ]"/>
+                    <JCheckBox actions="robot, click" key="#-331997725" name="Two" xpath="JCheckBox[ @text='Two' ]"/>
+                    <JRadioButton actions="robot, click" key="#42726275" name="No_Padding" xpath="JRadioButton[ @text='0' and @tooltip='Uses no padding between the border and label.' ]"/>
+                    <DirectionPanel actions="robot" key="#443252723" name="Text_Position" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Text Position:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                </JPanel>
+                <JPanel actions="index" key="#-865052446" name="Radio_Buttons" tab-index="1" tab-title="Radio Buttons" xpath="JPanel[ @tab-title='Radio Buttons' ]">
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				<JCheckBox actions="robot, click" key="#-1019249999" name="Paint_Border" xpath="JCheckBox[ @text='Paint Border' and @tooltip='Click here to turn border painting on or off.' ]"/>
+                    <JCheckBox actions="robot, click" key="#-1181507968" name="Enabled" xpath="JCheckBox[ @text='Enabled' and @tooltip='Click here to enable or disable the buttons.' ]"/>
+                    <DirectionPanel actions="robot" key="#-1594803566" name="Content_Alignment" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Content Alignment:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                    <JRadioButton actions="robot, click" key="#17244473" name="Radio_One" xpath="JRadioButton[ @text='Radio One' ]"/>
+                    <JRadioButton actions="robot, click" key="#-1733288978" name="Pad_10px" xpath="JRadioButton[ @text='10' and @tooltip='Uses a 10 pixel pad between the border and label.' ]"/>
+                    <JRadioButton actions="robot, click" key="#-1756533484" name="Radio_Two" xpath="JRadioButton[ @text='Radio Two' ]"/>
+                    <JRadioButton actions="robot, click" key="#-1960323732" name="Default" xpath="JRadioButton[ @text='Default' and @tooltip='Uses the default padding between the border and label.' ]"/>
+                    <JCheckBox actions="robot, click" key="#202203666" name="Paint_Focus" xpath="JCheckBox[ @text='Paint Focus' and @tooltip='Click here to turn focus painting on or off.' ]"/>
+                    <JCheckBox actions="robot, click" key="#2037221612" name="Content_Filled" xpath="JCheckBox[ @text='Content Filled' and @tooltip='Click here to control the filling of the content area.' ]"/>
+                    <JRadioButton actions="robot, click" key="#304091267" name="Radio_Three" xpath="JRadioButton[ @text='Radio Three' ]"/>
+                    <JRadioButton actions="robot, click" key="#42726275" name="No_Padding" xpath="JRadioButton[ @text='0' and @tooltip='Uses no padding between the border and label.' ]"/>
+                    <DirectionPanel actions="robot" key="#443252723" name="Text_Position" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Text Position:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                </JPanel>
+                <JPanel actions="index" key="#945254621" name="Buttons" tab-index="0" tab-title="Buttons" xpath="JPanel[ @tab-title='Buttons' ]">
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				<JCheckBox actions="robot, click" key="#-1019249999" name="Paint_Border" xpath="JCheckBox[ @text='Paint Border' and @tooltip='Click here to turn border painting on or off.' ]"/>
+                    <JCheckBox actions="robot, click" key="#-1181507968" name="Enabled" xpath="JCheckBox[ @text='Enabled' and @tooltip='Click here to enable or disable the buttons.' ]"/>
+                    <JButton actions="robot, click" key="#-1332366488" name="b2" xpath="JButton[ @icon='b2.gif' ]"/>
+                    <DirectionPanel actions="robot" key="#-1594803566" name="Content_Alignment" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Content Alignment:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                    <JRadioButton actions="robot, click" key="#-1733288978" name="Pad_10px" xpath="JRadioButton[ @text='10' and @tooltip='Uses a 10 pixel pad between the border and label.' ]"/>
+                    <JRadioButton actions="robot, click" key="#-1960323732" name="Default" xpath="JRadioButton[ @text='Default' and @tooltip='Uses the default padding between the border and label.' ]"/>
+                    <JCheckBox actions="robot, click" key="#202203666" name="Paint_Focus" xpath="JCheckBox[ @text='Paint Focus' and @tooltip='Click here to turn focus painting on or off.' ]"/>
+                    <JButton actions="robot, click" key="#-2025468185" name="b1" xpath="JButton[ @icon='b1.gif' ]"/>
+                    <JCheckBox actions="robot, click" key="#2037221612" name="Content_Filled" xpath="JCheckBox[ @text='Content Filled' and @tooltip='Click here to control the filling of the content area.' ]"/>
+                    <JButton actions="robot, click" key="#2128040599" name="One" xpath="JButton[ @text='One' ]"/>
+                    <JRadioButton actions="robot, click" key="#42726275" name="No_Padding" xpath="JRadioButton[ @text='0' and @tooltip='Uses no padding between the border and label.' ]"/>
+                    <JButton actions="robot, click" key="#-44231886" name="Two" xpath="JButton[ @text='Two' ]"/>
+                    <DirectionPanel actions="robot" key="#443252723" name="Text_Position" xpath="DirectionPanel[ preceding-sibling::JLabel[ 1 ]/@text='Text Position:' ]">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="top_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="middle_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#1070792315" name="bottom_right_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom right layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="top_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="middle_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='middle left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#-315411079" name="bottom_left_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom left layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="top_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='top middle layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="center_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='center layout button' ]"/>
+                        <DirectionPanel-DirectionButton actions="robot, click" key="#377690618" name="bottom_middle_layout_button" xpath="DirectionPanel-DirectionButton[ @icon='bottom middle layout button' ]"/>
+                    </DirectionPanel>
+                    <JButton actions="robot, click" key="#-639264791" name="b3" xpath="JButton[ @icon='b3.gif' ]"/>
+                    <JButton actions="robot, click" key="#864600630" name="Three" xpath="JButton[ @text='&lt;html&gt;&lt;font size=2 color=red&gt;&lt;bold&gt;Three!&lt;/font&gt;&lt;/html&gt;' ]"/>
+                </JPanel>
+            </JTabbedPane>
+        </JPanel>
+        <JPanel actions="index" key="#752218341" name="Scroll_Pane_Demo" tab-index="0" tab-title="Scroll Pane Demo" xpath="JPanel[ @tab-title='Scroll Pane Demo' ]"/>
+        <JPanel actions="index" key="#759901485" name="ColorChooser_Demo" tab-index="0" tab-title="ColorChooser Demo" xpath="JPanel[ @tab-title='ColorChooser Demo' ]">
+			
+			
+			
+			
+		<JButton actions="robot, click" key="#-1139127310" name="Perimeter" xpath="JButton[ @text='Perimeter' ]"/>
+            <JButton actions="robot, click" key="#1570671868" name="Background" xpath="JButton[ @text='Background' ]"/>
+            <JButton actions="robot, click" key="#1919276200" name="Gradient_1" xpath="JButton[ @text='Gradient 1' ]"/>
+            <JButton actions="robot, click" key="#-1937651802" name="Gradient_2" xpath="JButton[ @text='Gradient 2' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#769401181" name="JEditorPane_HTML_Demo" tab-index="0" tab-title="JEditorPane HTML Demo" xpath="JPanel[ @tab-title='JEditorPane HTML Demo' ]"/>
+        <JPanel actions="index" key="#-810721583" name="ToolTip_Demo" tab-index="0" tab-title="ToolTip Demo" xpath="JPanel[ @tab-title='ToolTip Demo' ]"/>
+        <JPanel actions="index" key="#902381186" name="Internal_Frames_Demo" tab-index="0" tab-title="Internal Frames Demo" xpath="JPanel[ @tab-title='Internal Frames Demo' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JCheckBox actions="robot, click" key="#-1367499954" name="Closable" xpath="JCheckBox[ @text='Closable' ]"/>
+            <JCheckBox actions="robot, click" key="#-1609373585" name="Maximizable" xpath="JCheckBox[ @text='Maximizable' ]"/>
+            <JCheckBox actions="robot, click" key="#1750892694" name="Resizable" xpath="JCheckBox[ @text='Resizable' ]"/>
+            <JButton actions="robot, click" key="#289173943" name="moon_small" xpath="JButton[ @icon='moon_small.gif' ]"/>
+            <JButton actions="robot, click" key="#289173943" name="cab_small" xpath="JButton[ @icon='cab_small.gif' ]"/>
+            <JButton actions="robot, click" key="#-403927754" name="fish_small" xpath="JButton[ @icon='fish_small.gif' ]"/>
+            <JButton actions="robot, click" key="#-403927754" name="sun_small" xpath="JButton[ @icon='sun_small.gif' ]"/>
+            <JCheckBox actions="robot, click" key="#619933717" name="Iconifiable" xpath="JCheckBox[ @text='Iconifiable' ]"/>
+            <JTextField actions="robot, text" key="#-759632459" name="Frame_title" xpath="JTextField[ preceding-sibling::JLabel[ 1 ]/@text='Frame title:' ]"/>
+        </JPanel>
+        <JPanel actions="index" key="#-929080293" name="FileChooser_Demo" tab-index="0" tab-title="FileChooser Demo" xpath="JPanel[ @tab-title='FileChooser Demo' ]">
+			
+			
+			
+		<FileChooserDemo-10 actions="robot, click" key="#1381748396" name="Show_Preview_JFileChooser" xpath="FileChooserDemo-10[ @text='Show Preview JFileChooser' ]"/>
+            <FileChooserDemo-10 actions="robot, click" key="#2124588141" name="Show_Plain_JFileChooser" xpath="FileChooserDemo-10[ @text='Show Plain JFileChooser' ]"/>
+            <FileChooserDemo-10 actions="robot, click" key="#-291947720" name="Show_Custom_JFileChooser" xpath="FileChooserDemo-10[ @text='Show Custom JFileChooser' ]"/>
+        </JPanel>
+    </JTabbedPane>
+    <JDialog key="#114979020" name="Message" xpath="JDialog[ @title='Message' ]">
+		
+	<JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <JDialog key="#1395097614" name="Component_Dialog_Example" xpath="JDialog[ @title='Component Dialog Example' ]">
+		
+		
+		
+		
+		
+		
+		
+	<JButton actions="robot, click" key="#120054644" name="Yes" xpath="JButton[ @text='Yes' ]"/>
+        <JButton actions="robot, click" key="#1901902261" name="Probably" xpath="JButton[ @text='Probably' ]"/>
+        <JButton actions="robot, click" key="#-2057905283" name="Cancel" xpath="JButton[ @text='Cancel' ]"/>
+        <JTextField actions="robot, text" key="#-2125247301" name="JTextField" xpath="JTextField[ preceding-sibling::JLabel[ 1 ]/@text='&lt;html&gt;JOptionPane can contain as many components &lt;br&gt; as you want, such as a text field:&lt;/html&gt;' ]"/>
+        <JButton actions="robot, click" key="#473159673" name="No" xpath="JButton[ @text='No' ]"/>
+        <JButton actions="robot, click" key="#926941781" name="Maybe" xpath="JButton[ @text='Maybe' ]"/>
+        <JComboBox actions="robot, index" key="#-989282842" name="JComboBox" xpath="JComboBox[ preceding-sibling::JLabel[ 1 ]/@text='&lt;html&gt;JOptionPane can contain as many components &lt;br&gt; as you want, such as a text field:&lt;/html&gt;' ]"/>
+    </JDialog>
+    <JTextField actions="robot, text" key="#1452535712" name="Status_Text" xpath="JTextField[ 1 ]"/>
+    <JTabbedPane actions="robot, index" key="#-1578233400" name="JTabbedPane" xpath="JTabbedPane[ 1 ]">
+		
+		
+		
+		
+		
+	<JPanel actions="index" key="#-1028003809" name="HSL" tab-index="2" tab-title="HSL" xpath="JPanel[ @tab-title='HSL' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JRadioButton actions="robot, click" key="#105034114" name="Lightness" xpath="JRadioButton[ @text='Lightness' ]"/>
+            <JFormattedTextField actions="robot, text" key="#-1145543808" name="" xpath="JFormattedTextField[ @hash=//JLabel[ @text='' ]/@for-hash ]"/>
+            <JSpinner actions="robot" key="#122568541" name="JSpinner_3" xpath="JSpinner[ 3 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="30" xpath="JFormattedTextField[ @text='30' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-1915487748" name="JSpinner_4" xpath="JSpinner[ 4 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-2134342466" name="JSpinner_2" xpath="JSpinner[ 2 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="100" xpath="JFormattedTextField[ @text='100' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#-2135651018" name="Saturation" xpath="JRadioButton[ @text='Saturation' ]"/>
+            <JSpinner actions="robot" key="#341423259" name="JSpinner_5" xpath="JSpinner[ 5 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#600888213" name="Hue" xpath="JRadioButton[ @text='Hue' ]"/>
+            <JSpinner actions="robot" key="#-96286177" name="JSpinner" xpath="JSpinner[ 1 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="240" xpath="JFormattedTextField[ @text='240' ]"/>
+            </JSpinner>
+        </JPanel>
+        <JPanel actions="index" key="#1990021491" name="RGB" tab-index="3" tab-title="RGB" xpath="JPanel[ @tab-title='RGB' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JFormattedTextField actions="robot, text" key="#-1145543808" name="Color_Code" xpath="JFormattedTextField[ @hash=//JLabel[ @text='Color Code' ]/@for-hash ]"/>
+            <JSpinner actions="robot" key="#122568541" name="JSpinner_3" xpath="JSpinner[ 3 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="153" xpath="JFormattedTextField[ @text='153' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#1869104939" name="Green" xpath="JRadioButton[ @text='Green' ]"/>
+            <JSpinner actions="robot" key="#-1915487748" name="JSpinner_4" xpath="JSpinner[ 4 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="255" xpath="JFormattedTextField[ @text='255' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#2115730253" name="Blue" xpath="JRadioButton[ @text='Blue' ]"/>
+            <JSpinner actions="robot" key="#-2134342466" name="JSpinner_2" xpath="JSpinner[ 2 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#341423259" name="JSpinner_5" xpath="JSpinner[ 5 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#872373596" name="Red" xpath="JRadioButton[ @text='Red' ]"/>
+            <JSpinner actions="robot" key="#-96286177" name="JSpinner" xpath="JSpinner[ 1 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+        </JPanel>
+        <JPanel actions="index" key="#-2003337812" name="Swatches" tab-index="0" tab-title="Swatches" xpath="JPanel[ @tab-title='Swatches' ]"/>
+        <JPanel actions="index" key="#464742266" name="CMYK" tab-index="4" tab-title="CMYK" xpath="JPanel[ @tab-title='CMYK' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JFormattedTextField actions="robot, text" key="#-1145543808" name="" xpath="JFormattedTextField[ @hash=//JLabel[ @text='' ]/@for-hash ]"/>
+            <JSpinner actions="robot" key="#122568541" name="Alpha" xpath="JSpinner[ preceding-sibling::JLabel[ 1 ]/@text='Alpha' ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#1418048550" name="Cyan" xpath="JRadioButton[ @text='Cyan' ]"/>
+            <JSpinner actions="robot" key="#-1915487748" name="Alpha" xpath="JSpinner[ preceding-sibling::JLabel[ 1 ]/@text='Alpha' ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="101" xpath="JFormattedTextField[ @text='101' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-2134342466" name="Alpha" xpath="JSpinner[ preceding-sibling::JLabel[ 1 ]/@text='Alpha' ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="255" xpath="JFormattedTextField[ @text='255' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#337296883" name="Yellow" xpath="JRadioButton[ @text='Yellow' ]"/>
+            <JRadioButton actions="robot, click" key="#-340227323" name="Magenta" xpath="JRadioButton[ @text='Magenta' ]"/>
+            <JSpinner actions="robot" key="#341423259" name="Alpha" xpath="JSpinner[ preceding-sibling::JLabel[ 1 ]/@text='Alpha' ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="255" xpath="JFormattedTextField[ @text='255' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-96286177" name="Alpha" xpath="JSpinner[ preceding-sibling::JLabel[ 1 ]/@text='Alpha' ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="255" xpath="JFormattedTextField[ @text='255' ]"/>
+            </JSpinner>
+        </JPanel>
+        <JPanel actions="index" key="#524147445" name="HSV" tab-index="1" tab-title="HSV" xpath="JPanel[ @tab-title='HSV' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+		<JSpinner actions="robot" key="#122568541" name="JSpinner_3" xpath="JSpinner[ 3 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="60" xpath="JFormattedTextField[ @text='60' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-1915487748" name="JSpinner_4" xpath="JSpinner[ 4 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JSpinner actions="robot" key="#-2134342466" name="JSpinner_2" xpath="JSpinner[ 2 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="100" xpath="JFormattedTextField[ @text='100' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#-2135651018" name="Saturation" xpath="JRadioButton[ @text='Saturation' ]"/>
+            <JRadioButton actions="robot, click" key="#245948414" name="Value" xpath="JRadioButton[ @text='Value' ]"/>
+            <JSpinner actions="robot" key="#341423259" name="JSpinner_5" xpath="JSpinner[ 5 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="0" xpath="JFormattedTextField[ @text='0' ]"/>
+            </JSpinner>
+            <JRadioButton actions="robot, click" key="#600888213" name="Hue" xpath="JRadioButton[ @text='Hue' ]"/>
+            <JSpinner actions="robot" key="#-96286177" name="JSpinner" xpath="JSpinner[ 1 ]">
+				
+			<JFormattedTextField actions="robot, text" key="#-639688339" name="240" xpath="JFormattedTextField[ @text='240' ]"/>
+            </JSpinner>
+        </JPanel>
+    </JTabbedPane>
+    <JDialog key="#-1807340545" name="Select_an_Option" xpath="JDialog[ @title='Select an Option' ]">
+		
+		
+		
+	<JButton actions="robot, click" key="#120054644" name="Yes" xpath="JButton[ @text='Yes' ]"/>
+        <JButton actions="robot, click" key="#-1576825025" name="Cancel" xpath="JButton[ @text='Cancel' ]"/>
+        <JButton actions="robot, click" key="#473159673" name="No" xpath="JButton[ @text='No' ]"/>
+    </JDialog>
+    <JMenuBar actions="robot" key="#1890239732" name="JMenuBar" xpath="JMenuBar[ 1 ]">
+		
+		
+		
+		
+		
+	<JMenu actions="robot, click" key="#1026639965" name="Multiscreen" xpath="JMenu[ @text='Multiscreen' ]">
+			
+			
+			
+		<JMenuItem actions="robot, click" key="#1324244910" name="Create_SwingSet2_on_all_screens" xpath="JMenuItem[ @text='Create SwingSet2 on all screens' ]"/>
+            <JMenuItem actions="robot, click" key="#-1707019133" name="Create_SwingSet2_on_screen_0" xpath="JMenuItem[ @text='Create SwingSet2 on screen 0' ]"/>
+            <JMenuItem actions="robot, click" key="#478944705" name="Create_SwingSet2_on_screen_1" xpath="JMenuItem[ @text='Create SwingSet2 on screen 1' ]"/>
+        </JMenu>
+        <JMenu actions="robot, click" key="#-1077784637" name="Options" xpath="JMenu[ @text='Options' ]">
+			
+			
+		<JCheckBoxMenuItem actions="robot, click" key="#102558383" name="Enable_Drag_Support" xpath="JCheckBoxMenuItem[ @text='Enable Drag Support' ]"/>
+            <JCheckBoxMenuItem actions="robot, click" key="#-1272391611" name="Enable_Tool_Tips" xpath="JCheckBoxMenuItem[ @text='Enable Tool Tips' ]"/>
+        </JMenu>
+        <JMenu actions="robot, click" key="#-1706654754" name="Look__Feel" xpath="JMenu[ @text='Look &amp; Feel' ]">
+			
+			
+			
+			
+		<JRadioButtonMenuItem actions="robot, click" key="#-1030508216" name="Nimbus_Look__Feel" xpath="JRadioButtonMenuItem[ @text='Nimbus Look &amp; Feel' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#-145812084" name="Windows_Style_Look__Feel" xpath="JRadioButtonMenuItem[ @text='Windows Style Look &amp; Feel' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#-1590934608" name="Motif_Look__Feel" xpath="JRadioButtonMenuItem[ @text='Motif Look &amp; Feel' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#998475637" name="Java_Look__Feel" xpath="JRadioButtonMenuItem[ @text='Java Look &amp; Feel' ]"/>
+        </JMenu>
+        <JMenu actions="robot, click" key="#1980789100" name="Themes" xpath="JMenu[ @text='Themes' ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JRadioButtonMenuItem actions="robot, click" key="#1034434176" name="Ocean" xpath="JRadioButtonMenuItem[ @text='Ocean' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#1496591714" name="High_Contrast" xpath="JRadioButtonMenuItem[ @text='High Contrast' ]"/>
+            <JMenu actions="robot, click" key="#-1585722110" name="Audio" xpath="JMenu[ @text='Audio' ]">
+				
+				
+				
+			<JRadioButtonMenuItem actions="robot, click" key="#-1184336860" name="Default" xpath="JRadioButtonMenuItem[ @text='Default' ]"/>
+                <JRadioButtonMenuItem actions="robot, click" key="#-429322413" name="On" xpath="JRadioButtonMenuItem[ @text='On' ]"/>
+                <JRadioButtonMenuItem actions="robot, click" key="#-782696073" name="Off" xpath="JRadioButtonMenuItem[ @text='Off' ]"/>
+            </JMenu>
+            <JRadioButtonMenuItem actions="robot, click" key="#1614276756" name="Steel" xpath="JRadioButtonMenuItem[ @text='Steel' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#-1862711718" name="Aqua" xpath="JRadioButtonMenuItem[ @text='Aqua' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#1996187551" name="Emerald" xpath="JRadioButtonMenuItem[ @text='Emerald' ]"/>
+            <JMenu actions="robot, click" key="#2092117525" name="Fonts" xpath="JMenu[ @text='Fonts' ]">
+				
+				
+			<JRadioButtonMenuItem actions="robot, click" key="#-2138421126" name="Plain" xpath="JRadioButtonMenuItem[ @text='Plain' ]"/>
+                <JRadioButtonMenuItem actions="robot, click" key="#-2145951476" name="Bold" xpath="JRadioButtonMenuItem[ @text='Bold' ]"/>
+            </JMenu>
+            <JRadioButtonMenuItem actions="robot, click" key="#20990456" name="Ruby" xpath="JRadioButtonMenuItem[ @text='Ruby' ]"/>
+            <JRadioButtonMenuItem actions="robot, click" key="#995494504" name="Charcoal" xpath="JRadioButtonMenuItem[ @text='Charcoal' ]"/>
+        </JMenu>
+        <JMenu actions="robot, click" key="#684915068" name="File" xpath="JMenu[ @text='File' ]">
+			
+			
+			
+			
+			
+		<JMenuItem actions="robot, click" key="#1925045342" name="About" xpath="JMenuItem[ @text='About' ]"/>
+            <JMenuItem actions="robot, click" key="#2020668300" name="Save" xpath="JMenuItem[ @text='Save' ]"/>
+            <JMenuItem actions="robot, click" key="#-2084921920" name="Open" xpath="JMenuItem[ @text='Open' ]"/>
+            <JMenuItem actions="robot, click" key="#-2099936465" name="Save_As" xpath="JMenuItem[ @text='Save As...' ]"/>
+            <JMenuItem actions="robot, click" key="#771624969" name="Exit" xpath="JMenuItem[ @text='Exit' ]"/>
+        </JMenu>
+    </JMenuBar>
+    <JDialog key="#-1923077269" name="Message" xpath="JDialog[ @title='Message' ]">
+		
+	<JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <JDialog key="#-1986278675" name="Warning_Dialog_Example" xpath="JDialog[ @title='Warning Dialog Example' ]">
+		
+	<JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <JDialog key="#-274760263" name="Open" xpath="JDialog[ @title='Open' ]">
+		
+	<JFileChooser actions="robot" key="#-2015182569" name="JFileChooser" xpath="JFileChooser[ 1 ]">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<JComboBox actions="robot, index" key="#1108113817" name="JComboBox" xpath="JComboBox[ 1 ]"/>
+            <JToggleButton actions="robot, click" key="#-1365579520" name="List" xpath="JToggleButton[ @tooltip='List' ]"/>
+            <JButton actions="robot, click" key="#-1547537873" name="Desktop" xpath="JButton[ @tooltip='Desktop' ]"/>
+            <JButton actions="robot, click" key="#-207364712" name="Create_New_Folder" xpath="JButton[ @tooltip='Create New Folder' ]"/>
+            <JToggleButton actions="robot, click" key="#317984597" name="Details" xpath="JToggleButton[ @tooltip='Details' ]"/>
+            <JButton actions="robot, click" key="#-334677115" name="Open" xpath="JButton[ @text='Open' and @tooltip='Open selected file' ]"/>
+            <JButton actions="robot, click" key="#-370049787" name="Up_One_Level" xpath="JButton[ @tooltip='Up One Level' ]"/>
+            <JButton actions="robot, click" key="#-729334730" name="Cancel" xpath="JButton[ @text='Cancel' and @tooltip='Abort file chooser dialog' ]"/>
+            <JButton actions="robot, click" key="#-860309720" name="Open_Directory" xpath="JButton[ @text='Open' and @tooltip='Open selected directory' ]"/>
+        </JFileChooser>
+    </JDialog>
+    <SwingSet2-ToolBarPanel actions="robot" key="#-563408853" key.raw="gui/SwingSet2-ToolBarPanel[1]" name="toolbar" xpath="SwingSet2-ToolBarPanel[ 1 ]">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        		
+	<JToggleButton actions="robot, click" key="#+1056111690" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[1]" name="JInternalFrame_demo" xpath="JToggleButton[ @tooltip='JInternalFrame demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111721" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[2]" name="JButtons_demos" xpath="JToggleButton[ @tooltip='JButton, JRadioButton, JToggleButton, JCheckbox demos' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111752" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[3]" name="JColorChooser_demo" xpath="JToggleButton[ @tooltip='JColorChooser demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111783" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[4]" name="JComboBox_demo" xpath="JToggleButton[ @tooltip='JComboBox demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111814" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[5]" name="JFileChooser_demo" xpath="JToggleButton[ @tooltip='JFileChooser demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111845" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[6]" name="JEditorPane_HTML_demo" xpath="JToggleButton[ @tooltip='JEditorPane HTML demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111876" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[7]" name="JList_demo" xpath="JToggleButton[ @tooltip='JList demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111907" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[8]" name="JOptionPane_Demo" xpath="JToggleButton[ @tooltip='JOptionPane Demo' ]"/>
+        <JToggleButton actions="robot, click" key="#+1056111938" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[9]" name="JProgressBar_demo" xpath="JToggleButton[ @tooltip='JProgressBar demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277094" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[16]" name="JTree_demo" xpath="JToggleButton[ @tooltip='JTree demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277125" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[15]" name="ToolTip_demo" xpath="JToggleButton[ @tooltip='ToolTip demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277156" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[14]" name="JTable_demo" xpath="JToggleButton[ @tooltip='JTable demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277187" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[13]" name="JTabbedPane_demo" xpath="JToggleButton[ @tooltip='JTabbedPane demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277218" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[12]" name="JSplitPane_demo" xpath="JToggleButton[ @tooltip='JSplitPane demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277249" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[11]" name="JSlider_demo" xpath="JToggleButton[ @tooltip='JSlider demo' ]"/>
+        <JToggleButton actions="robot, click" key="#-1620277280" key.raw="gui/SwingSet2-ToolBarPanel/JToggleButton[10]" name="JScrollPane_demo" xpath="JToggleButton[ @tooltip='JScrollPane demo' ]"/>
+    </SwingSet2-ToolBarPanel>
+    <JDialog key="#640250504" name="Input" xpath="JDialog[ @title='Input' ]">
+		
+		
+		
+	<JButton actions="robot, click" key="#-1336284896" name="Cancel" xpath="JButton[ @text='Cancel' ]"/>
+        <BasicOptionPaneUI-MultiplexingTextField actions="robot, text" key="#1421611091" name="Find_File" xpath="BasicOptionPaneUI-MultiplexingTextField[ preceding-sibling::JLabel[ 1 ]/@text='Find File:' ]"/>
+        <JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <JDialog key="#801138827" name="Printing_Result" xpath="JDialog[ @title='Printing Result' ]">
+		
+	<JButton actions="robot, click" key="#1656358015" name="OK" xpath="JButton[ @text='OK' ]"/>
+    </JDialog>
+    <JDialog key="#818533371" name="Custom_Layout_FileChooser" xpath="JDialog[ @title='Custom Layout FileChooser' ]">
+		
+		
+		
+		
+		
+		
+	<JButton actions="robot, click" key="#1298418131" name="help" xpath="JButton[ @icon='help.gif' ]"/>
+        <FileChooserDemo-10 actions="robot, click" key="#-1400699485" name="OK" xpath="FileChooserDemo-10[ @text='OK' ]"/>
+        <FileChooserDemo-10 actions="robot, click" key="#-182899863" name="About" xpath="FileChooserDemo-10[ @text='About' ]"/>
+        <JFileChooser actions="robot" key="#381536226" name="JFileChooser" xpath="JFileChooser[ 1 ]">
+			
+			
+			
+			
+			
+			
+		<JComboBox actions="robot, index" key="#-1215080082" name="JComboBox" xpath="JComboBox[ 1 ]"/>
+            <JButton actions="robot, click" key="#1310919779" name="Create_New_Folder" xpath="JButton[ @tooltip='Create New Folder' ]"/>
+            <JToggleButton actions="robot, click" key="#-156501867" name="List" xpath="JToggleButton[ @tooltip='List' ]"/>
+            <JButton actions="robot, click" key="#1614582458" name="Desktop" xpath="JButton[ @tooltip='Desktop' ]"/>
+            <JButton actions="robot, click" key="#1912404826" name="Up_One_Level" xpath="JButton[ @tooltip='Up One Level' ]"/>
+            <JToggleButton actions="robot, click" key="#-1940366432" name="Details" xpath="JToggleButton[ @tooltip='Details' ]"/>
+        </JFileChooser>
+        <FileChooserDemo-10 actions="robot, click" key="#-38422460" name="Cancel" xpath="FileChooserDemo-10[ @text='Cancel' ]"/>
+        <JButton actions="robot, click" key="#605316434" name="find" xpath="JButton[ @icon='find.gif' ]"/>
+    </JDialog>
+</gui>

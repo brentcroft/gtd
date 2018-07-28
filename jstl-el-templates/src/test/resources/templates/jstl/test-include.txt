@@ -1,0 +1,7 @@
+<c:log>hello from test-include.txt</c:log>
+hello from test-include.txt
+
+<c:include page='sub1/test-include-subs.txt'/>
+<c:include page='sub1/sub2/test-include-subs2.txt'/>
+
+
