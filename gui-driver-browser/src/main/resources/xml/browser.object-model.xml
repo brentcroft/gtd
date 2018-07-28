@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<snapshot xmlns:c="jstl">
+    <AnchorPane actions="robot" guid="AnchorPane" key="#-2129595307" name="browserPane" xpath="AnchorPane[(@guid='AnchorPane')]">
+        <BorderPane actions="robot" guid="browser" key="#-1105937915" name="browser" xpath="BorderPane[(@guid='browser')]">
+            <TextField actions="robot, text" guid="pageAddress" key="#+218095265" name="pageAddress" xpath="TextField[(@guid='pageAddress')]"/>
+            <Button actions="robot, click" guid="pageAddressGet" key="#+879017154" name="pageAddressGet" xpath="Button[(@guid='pageAddressGet')]"/>
+            <WebView actions="robot, text" guid="webView" key="#+1901553967" name="WebView" xpath="WebView[(@guid='webView')]"/>
+        </BorderPane>
+    </AnchorPane>
+	<c:include page="model/file-save-dialog.xml"/>	
+</snapshot>

@@ -1,0 +1,17 @@
+<BorderPane actions="robot" guid="fileChooser" hash="452970252" key="#+2117179566" name="fileChooser" name-previous="" visible="true" xpath="BorderPane[(@guid='fileChooser')]">
+	<TextField actions="robot, text" guid="nameField" hash="329073615" key="#+932294117" name="nameField" name-previous="" text="The-Band-Van.pdf" visible="true" xpath="TextField[(@guid='nameField')]"/>
+	<Button actions="robot, click" disabled="true" guid="backButton" hash="1342865925" key="#-690021010" name="backButton" name-previous="" visible="true" xpath="Button[(@guid='backButton')]"/>
+	<TitledPane actions="robot" guid="placesPane" hash="1327347616" key="#-1025593707" name="placesPane" name-previous="" text="Places" visible="true" xpath="TitledPane[(@guid='placesPane')]">
+		<TreeView actions="robot, tree" guid="placesView" hash="1937370438" key="#+1841900999" name="placesView" name-previous="" visible="true" xpath="TreeView[(@guid='placesView')]"/>
+	</TitledPane>
+	<GridPane actions="robot" hash="1720815631" key="#-1411450567" name="GridPane" name-previous="" visible="true" xpath="GridPane[1]"/>
+	<BorderPane actions="robot" guid="extensionsBorderPane" hash="442599727" key="#-959871839" name="extensionsBorderPane" name-previous="" visible="true" xpath="BorderPane[(@guid='extensionsBorderPane')]"/>
+	<ButtonBar actions="robot" guid="buttonBar" hash="1709791563" key="#-1481665761" name="buttonBar" name-previous="" visible="true" xpath="ButtonBar[(@guid='buttonBar')]">
+		<Button actions="robot, click" guid="doneButton" hash="883241061" key="#-877183693" name="doneButton" name-previous="" text="Save" visible="true" xpath="Button[(@guid='doneButton')]"/>
+		<Button actions="robot, click" guid="cancelButton" hash="719769142" key="#+1166108219" name="cancelButton" name-previous="" text="Cancel" visible="true" xpath="Button[(@guid='cancelButton')]"/>
+		<Button actions="robot, click" guid="helpButton" hash="1570208432" key="#-1909368748" name="helpButton" name-previous="" text="Help" visible="true" xpath="Button[(@guid='helpButton')]"/>
+		<Button actions="robot, click" guid="doneButton" hash="883241061" key="#-877183693" name="doneButton" name-previous="" text="Save" visible="true" xpath="Button[(@guid='doneButton')]"/>
+		<Button actions="robot, click" guid="cancelButton" hash="719769142" key="#+1166108219" name="cancelButton" name-previous="" text="Cancel" visible="true" xpath="Button[(@guid='cancelButton')]"/>
+		<Button actions="robot, click" guid="helpButton" hash="1570208432" key="#-1909368748" name="helpButton" name-previous="" text="Help" visible="true" xpath="Button[(@guid='helpButton')]"/>
+	</ButtonBar>
+</BorderPane>

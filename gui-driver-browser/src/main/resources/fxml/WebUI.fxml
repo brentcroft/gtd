@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:id="window"
+            fx:controller="com.brentcroft.gtd.browser.WebUIController"
+            prefHeight="800.0" prefWidth="1100.0">
+    <top>
+        <ToolBar id="toolbar">
+            <TextField fx:id="url" onAction="#goAction" prefHeight="30.0" prefWidth="80.0" HBox.hgrow="ALWAYS" />
+            <Button id="get" onAction="#goAction" prefHeight="30.0" prefWidth="50.0" text="Get" HBox.hgrow="NEVER" />
+        </ToolBar>
+    </top>
+    <center>
+        <SplitPane orientation="VERTICAL" dividerPositions="0.99" id="outputPanes">
+            <WebView fx:id="document"/>
+            <VBox prefHeight="30.0" fx:id="status">
+                <ToolBar prefHeight="30.0" prefWidth="800.0" id="controls">
+                    <Label text="Status: "/>
+                    <Button onAction="#statusClear" text="Clear" HBox.hgrow="NEVER" id="clearStatus" />
+                    <CheckBox onAction="#statusEvents" text="Events" HBox.hgrow="NEVER" id="toggleEvents"/>
+                </ToolBar>
+                <TextArea fx:id="console" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>
