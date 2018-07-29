@@ -8,8 +8,8 @@ import com.brentcroft.gtd.cucumber.CucumberHookDefinition;
 import com.brentcroft.gtd.cucumber.CucumberMethodScanner;
 import com.brentcroft.gtd.cucumber.CucumberSnippet;
 import com.brentcroft.gtd.cucumber.CucumberStepDefinition;
-
 import com.brentcroft.gtd.js.context.Context;
+
 import cucumber.runtime.io.ResourceLoader;
 import cucumber.runtime.snippets.FunctionNameGenerator;
 import cucumber.runtime.snippets.SnippetGenerator;
@@ -20,7 +20,7 @@ public class CucumberBackend implements Backend
 {
     private SnippetGenerator snippetGenerator = new SnippetGenerator( new CucumberSnippet() );
 
-    private Context context;
+    //private Context context;
 
     private CucumberMethodScanner methodScanner;
 
@@ -38,13 +38,13 @@ public class CucumberBackend implements Backend
 
     public CucumberBackend( Context context )
     {
-        this.context = context;
+        //this.context = context;
         methodScanner = new CucumberMethodScanner( context );
     }
 
     public CucumberBackend(Context context, String adapterPath )
     {
-        this.context = context;
+        //this.context = context;
         methodScanner = new CucumberMethodScanner(
                 context,
                 new File( adapterPath ) );
@@ -52,7 +52,7 @@ public class CucumberBackend implements Backend
 
     public CucumberBackend withContext( Context context, String adapterPath)
     {
-        this.context = context;
+        //this.context = context;
         methodScanner = new CucumberMethodScanner(
                 context,
                 new File( adapterPath ) );
@@ -61,7 +61,7 @@ public class CucumberBackend implements Backend
 
     public CucumberBackend withContext( Context context)
     {
-        this.context = context;
+        //this.context = context;
         methodScanner = new CucumberMethodScanner( context );
         return this;
     }
