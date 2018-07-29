@@ -7,260 +7,259 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.brentcroft.util.DateUtils;
-import com.brentcroft.util.TextUtils;
 
 /**
  * Created by Alaric on 21/10/2016.
  */
 public class GuiLocalSession extends AbstractGuiSession
 {
-    private final static Logger logger = Logger.getLogger( GuiLocalSession.class );
+	private final static Logger logger = Logger.getLogger( GuiLocalSession.class );
 
-    private Long started = null;
-    private Long stopped = null;
+	private Long started = null;
+	private Long stopped = null;
 
-    private String onStartedScript = null;
+	private String onStartedScript = null;
 
-    public boolean isStarted()
-    {
-        return !isStopped();
-    }
+	public boolean isStarted()
+	{
+		return !isStopped();
+	}
 
-    public boolean isStopped()
-    {
-        return started == null;
-    }
+	public boolean isStopped()
+	{
+		return started == null;
+	}
 
-    @Override
-    public void start()
-    {
-        try
-        {
-            changeState( State.STARTING );
+	@Override
+	public void start()
+	{
+		try
+		{
+			changeState( State.STARTING );
 
-            GuiDriver driver = getDriver();
+			GuiDriver driver = getDriver();
 
-            // inaccessible if Gui hasn't been started
-            // fast timeout as we're checking if a JMX connection is already open
-            if ( launcher.isHarnessAccessible( driver, getEchoTimeoutSeconds() ) && isLoggedIn() )
-            {
-                logger.info( format( "Harness accessible and adapter logged in; re-started %s", launcher ) );
+			// inaccessible if Gui hasn't been started
+			// fast timeout as we're checking if a JMX connection is already open
+			if ( launcher.isHarnessAccessible( driver, getEchoTimeoutSeconds() ) && isLoggedIn() )
+			{
+				logger.info( format( "Harness accessible and adapter logged in; re-started %s", launcher ) );
 
-                changeState( State.STARTED );
+				changeState( State.STARTED );
 
-                started = System.currentTimeMillis();
+				started = System.currentTimeMillis();
 
-                // re-send session properties to harness for configuration (might have reloaded
-                // config)
-                initialiseRemote();
+				// re-send session properties to harness for configuration (might have reloaded
+				// config)
+				initialiseRemote();
 
-                return;
-            }
+				return;
+			}
 
-            // try stopping it first
-            // we already tried to connect
-            // so this is a speculative attempt
-            // to kill a zombie
+			// try stopping it first
+			// we already tried to connect
+			// so this is a speculative attempt
+			// to kill a zombie
 
-            // logger.info( "About to try speculative stop..." );
-            //
-            // stop();
+			// logger.info( "About to try speculative stop..." );
+			//
+			// stop();
 
-            if ( !launcher.isLaunchable() )
-            {
-                throw new RuntimeException();
-            }
+			if ( !launcher.isLaunchable() )
+			{
+				throw new RuntimeException();
+			}
 
-            logger.info( "About to start the application..." );
+			logger.info( "About to start the application..." );
 
-            // ok - try starting it
-            // will raise an exception if can't connect
+			// ok - try starting it
+			// will raise an exception if can't connect
 
-            launcher.startApplication();
+			launcher.startApplication();
 
-            changeState( State.STARTED );
+			changeState( State.STARTED );
 
-            started = System.currentTimeMillis();
+			started = System.currentTimeMillis();
 
-            // send session properties to harness for configuration
-            initialiseRemote();
+			// send session properties to harness for configuration
+			initialiseRemote();
 
-            logger.info( "About to login..." );
+			logger.info( "About to login..." );
 
-            login();
+			login();
 
-        }
-        finally
-        {
-            if ( getState() == State.STARTING )
-            {
-                // there must have been an exception when starting the application
-                changeState( State.FAILED );
-            }
-            
-            logger.info( format( "Session: %s", this ) );
-        }
-    }
+		}
+		finally
+		{
+			if ( getState() == State.STARTING )
+			{
+				// there must have been an exception when starting the application
+				changeState( State.FAILED );
+			}
 
-    public void initialiseRemote()
-    {
-        Properties p = getProperties();
+			logger.info( format( "Session: %s", this ) );
+		}
+	}
 
-        if ( logger.isDebugEnabled() )
-        {
-            logger.debug( "Setting harness properties: " + p );
-        }
+	public void initialiseRemote()
+	{
+		Properties p = getProperties();
 
-        getDriver().setProperties( p );
+		if ( logger.isDebugEnabled() )
+		{
+			logger.debug( "Setting harness properties: " + p );
+		}
 
-        if ( onStartedScript != null && !onStartedScript.isEmpty() )
-        {
-            getDriver().configure( onStartedScript );
-        }
-    }
+		getDriver().setProperties( p );
 
-    /**
-     * First tries to logout, then tries to stop the application, then tries to
-     * shutdown the harness harness.
-     */
-    @Override
-    public void stop()
-    {
-        changeState( State.STOPPING );
+		if ( onStartedScript != null && !onStartedScript.isEmpty() )
+		{
+			getDriver().configure( onStartedScript );
+		}
+	}
 
-        try
-        {
-            logger.info( "About to logout..." );
+	/**
+	 * First tries to logout, then tries to stop the application, then tries to
+	 * shutdown the harness harness.
+	 */
+	@Override
+	public void stop()
+	{
+		changeState( State.STOPPING );
 
-            logout();
+		try
+		{
+			logger.info( "About to logout..." );
 
-            logger.info( "Logged out." );
-        }
-        catch ( Exception e )
-        {
-            // it was a speculative attempt
-            if ( logger.isTraceEnabled() )
-            {
-                logger.trace( "Speculative logout on stop failed: " + e.getMessage() );
-            }
-        }
+			logout();
 
-        if ( launcher != null )
-        {
-            try
-            {
-                launcher.stopApplication();
+			logger.info( "Logged out." );
+		}
+		catch ( Exception e )
+		{
+			// it was a speculative attempt
+			if ( logger.isTraceEnabled() )
+			{
+				logger.trace( "Speculative logout on stop failed: " + e.getMessage() );
+			}
+		}
 
-                logger.info( "Application stop completed." );
-            }
-            catch ( Exception e )
-            {
-                // it was a speculative attempt
-                logger.warn( "An exception was raised while stopping the application: " + e, e );
-            }
-        }
-        else
-        {
-            logger.info( "No launcher!" );
-        }
+		if ( launcher != null )
+		{
+			try
+			{
+				launcher.stopApplication();
 
-        try
-        {
-            getDriver().shutdown( 0 );
-        }
-        catch ( Exception e )
-        {
-            // it was a speculative attempt
-            logger.warn( "An exception was raised while shutting down the harness: " + e, e );
-        }
-        finally
-        {
-            // primarily to drop its listeners
-            getDriver().cleanup();
+				logger.info( "Application stop completed." );
+			}
+			catch ( Exception e )
+			{
+				// it was a speculative attempt
+				logger.warn( "An exception was raised while stopping the application: " + e, e );
+			}
+		}
+		else
+		{
+			logger.info( "No launcher!" );
+		}
 
-            started = null;
-            stopped = System.currentTimeMillis();
+		try
+		{
+			getDriver().shutdown( 0 );
+		}
+		catch ( Exception e )
+		{
+			// it was a speculative attempt
+			logger.warn( "An exception was raised while shutting down the harness: " + e, e );
+		}
+		finally
+		{
+			// primarily to drop its listeners
+			getDriver().cleanup();
 
-            changeState( State.STOPPED );
-            
-            logger.info( format( "Session: %s", this ) );
-        }
-    }
+			started = null;
+			stopped = System.currentTimeMillis();
 
-    /**
-     * The adapter has to communicate with the harness using the driver
-     *
-     * @return
-     */
-    @Override
-    public GuiSession login()
-    {
-        GuiAdapter guiAdapter = getGuiAdapter();
+			changeState( State.STOPPED );
 
-        if ( guiAdapter == null )
-        {
-            return this;
-        }
+			logger.info( format( "Session: %s", this ) );
+		}
+	}
 
-        if ( !guiAdapter.hasCredentials() )
-        {
-            guiAdapter.setCredentials( getProperties() );
-        }
+	/**
+	 * The adapter has to communicate with the harness using the driver
+	 *
+	 * @return
+	 */
+	@Override
+	public GuiSession login()
+	{
+		GuiAdapter guiAdapter = getGuiAdapter();
 
-        guiAdapter.login( getLoginTimeoutSeconds() );
+		if ( guiAdapter == null )
+		{
+			return this;
+		}
 
-        return this;
-    }
+		if ( !guiAdapter.hasCredentials() )
+		{
+			guiAdapter.setCredentials( getProperties() );
+		}
 
-    /**
-     * This can get called often so should not modify the GUI.
-     * <p/>
-     * It should simply read.
-     *
-     * @return
-     */
-    @Override
-    public boolean isLoggedIn()
-    {
-        GuiAdapter guiAdapter = getGuiAdapter();
+		guiAdapter.login( getLoginTimeoutSeconds() );
 
-        // TODO should this have its own timeout??
-        // the adapter is free to set a smaller one
-        return guiAdapter != null
-                && guiAdapter.isLoggedIn( getLoginTimeoutSeconds() );
-    }
+		return this;
+	}
 
-    @Override
-    public GuiSession logout()
-    {
-        GuiAdapter guiAdapter = getGuiAdapter();
+	/**
+	 * This can get called often so should not modify the GUI.
+	 * <p/>
+	 * It should simply read.
+	 *
+	 * @return
+	 */
+	@Override
+	public boolean isLoggedIn()
+	{
+		GuiAdapter guiAdapter = getGuiAdapter();
 
-        if ( guiAdapter != null )
-        {
-            guiAdapter.logout( getLoginTimeoutSeconds() );
-        }
-        return this;
-    }
+		// TODO should this have its own timeout??
+		// the adapter is free to set a smaller one
+		return guiAdapter != null
+				&& guiAdapter.isLoggedIn( getLoginTimeoutSeconds() );
+	}
 
-    @Override
-    public GuiSession withCheckInstanceTimeout( double seconds )
-    {
-        setEchoTimeoutSeconds( seconds );
-        return this;
-    }
+	@Override
+	public GuiSession logout()
+	{
+		GuiAdapter guiAdapter = getGuiAdapter();
 
-    @Override
-    public void setOnStarted( String onStartedScript )
-    {
-        this.onStartedScript = onStartedScript;
-    }
+		if ( guiAdapter != null )
+		{
+			guiAdapter.logout( getLoginTimeoutSeconds() );
+		}
+		return this;
+	}
 
-    public String toString()
-    {
-        return format(
-                "started=[%s]%nstopped=[%s]%n%s",
-                started == null ? "-" : DateUtils.timestamp( started ),
-                stopped == null ? "-" : DateUtils.timestamp( stopped ),
-                super.toString() );
-    }
+	@Override
+	public GuiSession withCheckInstanceTimeout( double seconds )
+	{
+		setEchoTimeoutSeconds( seconds );
+		return this;
+	}
+
+	@Override
+	public void setOnStarted( String onStartedScript )
+	{
+		this.onStartedScript = onStartedScript;
+	}
+
+	public String toString()
+	{
+		return format(
+				"started=[%s]%nstopped=[%s]%n%s",
+				started == null ? "-" : DateUtils.timestamp( started ),
+				stopped == null ? "-" : DateUtils.timestamp( stopped ),
+				super.toString() );
+	}
 }

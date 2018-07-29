@@ -994,6 +994,18 @@ public class GuiLocalDriver extends AbstractGuiLocalDriver implements GuiDriver
         return existsAll( defaultTimeoutSeconds, paths );
     }
 
+    public boolean isConnected()
+    {
+    	try
+    	{
+    		return "hello".equals( remote().echo( "hello" ) );
+    	}
+    	catch (Exception e)
+    	{
+    		return false;
+    	}
+    }
+    
 
     @Override
     public Object echo( Object o )
