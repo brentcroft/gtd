@@ -155,7 +155,7 @@ public class GuiHarness
     }
 
 
-    private static GuiObjectService createGuiObjectService( String guiObjectServiceClassName )
+    private static GuiObjectService< ? > createGuiObjectService( String guiObjectServiceClassName )
             throws IllegalAccessException, InstantiationException, ClassNotFoundException
     {
         if ( guiObjectServiceClassName == null )
@@ -174,7 +174,7 @@ public class GuiHarness
 
         Class< ? > clazz = Class.forName( guiObjectServiceClassName );
 
-        GuiObjectService client = ( GuiObjectService ) clazz.newInstance();
+        GuiObjectService< ? > client = ( GuiObjectService< ? > ) clazz.newInstance();
 
         logger.info( format( "Created GuiObjectService: %s", client ) );
 
@@ -182,7 +182,7 @@ public class GuiHarness
     }
 
 
-    private static void installMBean( GuiObjectService gos )
+    private static void installMBean( GuiObjectService< ? > gos )
     {
         try
         {
