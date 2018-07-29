@@ -2,12 +2,6 @@ package com.brentcroft.gtd.driver.client;
 
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by Alaric on 21/10/2016.
  */
