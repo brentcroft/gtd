@@ -1,7 +1,6 @@
 package com.brentcroft.gtd.camera;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -18,6 +17,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 
+import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.camera.CameraObjectManager.AdapterSpecification;
 import com.brentcroft.gtd.camera.model.swt.ButtonGuiObject;
 import com.brentcroft.gtd.camera.model.swt.ComboGuiObject;
@@ -42,43 +42,44 @@ public class SwtCameraObjectService extends CameraObjectService
 {
 
 	@Override
-	protected void addAdapters( List< AdapterSpecification > adapters, Properties properties )
+	protected < C, H extends GuiObject< ? super C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
 	{
 		super.addAdapters( adapters, properties );
 
 		adapters.addAll( buildSWTAdapters( properties ) );
 	}
 
-	private Collection< ? extends AdapterSpecification > buildSWTAdapters( Properties properties )
+	@SuppressWarnings( "unchecked" )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildSWTAdapters( Properties properties )
 	{
-		List< CameraObjectManager.AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
 		CameraObjectManager gom = getManager();
 
-		adapters.add( gom.newAdapterSpecification( Widget.class, WidgetGuiObject.class, new SwtGuiObjectConsultant<>( properties ) ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Widget.class, WidgetGuiObject.class, new SwtGuiObjectConsultant< Widget >( properties ) ) );
 
-		adapters.add( gom.newAdapterSpecification( Item.class, ItemGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Item.class, ItemGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Control.class, ControlGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Control.class, ControlGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Composite.class, CompositeGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Composite.class, CompositeGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Label.class, LabelGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Label.class, LabelGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Menu.class, MenuGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( MenuItem.class, MenuItemGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Menu.class, MenuGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( MenuItem.class, MenuItemGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Button.class, ButtonGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Text.class, TextGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Combo.class, ComboGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Button.class, ButtonGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Text.class, TextGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Combo.class, ComboGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( org.eclipse.swt.widgets.List.class, ListGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( org.eclipse.swt.widgets.List.class, ListGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Table.class, TableGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Table.class, TableGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Tree.class, TreeGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Tree.class, TreeGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( SwtSnapshot.class, SwtSnapshotGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( SwtSnapshot.class, SwtSnapshotGuiObject.class ) );
 
 		return adapters;
 	}

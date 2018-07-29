@@ -22,6 +22,7 @@ public class ButtonGuiObject< T extends Button > extends ControlGuiObject< T >
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

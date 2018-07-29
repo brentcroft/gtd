@@ -26,28 +26,8 @@ public class SwtSnapshot
 	{
 		List< T > children = snapshot.getChildren();
 
-		Display currentDisplay = Display.getCurrent();
-
-		if ( currentDisplay == null )
-		{
-			logger.warn( "Using Default display" );
-		}
-		else
-		{
-			if ( currentDisplay.getThread() == Thread.currentThread() )
-			{
-				logger.warn( "Using Default display: Current Display Thread is current thread" );
-				currentDisplay = null;
-			}
-			else if ( currentDisplay.isDisposed() )
-			{
-				logger.warn( format( "Using Default display: Current Display already disposed" ) );
-				currentDisplay = null;
-			}
-		}
-
 		Display display = Optional
-				.ofNullable( currentDisplay )
+				.ofNullable( Display.getCurrent() )
 				.orElse( Display.getDefault() );
 
 		if ( display.getThread() == Thread.currentThread() )

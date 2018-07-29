@@ -23,6 +23,7 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{
