@@ -13,14 +13,14 @@ public abstract class AsynchBuffer< T > implements Runnable
 {
     private final static transient Logger logger = Logger.getLogger( AsynchBuffer.class );
 
-    private long maxSize = - 1;
-    private long maxEntries = - 1;
+    private int maxSize = - 1;
+    private int maxEntries = - 1;
 
     private long delay = 0;
 
     private boolean fifo = true;
 
-    private Queue< T > queue = new Queue< T >();
+    private Queue queue = new Queue();
 
 
     public AsynchBuffer( String name )
@@ -43,10 +43,9 @@ public abstract class AsynchBuffer< T > implements Runnable
         return this;
     }
 
-    public AsynchBuffer< T > withMaxEntries( long maxEntries )
+    public AsynchBuffer< T > withMaxEntries( int maxEntries )
     {
         this.maxEntries = maxEntries;
-        queue.setMaxEntries( maxEntries );
         return this;
     }
 
@@ -151,11 +150,8 @@ public abstract class AsynchBuffer< T > implements Runnable
     public abstract void process( T t );
 
 
-    class Queue< T >
+    class Queue
     {
-        private int maxSize = 0;
-
-        private long maxEntries = - 1;
 
         private LinkedList< T > linkedList;
 
@@ -204,18 +200,18 @@ public abstract class AsynchBuffer< T > implements Runnable
 
         public int maxSize()
         {
-            return maxSize;
+            return AsynchBuffer.this.maxSize;
         }
 
 
-        public long getMaxEntries()
+        public int getMaxEntries()
         {
             return maxEntries;
         }
 
-        public void setMaxEntries( long maxEntries )
+        public void setMaxEntries( int maxEntries )
         {
-            this.maxEntries = maxEntries;
+        	AsynchBuffer.this.maxEntries = maxEntries;
         }
     }
 }

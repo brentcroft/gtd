@@ -310,7 +310,7 @@ public class SimpleNode implements Node
         }
         else if ( children.length < 1 )
         {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         else
         {

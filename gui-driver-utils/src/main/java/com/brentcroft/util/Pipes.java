@@ -179,7 +179,7 @@ public class Pipes
         }
 
 
-        public Pipe< IN, OUT > withOutBuffer( double delaySeconds, long maxEntries, boolean fifo )
+        public Pipe< IN, OUT > withOutBuffer( double delaySeconds, int maxEntries, boolean fifo )
         {
             this.outBuffer = new AsynchBuffer< OUT >( "buffer" )
             {
@@ -196,7 +196,8 @@ public class Pipes
             return this;
         }
 
-        public Pipe< IN, OUT > withListeners( Listener< OUT >... newListeners )
+        @SuppressWarnings( "unchecked" )
+		public Pipe< IN, OUT > withListeners( Listener< OUT >... newListeners )
         {
             if ( newListeners != null )
             {

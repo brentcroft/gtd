@@ -1,17 +1,18 @@
 package com.brentcroft.util.xpath;
 
-import com.brentcroft.util.xpath.gob.Gobber;
-import com.brentcroft.util.xpath.gob.Selection;
+import static java.lang.String.format;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static java.lang.String.format;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.brentcroft.util.xpath.gob.Gobber;
+import com.brentcroft.util.xpath.gob.Selection;
 
 @RunWith( Parameterized.class )
 public class XParserAndOrTest

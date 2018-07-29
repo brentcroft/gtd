@@ -82,7 +82,7 @@ public class AsynchBufferTest
     {
         final long delayMillis = 1000;
         final long numEntries = 100;
-        final long maxEntries = 1;
+        final int maxEntries = 1;
 
         final long[] processed = { 0 };
 
@@ -108,7 +108,7 @@ public class AsynchBufferTest
     {
         final long delayMillis = 10;
         final long numEntries = 10000;
-        final long maxEntries = 1;
+        final int maxEntries = 1;
 
         final long[] processed = { 0 };
 

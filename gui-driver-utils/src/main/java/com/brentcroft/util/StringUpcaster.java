@@ -101,7 +101,8 @@ public class StringUpcaster
         }
     }
 
-    public static < T > T upcast( final String value, T defaultValue )
+    @SuppressWarnings( "unchecked" )
+	public static < T > T upcast( final String value, T defaultValue )
     {
         if ( defaultValue == null )
         {
@@ -112,14 +113,8 @@ public class StringUpcaster
         {
             return convert( ( Class< T > ) defaultValue.getClass(), value );
         }
-        else if ( defaultValue != null )
-        {
-            return defaultValue;
-        }
-        else
-        {
-            return null;
-        }
+
+		return defaultValue;
     }
 
     public static < T > T[] upcast( final String[] values, final Class< T > type )

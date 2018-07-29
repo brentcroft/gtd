@@ -1,13 +1,12 @@
 package com.brentcroft.util;
 
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Created by Alaric on 16/11/2016.
@@ -173,7 +172,7 @@ public class XmlUtilsTest
     public void erode()
     {
         String xml = "<g><a1 x=\"true\"><b>hello</b></a1><a2><b x=\"true\">hello</b></a2></g>";
-        String expected = "<g><a2><b x=\"true\">hello</b></a2></g>";
+        //String expected = "<g><a2><b x=\"true\">hello</b></a2></g>";
 
         Document d = XmlUtils.parse( xml );
 

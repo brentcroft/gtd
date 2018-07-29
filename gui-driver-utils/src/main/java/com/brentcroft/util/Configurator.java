@@ -12,7 +12,8 @@ public interface Configurator< T, P >
         private final TriConsumer< String, T, CommentedProperties > exporter;
 
         private final String attribute;
-        private final String comment;
+        @SuppressWarnings( "unused" )
+		private final String comment;
 
         public PropertiesConfigurator(
                 String attribute,

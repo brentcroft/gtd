@@ -20,7 +20,6 @@ import com.brentcroft.util.xpath.ast.Minus;
 import com.brentcroft.util.xpath.ast.MultiplicativeExpr;
 import com.brentcroft.util.xpath.ast.NCName;
 import com.brentcroft.util.xpath.ast.NCNameColonStar;
-import com.brentcroft.util.xpath.ast.NameTest;
 import com.brentcroft.util.xpath.ast.NodeTest;
 import com.brentcroft.util.xpath.ast.OrExpr;
 import com.brentcroft.util.xpath.ast.PITest;

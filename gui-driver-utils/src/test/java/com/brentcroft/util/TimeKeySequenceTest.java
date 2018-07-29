@@ -24,7 +24,7 @@ public class TimeKeySequenceTest
 
         String[] lastKey = { null };
 
-        int printEvery = maxLoops / maxLines;
+        //int printEvery = maxLoops / maxLines;
 
         IntStream.range( 0, maxLoops )
                 .forEach( i ->

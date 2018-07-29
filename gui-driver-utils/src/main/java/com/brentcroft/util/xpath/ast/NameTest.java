@@ -2,20 +2,18 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=true,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 package com.brentcroft.util.xpath.ast;
 
+import static java.lang.String.format;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
+
 import com.brentcroft.util.xpath.SimpleNode;
 import com.brentcroft.util.xpath.XParser;
 import com.brentcroft.util.xpath.XParserTreeConstants;
 import com.brentcroft.util.xpath.XParserVisitor;
-import com.brentcroft.util.xpath.gob.Axis;
 import com.brentcroft.util.xpath.gob.Gob;
 import com.brentcroft.util.xpath.gob.Selection;
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import static java.lang.String.format;
 
 public class NameTest extends SimpleNode
 {
