@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- -->
+    <parent>
+        <groupId>com.brentcroft.gtd</groupId>
+        <artifactId>gui-driver-parent</artifactId>
+        <version>${gui-driver.version}</version>
+    </parent>
+    <!-- -->
+	<artifactId>jstl-el-templates</artifactId>
+	<name>JSTL EL Templates</name>
+	<!-- -->
+	<properties>
+ 		<!--
+		<glassfish-el.version>2.2.1-b03</glassfish-el.version>
+		-->
+        <juel.version>2.2.7</juel.version>
+        <javax.el-api.version>3.0.1-b04</javax.el-api.version>
+        <commons-text.version>1.2</commons-text.version>
+	</properties>
+	<!-- -->
+	<dependencies>
+
+        <dependency>
+            <groupId>com.brentcroft.gtd</groupId>
+            <artifactId>gui-driver-utils</artifactId>
+            <version>${gui-driver.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>de.odysseus.juel</groupId>
+			<artifactId>juel-impl</artifactId>
+			<version>${juel.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.odysseus.juel</groupId>
+			<artifactId>juel-api</artifactId>
+			<version>${juel.version}</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
+        </dependency>
+        <!--
+
+		<dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el-api.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>com.springsource.javax.el</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        -->
+
+		<!-- <dependency> <groupId>org.glassfish.web</groupId> <artifactId>el</artifactId>
+			<version>${glassfish-el.version}</version> </dependency> -->
+
+	</dependencies>
+</project>
