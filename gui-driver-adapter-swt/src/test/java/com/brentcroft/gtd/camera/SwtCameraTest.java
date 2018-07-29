@@ -1,181 +1,219 @@
 package com.brentcroft.gtd.camera;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.brentcroft.gtd.adapter.model.GuiObject;
+import com.brentcroft.gtd.camera.model.swt.ButtonGuiObject;
+import com.brentcroft.gtd.swt.SwtApplication;
 import com.brentcroft.util.Waiter8;
 import com.brentcroft.util.XmlUtils;
 
 public class SwtCameraTest
 {
-    Thread swtThread = null;
+	SwtApplication app;
+	SwtCamera camera;
 
-    SwtCamera camera = new SwtCamera();
-    SwtApplication app = new SwtApplication( camera, () -> swtThread = null );
+	@Before
+	public void setUp()
+	{
+		app = new SwtApplication();
+		camera = new SwtCamera();
 
-    private Thread getSwtThread()
-    {
-        return new Thread( () -> app.run() );
-    }
+		new Thread( () -> app.run() ).start();
 
-    @Before
-    public void setUp()
-    {
-        if ( swtThread == null )
-        {
-            swtThread = getSwtThread();
-        }
+		new Waiter8()
+				.withDelayMillis( 1 * 1000 )
+				.withTimeoutMillis( 5 * 1000 )
+				.until( () -> app.isStarted() );
 
-        swtThread.start();
+		// System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+	}
 
-        Waiter8.delay( 1 * 1000 );
+	@After
+	public void tearDown()
+	{
+		app.kill();
 
-        assertNotNull( app.display[ 0 ] );
+		new Waiter8()
+				.withDelayMillis( 1 * 1000 )
+				.withTimeoutMillis( 5 * 1000 )
+				.until( () -> !app.isStarted() );
+	}
 
-        assertFalse( app.shell[ 0 ].isDisposed() );
-    }
+	@Test
+	public void testButtonExists()
+	{
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, SwtApplication.buttonXPath );
 
-    @After
-    public void tearDown()
-    {
-        if ( !app.shell[ 0 ].isDisposed() )
-        {
-            System.out.println( "tearDown disposing swtThread..." );
+		assertNotNull( guiObject );
 
-            app.display[ 0 ].syncExec( () -> app.shell[ 0 ].dispose() );
-        }
-    }
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
-    @Test
-    public void testButtonExists()
-    {
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, app.buttonXPath );
+		assertEquals( SwtApplication.buttonName, guiObject.getAttribute( "text" ) );
 
-            assertNotNull( guiObject );
+	}
 
-            assertEquals( app.buttonName, guiObject.getAttribute( "text" ) );
-        } );
-    }
+	@Test
+	public void testButtonClick()
+	{
 
-    @Test
-    public void testButtonClick()
-    {
-        assertFalse( app.shell[ 0 ].isDisposed() );
+		@SuppressWarnings( "unchecked" )
+		ButtonGuiObject< Button > guiObject = ( ButtonGuiObject< Button > ) camera.getGuiObject( 1, 5, SwtApplication.buttonXPath );
 
-        app.display[ 0 ].syncExec( () -> {
+		assertNotNull( guiObject );
 
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, app.buttonXPath );
+		Button button = guiObject.getObject();
 
-            assertNotNull( guiObject );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( button, null ) ) );
 
-            System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+		final AtomicBoolean wasClicked = new AtomicBoolean( false );
 
-            guiObject.asClick().click();
-        } );
+		ButtonGuiObject.onDisplayThread( button, go -> {
+			go.addSelectionListener( new SelectionAdapter()
+			{
 
-        Waiter8.delay( 1 * 1000 );
+				@Override
+				public void widgetSelected( SelectionEvent e )
+				{
+					System.out.println( "widgetSelected: " + e );
+					wasClicked.set( true );
+				}
+			} );
+			return null;
+		} );
 
-        new Waiter8()
-                .withTimeoutMillis( 100 )
-                .onTimeout( timeout -> assertTrue( app.shell[ 0 ].isDisposed() ) )
-                .until( () -> app.shell[ 0 ].isDisposed() );
-    }
+		// TODO:
+		// since this activates shutdown on the target
+		// it's problematic to investigate the SWT DOM
+		// but we can still check the button was clicked
+		guiObject.asClick().click();
 
-    @Test
-    public void testTextExists()
-    {
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//Text" );
-            
-            assertNotNull( guiObject );
+		new Waiter8()
+				.withTimeoutMillis( 100 )
+				.onTimeout( timeout -> assertTrue( wasClicked.get() ) )
+				.until( () -> wasClicked.get() );
 
-            assertEquals( app.initialText, guiObject.asText().getText() );
+//		new Waiter8()
+//				.withTimeoutMillis( 100 )
+//				.onTimeout( timeout -> assertTrue( wasClicked.get() ) )
+//				.until( () -> camera.getController().notExists( SwtApplication.buttonXPath, 5, 1 ) );
+	}
 
-            guiObject.asText().setText( app.finalText );
+	@Test
+	public void testTextExists()
+	{
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, SwtApplication.textXPath );
 
-            assertEquals( app.finalText, guiObject.asText().getText() );
-        } );
-    }
-    
-    
-    @Test
-    public void testLabelExists()
-    {
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//Label" );
-            
-            assertNotNull( guiObject );
-        } );
-    }
-    
+		assertNotNull( guiObject );
 
-    @Test
-    public void testComboExists()
-    {
-        Integer index = 2;
+		assertEquals( SwtApplication.initialText, guiObject.asText().getText() );
 
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//Combo" );
+		guiObject.asText().setText( SwtApplication.finalText );
 
-            guiObject.asIndex().setSelectedIndex( index );
+		assertEquals( SwtApplication.finalText, guiObject.asText().getText() );
 
-            assertEquals( index, guiObject.asIndex().getSelectedIndex() );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
-            System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
-        } );
-    }
+	}
 
-    @Test
-    public void testComboText()
-    {
-        String text = "magnolia";
+	@Test
+	public void testLabelExists()
+	{
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Label" );
 
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//Combo" );
+		assertNotNull( guiObject );
 
-            guiObject.asText().setText( text );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+	}
 
-            assertEquals( text, guiObject.asText().getText() );
+	@Test
+	public void testComboExists()
+	{
+		Integer index = 2;
 
-            System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
-        } );
-    }
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Combo" );
 
-    @Test
-    public void testListExists()
-    {
-        Integer index = 2;
+		assertNotNull( guiObject );
 
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//List" );
+		guiObject.asIndex().setSelectedIndex( index );
 
-            guiObject.asIndex().setSelectedIndex( index );
+		assertEquals( index, guiObject.asIndex().getSelectedIndex() );
 
-            assertEquals( index, guiObject.asIndex().getSelectedIndex() );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
-            System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
-        } );
-    }
+	}
 
-    @Test
-    public void testTableExists()
-    {
-        Integer index = 2;
+	@Test
+	public void testComboText()
+	{
+		String text = "magnolia";
 
-        app.display[ 0 ].syncExec( () -> {
-            GuiObject guiObject = camera.getGuiObject( 1000, 5000, "//Table" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Combo" );
 
-            guiObject.asTable().selectRow( index );
+		assertNotNull( guiObject );
 
-            System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
-        } );
-    }
+		guiObject.asText().setText( text );
+
+		assertEquals( text, guiObject.asText().getText() );
+
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+	}
+
+	@Test
+	public void testListExists()
+	{
+		Integer index = 2;
+
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//List" );
+
+		assertNotNull( guiObject );
+
+		guiObject.asIndex().setSelectedIndex( index );
+
+		assertEquals( index, guiObject.asIndex().getSelectedIndex() );
+
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+	}
+
+	@Test
+	public void testTableExists()
+	{
+		Integer index = 2;
+
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Table" );
+
+		assertNotNull( guiObject );
+
+		guiObject.asTable().selectRow( index );
+
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+	}
+
+	@Test
+	public void testTreeExists()
+	{
+		String[] path = { "3:2:1" };
+
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Tree" );
+
+		assertNotNull( guiObject );
+
+		System.out.println( guiObject.asTree().getPath( path[ 0 ] ) );
+
+		guiObject.asTree().selectPath( path[ 0 ] );
+
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+	}
+
 }

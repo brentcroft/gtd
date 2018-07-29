@@ -1,17 +1,14 @@
 package com.brentcroft.gtd.camera;
 
+import static java.lang.String.format;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.swt.SWT;
+import org.apache.log4j.Logger;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
-
-import com.brentcroft.util.Waiter8;
-
 
 /**
  * A synthetic top-level parent for all SWT, Swing, FX, HTML gui components.
@@ -20,64 +17,78 @@ import com.brentcroft.util.Waiter8;
  */
 public class SwtSnapshot
 {
-	private Snapshot snapshot = new Snapshot();
-	
-    @SuppressWarnings("unchecked")
-	public < T extends Object > List< T > getChildren()
-    {
-        List<T> children = snapshot.getChildren();
+	private static Logger logger = Logger.getLogger( SwtSnapshot.class );
 
-        getDisplay()
-	        .syncExec(()->{
-	        	children.addAll( (Collection<? extends T>) Arrays.asList( getDisplay().getShells() ) );
-	        } );
-        
-        return children;
-    }
-        
-    
-    public static Display getDisplay()
-    {
-    	return Optional
-    		.ofNullable(Display.getCurrent())
-    		.orElse(Display.getDefault());
-    }
-    
-    
-    private static void processEvents(Event[] events, long delay )
-    {
-    	Arrays
-    		.asList(events)
-    		.stream()
-    		.forEach(event->{
-    		    event.display.post(event);
-    	    	
-    	    	Waiter8.delay(delay);
-    		});
-    }
-    
-    public static void click( Widget sourceWidget)
-    {
-    	long delay = 80;
-    	processEvents(
-    			new Event[] {
-    					new Event() {
-    						{
-    					    	type = SWT.MouseDown;
-    					    	widget = sourceWidget;
-    					    	display = sourceWidget.getDisplay();
-    					    	button = 1;
-    						}
-    					},
-    					new Event() {
-    						{
-    					    	type = SWT.MouseUp;
-    					    	widget = sourceWidget;
-    					    	display = sourceWidget.getDisplay();
-    					    	button = 1;
-    						}
-    					}
-    					
-    			}, delay );
-    }
+	private Snapshot snapshot = new Snapshot();
+
+	@SuppressWarnings( "unchecked" )
+	public < T extends Object > List< T > getChildren()
+	{
+		List< T > children = snapshot.getChildren();
+
+		Display currentDisplay = Display.getCurrent();
+
+		if ( currentDisplay == null )
+		{
+			logger.warn( "Using Default display" );
+		}
+		else
+		{
+			if ( currentDisplay.getThread() == Thread.currentThread() )
+			{
+				logger.warn( "Using Default display: Current Display Thread is current thread" );
+				currentDisplay = null;
+			}
+			else if ( currentDisplay.isDisposed() )
+			{
+				logger.warn( format( "Using Default display: Current Display already disposed" ) );
+				currentDisplay = null;
+			}
+		}
+
+		Display display = Optional
+				.ofNullable( currentDisplay )
+				.orElse( Display.getDefault() );
+
+		if ( display.getThread() == Thread.currentThread() )
+		{
+			logger.warn( "Aborting: Display Thread is current" );
+		}
+		else if ( display.isDisposed() )
+		{
+			logger.warn( format( "Aborting: Display already disposed" ) );
+		}
+		else
+		{
+			Object lock = new Object();
+
+			display.asyncExec( () -> {
+				try
+				{
+					children.addAll( ( Collection< ? extends T > ) Arrays.asList( display.getShells() ) );
+				}
+				finally
+				{
+					synchronized ( lock )
+					{
+						lock.notifyAll();
+					}
+				}
+			} );
+
+			try
+			{
+				synchronized ( lock )
+				{
+					lock.wait( 100 );
+				}
+			}
+			catch ( InterruptedException e )
+			{
+				logger.warn( "Interrupted waiting for Display Thread task to complete." );
+			}
+		}
+
+		return children;
+	}
 }

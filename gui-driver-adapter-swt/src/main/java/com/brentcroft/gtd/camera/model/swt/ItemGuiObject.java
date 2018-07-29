@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Item;
 
 import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
@@ -13,10 +13,11 @@ import com.brentcroft.util.xpath.gob.Gob;
 
 /**
  * Created by Alaric on 14/07/2017.
+ *
  */
-public class ButtonGuiObject< T extends Button > extends ControlGuiObject< T >
+public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 {
-	public ButtonGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
+	public ItemGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
 	{
 		super( go, parent, guiObjectConsultant, objectManager );
@@ -34,15 +35,14 @@ public class ButtonGuiObject< T extends Button > extends ControlGuiObject< T >
 		return attrSpec;
 	}
 
-	// "disabled", "visible", "focus"
-	enum Attr implements AttrSpec< Button >
+	static enum Attr implements AttrSpec< Item >
 	{
 		TEXT( "text", go -> go.getText() );
 
 		final String n;
-		final Function< Button, Object > f;
+		final Function< Item, Object > f;
 
-		Attr( String name, Function< Button, Object > f )
+		Attr( String name, Function< Item, Object > f )
 		{
 			this.n = name;
 			this.f = f;
@@ -55,9 +55,10 @@ public class ButtonGuiObject< T extends Button > extends ControlGuiObject< T >
 		}
 
 		@Override
-		public String getAttribute( Button go )
+		public String getAttribute( Item go )
 		{
 			return onSwtDisplayThreadAsText( go, f );
 		}
 	}
+
 }

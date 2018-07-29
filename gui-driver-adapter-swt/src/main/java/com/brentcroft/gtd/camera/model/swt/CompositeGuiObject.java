@@ -16,25 +16,25 @@ import com.brentcroft.util.xpath.gob.Gob;
  */
 public class CompositeGuiObject< T extends Composite > extends ControlGuiObject< T >
 {
-    public CompositeGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
-            CameraObjectManager objectManager )
-    {
-        super( go, parent, guiObjectConsultant, objectManager );
-    }
+	public CompositeGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
+			CameraObjectManager objectManager )
+	{
+		super( go, parent, guiObjectConsultant, objectManager );
+	}
 
-    @Override
-    public boolean hasChildren()
-    {
-        return getObject().getChildren().length > 0;
-    }
+	@Override
+	public boolean hasChildren()
+	{
+		return onDisplayThread( getObject(), go -> go.getChildren().length > 0 );
+	}
 
-    @Override
-    public List< GuiObject > loadChildren()
-    {
-        return Arrays
-                .asList( getObject().getChildren() )
-                .stream()
-                .map( child -> getManager().adapt( child, this ) )
-                .collect( Collectors.toList() );
-    }
+	@Override
+	public List< GuiObject< ? > > loadChildren()
+	{
+		return Arrays
+				.asList( onDisplayThread( getObject(), go -> go.getChildren() ) )
+				.stream()
+				.map( child -> getManager().adapt( child, this ) )
+				.collect( Collectors.toList() );
+	}
 }
