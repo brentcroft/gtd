@@ -2,8 +2,6 @@ package com.brentcroft.gtd.js.context.model;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
-import static java.lang.String.format;
-
 public class ModelObject implements ModelMember
 {
     protected final String name;

@@ -21,7 +21,8 @@ public class Modeller
             .withStripComments( true )
             .withELFilter( StandardELFilter.HTML_ESCAPE_FILTER );
 
-    private final File root;
+    @SuppressWarnings( "unused" )
+	private final File root;
     private final String xsltUri;
     private final String adapterBaseUri;
     private final String adapterUri;

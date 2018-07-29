@@ -7,7 +7,9 @@ package com.brentcroft.gtd.js.context;
  */
 public class CancelException extends RuntimeException
 {
-    public CancelException( String m )
+	private static final long serialVersionUID = 8733436581451719086L;
+
+	public CancelException( String m )
     {
         super( m );
     }

@@ -11,7 +11,8 @@ import static java.lang.String.format;
  */
 public class Model
 {
-    private File workingDir;
+    @SuppressWarnings( "unused" )
+	private File workingDir;
     private CommentedProperties properties;
 
     private String name;

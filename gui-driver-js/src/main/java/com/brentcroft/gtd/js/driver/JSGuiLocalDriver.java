@@ -100,10 +100,11 @@ public class JSGuiLocalDriver extends AbstractJSGuiLocalDriver implements JSGuiD
         {
             final String SNAPSHOT_TYPE = "snapshot";
             final double delay = 0.5;
-            final long maxEntries = 1;
+            final int maxEntries = 1;
             final boolean fifo = false;
 
-            private Pipes.Pipe< Notification, String > bufferPipe = new Pipes.Pipe< Notification, String >()
+            @SuppressWarnings( "unchecked" )
+			private Pipes.Pipe< Notification, String > bufferPipe = new Pipes.Pipe< Notification, String >()
                     .withConditionIn( notification -> SNAPSHOT_TYPE.equals( notification.getType() ) )
                     .withProcessor( notification -> notification.getMessage() )
                     .withConditionOut( ( snapshot ) -> snapshot != null )

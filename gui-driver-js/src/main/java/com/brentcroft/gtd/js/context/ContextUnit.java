@@ -44,8 +44,7 @@ public class ContextUnit
 
     public ContextUnit()
     {
-        this.engine = new ScriptEngineManager()
-                .getEngineByName( "js" );
+        ContextUnit.engine = new ScriptEngineManager().getEngineByName( "js" );
     }
 
     public ContextUnit( File configFile ) throws FileNotFoundException
