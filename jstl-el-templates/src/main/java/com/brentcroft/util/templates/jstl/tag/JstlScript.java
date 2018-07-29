@@ -12,8 +12,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import org.apache.log4j.Level;
-
 import com.brentcroft.util.templates.jstl.JstlTemplate;
 import com.brentcroft.util.tools.MapBindings;
 

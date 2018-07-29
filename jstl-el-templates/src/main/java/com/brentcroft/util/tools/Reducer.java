@@ -59,7 +59,7 @@ public class Reducer
 
     private String copyOfAttributes = "@*";
 
-    private final static Set< String > NOTHING = Collections.EMPTY_SET;
+    private final static Set< String > NOTHING = Collections.emptySet();
     private final static Set< String > ANYTHING = new HashSet<>();
     private final static String STAR = "*";
 
@@ -192,7 +192,7 @@ public class Reducer
                 "include",
                 "tag test (or expressions) that must be included, implicitly included ancestors.",
                 ( attribute, reducer, p ) -> {
-                    Set s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
+                    Set<String> s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
                     reducer.include.clear();
                     reducer.include.addAll( s.isEmpty() ? ANYTHING : s );
                 },
@@ -206,7 +206,7 @@ public class Reducer
                 "exclude",
                 "tag test (or expressions) that must be excluded, irrespective of included descendants.",
                 ( attribute, reducer, p ) -> {
-                    Set s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
+                    Set<String> s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
                     reducer.exclude.clear();
                     reducer.exclude.addAll( s.isEmpty() ? NOTHING : s );
                 },
@@ -219,7 +219,7 @@ public class Reducer
                 "elide",
                 "tag test (or expressions) that must be elided, irrespective of included descendants.",
                 ( attribute, reducer, p ) -> {
-                    Set s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
+                    Set<String> s = upcastSet( p.getProperty( reducer.expandAttributeName( attribute ) ) );
 
                     reducer.elide.clear();
                     reducer.elide.addAll( s.isEmpty() ? NOTHING : s );
