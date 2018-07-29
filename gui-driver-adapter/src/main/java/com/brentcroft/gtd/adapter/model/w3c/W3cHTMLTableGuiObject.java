@@ -58,7 +58,7 @@ public class W3cHTMLTableGuiObject< T extends HTMLTableElement > extends W3cHTML
 			return;
 		}
 
-		Node rowNode = h.item( row );
+		//Node rowNode = h.item( row );
 
 		// click on row node
 		// rowNode.click

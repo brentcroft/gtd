@@ -76,6 +76,7 @@ public class JSpinnerGuiObject< T extends JSpinner > extends JComponentGuiObject
 		} );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

@@ -42,6 +42,7 @@ public class AbstractButtonGuiObject< T extends AbstractButton > extends JCompon
 		SwingUtils.maybeInvokeNowOnEventThread( () -> getObject().doClick() );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

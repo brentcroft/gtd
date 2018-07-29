@@ -24,6 +24,7 @@ public class JFrameGuiObject< T extends JFrame > extends ContainerGuiObject< T >
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

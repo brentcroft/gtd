@@ -10,7 +10,9 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
-public class SnapshotGuiObjectConsultant implements GuiObjectConsultant< SnapshotGuiObject >
+import com.brentcroft.gtd.camera.Snapshot;
+
+public class SnapshotGuiObjectConsultant implements GuiObjectConsultant< Snapshot >
 {
 	// reference the interface
 	protected final static transient Logger logger = Logger.getLogger( GuiObjectConsultant.class );
@@ -46,7 +48,7 @@ public class SnapshotGuiObjectConsultant implements GuiObjectConsultant< Snapsho
 	}
 
 	@Override
-	public boolean ignore( GuiObject< SnapshotGuiObject > t )
+	public boolean ignore( GuiObject< Snapshot > t )
 	{
 		return false;
 	}
@@ -58,7 +60,7 @@ public class SnapshotGuiObjectConsultant implements GuiObjectConsultant< Snapsho
 	}
 
 	@Override
-	public void extendElement( GuiObject< SnapshotGuiObject > t, Element element )
+	public void extendElement( GuiObject< Snapshot > t, Element element )
 	{
 		if ( modelName != null )
 		{

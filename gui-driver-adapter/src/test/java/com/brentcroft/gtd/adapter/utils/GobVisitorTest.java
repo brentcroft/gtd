@@ -4,10 +4,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.camera.Camera;
 import com.brentcroft.gtd.camera.CameraObjectService;
-import com.brentcroft.gtd.camera.Snapshot;
 import com.brentcroft.util.XmlUtils;
 
 public class GobVisitorTest
@@ -19,9 +17,9 @@ public class GobVisitorTest
 	{
 		gos.install( new Properties() );
 
-		GuiObject origin = gos
-				.getManager()
-				.adapt( new Snapshot(), null );
+//		GuiObject origin = gos
+//				.getManager()
+//				.adapt( new Snapshot(), null );
 
 		// XPathGuiObjectVisitor visitor = new XPathGuiObjectVisitor();
 		//

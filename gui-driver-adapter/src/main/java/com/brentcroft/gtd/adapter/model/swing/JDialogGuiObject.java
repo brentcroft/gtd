@@ -24,6 +24,7 @@ public class JDialogGuiObject< T extends JDialog > extends ContainerGuiObject< T
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

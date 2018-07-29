@@ -26,16 +26,16 @@ public class ReflectionUtils
 	{
 	}
 
-	private final static Class[] NO_PARAMS = {};
+	private final static Class< ? >[] NO_PARAMS = {};
 
-	public static Class[] getParamTypes( Object... args )
+	public static Class< ? >[] getParamTypes( Object... args )
 	{
 		if ( args == null )
 		{
 			return NO_PARAMS;
 		}
 
-		Class[] pTypes = new Class[ args.length ];
+		Class< ? >[] pTypes = new Class[ args.length ];
 		for ( int i = 0, n = args.length; i < n; i++ )
 		{
 			if ( args[ i ] == null )
@@ -67,14 +67,14 @@ public class ReflectionUtils
 	 * @return the Method if found otherwise null (i.e. does not throw
 	 *         NoSuchMethodException)
 	 */
-	public static Method findMethodWithArgs( Class clazz, String methodName, Object... args )
+	public static Method findMethodWithArgs( Class<?> clazz, String methodName, Object... args )
 	{
 		if ( args == null )
 		{
 			args = EMPTY_OBJECT_ARRAY;
 		}
 
-		Class[] pTypes = getParamTypes( args );
+		Class<?>[] pTypes = getParamTypes( args );
 
 		return findMethod( clazz, methodName, pTypes );
 	}
@@ -94,7 +94,7 @@ public class ReflectionUtils
 	 * @return the Method if found otherwise null (i.e. does not throw
 	 *         NoSuchMethodException)
 	 */
-	public static Method findMethod( Class clazz, String methodName, Class... paramTypes )
+	public static Method findMethod( Class< ? > clazz, String methodName, Class< ? >... paramTypes )
 	{
 		try
 		{
@@ -170,7 +170,7 @@ public class ReflectionUtils
 	 * @return the Constructor if found otherwise null (i.e. does not throw
 	 *         NoSuchMethodException)
 	 */
-	public static < T > Constructor< T > findConstructor( Class< T > clazz, Class... paramTypes )
+	public static < T > Constructor< T > findConstructor( Class< T > clazz, Class< ? >... paramTypes )
 	{
 		try
 		{
@@ -180,13 +180,14 @@ public class ReflectionUtils
 		catch ( NoSuchMethodException e )
 		{
 			// try for compatible param types
-			final Constructor[] methods = clazz.isInterface()
+			@SuppressWarnings( "unchecked" )
+			final Constructor< T >[] methods = ( Constructor< T >[] ) (clazz.isInterface()
 					? clazz.getDeclaredConstructors()
-					: clazz.getConstructors();
+					: clazz.getConstructors());
 
 			if ( (methods != null) && (methods.length > 0) )
 			{
-				for ( Constructor m : methods )
+				for ( Constructor< T > m : methods )
 				{
 					if ( compatibleParamTypes( paramTypes, m.getParameterTypes() ) )
 					{
@@ -228,7 +229,7 @@ public class ReflectionUtils
 		}
 	}
 
-	private static boolean compatibleParamTypes( Class[] paramTypes, Class[] candidateTypes )
+	private static boolean compatibleParamTypes( Class<?>[] paramTypes, Class<?>[] candidateTypes )
 	{
 		// both empty - compatible
 		if ( ((candidateTypes == null) || (candidateTypes.length == 0))

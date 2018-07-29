@@ -25,7 +25,7 @@ import com.brentcroft.util.XmlUtils;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class Camera implements GuiObjectLocator< GuiObject >, GuiObjectService
+public class Camera implements GuiObjectLocator< GuiObject< ? > >, GuiObjectService< GuiObject< ? > >
 {
 	private final CameraObjectService service;
 
@@ -77,7 +77,7 @@ public class Camera implements GuiObjectLocator< GuiObject >, GuiObjectService
 	}
 
 	@Override
-	public GuiObjectLocator< GuiObject > getGuiObjectLocator()
+	public GuiObjectLocator< GuiObject< ? > > getGuiObjectLocator()
 	{
 		return this;
 	}
@@ -106,7 +106,7 @@ public class Camera implements GuiObjectLocator< GuiObject >, GuiObjectService
 	}
 
 	@Override
-	public GuiObject getGob( Object gobee )
+	public GuiObject<?> getGob( Object gobee )
 	{
 		return service
 				.getManager()

@@ -28,7 +28,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class JListGuiObject< T extends JList > extends JComponentGuiObject< T > implements GuiObject.Index
+public class JListGuiObject< T extends JList<?> > extends JComponentGuiObject< T > implements GuiObject.Index
 {
 	public JListGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
@@ -99,6 +99,7 @@ public class JListGuiObject< T extends JList > extends JComponentGuiObject< T > 
 		}
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{
@@ -111,7 +112,7 @@ public class JListGuiObject< T extends JList > extends JComponentGuiObject< T > 
 		return attrSpec;
 	}
 
-	enum Attr implements AttrSpec< JList >
+	enum Attr implements AttrSpec< JList<?> >
 	{
 		SELECTED_INDEX( "selected-index", go -> "" + go.getSelectedIndex() ),
 
@@ -120,9 +121,9 @@ public class JListGuiObject< T extends JList > extends JComponentGuiObject< T > 
 		TEXT( "text", go -> ofNullable( go.getSelectedValue() ).map( t -> "" + t ).orElse( null ) );
 
 		final String n;
-		final Function< JList, String > f;
+		final Function< JList<?>, String > f;
 
-		Attr( String name, Function< JList, String > f )
+		Attr( String name, Function< JList<?>, String > f )
 		{
 			this.n = name;
 			this.f = f;
@@ -135,7 +136,7 @@ public class JListGuiObject< T extends JList > extends JComponentGuiObject< T > 
 		}
 
 		@Override
-		public String getAttribute( JList go )
+		public String getAttribute( JList<?> go )
 		{
 			return f.apply( go );
 		}

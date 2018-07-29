@@ -48,7 +48,7 @@ public class EventNotification
 
 	private final AtomicLong notificationSequenceNumber = new AtomicLong( 0 );
 
-	private final GuiObjectService guiObjectService;
+	private final GuiObjectService< ? > guiObjectService;
 	private final JMXNotifier jmxNotifier;
 
 	private final AWTEventUtils awtEventUtils = new AWTEventUtils();
@@ -61,7 +61,7 @@ public class EventNotification
 
 	private boolean logNotifications = false;
 
-	public EventNotification( GuiObjectService guiObjectService, JMXNotifier jmxNotifier )
+	public EventNotification( GuiObjectService< ? > guiObjectService, JMXNotifier jmxNotifier )
 	{
 		this.guiObjectService = guiObjectService;
 		this.jmxNotifier = jmxNotifier;
@@ -181,7 +181,7 @@ public class EventNotification
 		logger.info( format( "Uninstalled AWT Global Listener: mask=[%s].", notificationEventMask ) );
 	}
 
-	public void installFXEventNotifications( EventType eventType )
+	public void installFXEventNotifications( EventType<?> eventType )
 	{
 		if ( fxEventHandler != null )
 		{
@@ -226,7 +226,7 @@ public class EventNotification
 		logger.info( format( "Re-installed Stage FX Listeners: type=[%s].", eventType ) );
 	}
 
-	public void uninstallFXEventNotifications( EventType eventType )
+	public void uninstallFXEventNotifications( EventType<?> eventType )
 	{
 		if ( fxEventHandler != null )
 		{

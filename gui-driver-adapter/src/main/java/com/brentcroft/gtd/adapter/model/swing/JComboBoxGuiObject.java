@@ -27,7 +27,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class JComboBoxGuiObject< T extends JComboBox > extends JComponentGuiObject< T >
+public class JComboBoxGuiObject< T extends JComboBox< ? > > extends JComponentGuiObject< T >
 		implements GuiObject.Text, GuiObject.Index
 {
 	public static final String MODEL_TAG = "model";
@@ -112,6 +112,7 @@ public class JComboBoxGuiObject< T extends JComboBox > extends JComponentGuiObje
 		}
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{
@@ -125,7 +126,7 @@ public class JComboBoxGuiObject< T extends JComboBox > extends JComponentGuiObje
 	}
 
 	// "text", "size", "selected-index"
-	enum Attr implements AttrSpec< JComboBox >
+	enum Attr implements AttrSpec< JComboBox< ? > >
 	{
 		SELECTED_INDEX( "selected-index", go -> "" + go.getSelectedIndex() ),
 
@@ -134,9 +135,9 @@ public class JComboBoxGuiObject< T extends JComboBox > extends JComponentGuiObje
 		TEXT( "text", go -> ofNullable( go.getSelectedItem() ).map( t -> "" + t ).orElse( null ) );
 
 		final String n;
-		final Function< JComboBox, String > f;
+		final Function< JComboBox< ? >, String > f;
 
-		Attr( String name, Function< JComboBox, String > f )
+		Attr( String name, Function< JComboBox< ? >, String > f )
 		{
 			this.n = name;
 			this.f = f;
@@ -149,7 +150,7 @@ public class JComboBoxGuiObject< T extends JComboBox > extends JComponentGuiObje
 		}
 
 		@Override
-		public String getAttribute( JComboBox go )
+		public String getAttribute( JComboBox< ? > go )
 		{
 			return f.apply( go );
 		}

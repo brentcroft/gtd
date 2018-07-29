@@ -132,7 +132,7 @@ public class FxTreeViewGuiObject< S, T extends TreeView< S > > extends FxControl
 			nodePath[ i ] = Integer.valueOf( nodePathKeys[ i ] ) - 1;
 		}
 
-		final TreeItem item = getTreeItem( getObject().getRoot(), nodePath );
+		final TreeItem< ? > item = getTreeItem( getObject().getRoot(), nodePath );
 
 		return "" + item.getValue();
 	}

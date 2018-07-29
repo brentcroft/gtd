@@ -37,7 +37,7 @@ public class Snapshot
 		}
 		catch ( Throwable e )
 		{
-			logger.warn( e.getMessage() );
+			logger.warn( e );
 
 			// java 9
 

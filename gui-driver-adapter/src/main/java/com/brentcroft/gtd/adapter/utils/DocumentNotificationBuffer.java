@@ -97,28 +97,28 @@ public class DocumentNotificationBuffer
 			// TODO: eh???
 			// this idea to progressively remove all leaf nodes that are not new
 			// and only notify what remains
-			if ( newHash && false )
-			{
-				// Document notifyDoc = (Document)document.cloneNode( true );
-				//
-				// // erode document
-				// XmlUtils.erode( notifyDoc.getDocumentElement(), new XmlUtils.ElementFilter()
-				// {
-				// @Override
-				// public boolean accept( Element element )
-				// {
-				// return Boolean.valueOf( element.getAttribute( GuiObject.HASH_NEW_ATTRIBUTE )
-				// );
-				// }
-				// } );
-				//
-				// if ( logger.isDebugEnabled() )
-				// {
-				// logger.debug( format( "Eroded snapshot." ) );
-				// }
-				//
-				// documentBuffer.add( notifyDoc );
-			}
+//			if ( newHash && false )
+//			{
+//				Document notifyDoc = ( Document ) document.cloneNode( true );
+//
+//				// erode document
+//				XmlUtils.erode( notifyDoc.getDocumentElement(), new XmlUtils.ElementFilter()
+//				{
+//					@Override
+//					public boolean accept( Element element )
+//					{
+//						return Boolean.valueOf( element.getAttribute( GuiObject.HASH_NEW_ATTRIBUTE )
+//						);
+//					}
+//				} );
+//
+//				if ( logger.isDebugEnabled() )
+//				{
+//					logger.debug( format( "Eroded snapshot." ) );
+//				}
+//
+//				documentBuffer.add( notifyDoc );
+//			}
 		}
 	}
 }

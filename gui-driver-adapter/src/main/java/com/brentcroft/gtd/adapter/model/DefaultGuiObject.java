@@ -75,23 +75,22 @@ public abstract class DefaultGuiObject< T extends Object > extends AbstractGuiOb
 
 	public static class Converter
 	{
-		public interface ValueConverter< T >
+		public interface ValueConverter
 		{
-			String convert( T value );
+			String convert( Object value );
 		}
 
-		private static final Map< Class, ValueConverter > converters = new HashMap< Class, ValueConverter >();
+		private static final  Map< Class<?>, ValueConverter > converters = new HashMap< >();
 
-		public static void addConverter( ValueConverter processor, Class... targets )
+		public static void addConverter( ValueConverter processor, Class<?>... targets )
 		{
-			for ( Class target : targets )
+			for ( Class<?> target : targets )
 			{
 				converters.put( target, processor );
 			}
 		}
 
-		@SuppressWarnings( "unchecked" )
-		public static String maybeConvertValue( Object value )
+		public static < T > String maybeConvertValue( T value )
 		{
 			String convert;
 

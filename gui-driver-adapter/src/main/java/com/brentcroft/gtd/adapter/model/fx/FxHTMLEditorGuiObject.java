@@ -48,6 +48,7 @@ public class FxHTMLEditorGuiObject< T extends HTMLEditor > extends FxControlGuiO
 		FXUtils.maybeInvokeNowOnFXThread( () -> getObject().setHtmlText( text ) );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

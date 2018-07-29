@@ -25,6 +25,7 @@ public class JPanelGuiObject< T extends JPanel > extends JComponentGuiObject< T 
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

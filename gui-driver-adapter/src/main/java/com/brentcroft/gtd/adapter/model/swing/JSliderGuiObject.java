@@ -53,6 +53,7 @@ public class JSliderGuiObject< T extends JSlider > extends JComponentGuiObject< 
 		SwingUtils.maybeInvokeNowOnEventThread( () -> getObject().setValue( index ) );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

@@ -24,6 +24,7 @@ public class JInternalFrameGuiObject< T extends JInternalFrame > extends JCompon
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

@@ -56,6 +56,7 @@ public class JTextComponentGuiObject< T extends JTextComponent > extends JCompon
 		// RobotUtils.awtRobotClick( getObjectMidpointLocationOnScreen() );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

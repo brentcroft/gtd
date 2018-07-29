@@ -100,6 +100,7 @@ public class W3cHTMLSelectElementGuiObject< T extends HTMLSelectElement > extend
 		}
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

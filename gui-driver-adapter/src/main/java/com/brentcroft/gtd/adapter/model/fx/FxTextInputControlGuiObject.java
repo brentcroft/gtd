@@ -51,6 +51,7 @@ public class FxTextInputControlGuiObject< T extends TextInputControl > extends F
 		FXUtils.maybeInvokeNowOnFXThread( () -> getObject().setText( text ) );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

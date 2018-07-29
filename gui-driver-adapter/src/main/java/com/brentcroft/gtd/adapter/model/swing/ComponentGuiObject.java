@@ -102,6 +102,7 @@ public class ComponentGuiObject< T extends Component > extends DefaultGuiObject<
 		addRobotAction( element, options );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

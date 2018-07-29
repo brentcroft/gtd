@@ -197,8 +197,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				t == null ? null : t.getClass().getName(), t ) );
 	}
 
-	@SuppressWarnings( "unchecked" )
-	public void install( List< AdapterSpecification > adapters )
+	public < C, H extends GuiObject< ? super C > > void install( List< ? extends AdapterSpecification< C, H > > adapters )
 	{
 		// addAdapters(
 		// adapters
@@ -209,8 +208,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		// 1.8
 		adapters.stream()
-				.map( spec -> ( GuiObjectAdapter< ? > ) newAdapter( spec.adapteeClass, spec.adapterClass,
-						spec.adapterGuiObjectConsultant ) )
+				.map( spec -> ( GuiObjectAdapter< ? > ) newAdapter( spec.adapteeClass, spec.adapterClass, spec.adapterGuiObjectConsultant ) )
 				// .forEach( adapter -> {
 				// adaptersByClass.put( adapter.handler(), adapter );
 				// } );
@@ -224,13 +222,13 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
 			Class< C > adapteeClass, Class< H > adapterClass )
 	{
-		return new AdapterSpecification<>( adapteeClass, adapterClass, null );
+		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, null );
 	}
 
 	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
 			Class< C > adapteeClass, Class< H > adapterClass, GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
-		return new AdapterSpecification<>( adapteeClass, adapterClass, adapterGuiObjectConsultant );
+		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, adapterGuiObjectConsultant );
 	}
 
 	public class AdapterSpecification< C, H extends GuiObject< ? super C > >
@@ -248,16 +246,22 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 	}
 
-	private < C, H extends GuiObject< ? super C > > GuiObjectAdapter< C > newAdapter( Class< C > adapteeClass,
-			Class< H > adapterClass, GuiObjectConsultant< C > adapterGuiObjectConsultant )
+	private < C, H extends GuiObject< ? super C > > GuiObjectAdapter< C > newAdapter(
+			Class< C > adapteeClass,
+			Class< H > adapterClass,
+			GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
 		return new AbstractGuiObjectAdapter< C >( adapteeClass )
 		{
 			private Constructor< H > constructor;
 
 			{
-				constructor = ReflectionUtils.findConstructor( adapterClass, adapteeClass, Gob.class,
-						GuiObjectConsultant.class, CameraObjectManager.class );
+				constructor = ReflectionUtils.findConstructor(
+						adapterClass,
+						adapteeClass,
+						Gob.class,
+						GuiObjectConsultant.class,
+						CameraObjectManager.class );
 
 				if ( constructor == null )
 				{

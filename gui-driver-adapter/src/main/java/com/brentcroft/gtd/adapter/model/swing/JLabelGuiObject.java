@@ -25,6 +25,7 @@ public class JLabelGuiObject< T extends JLabel > extends JComponentGuiObject< T 
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

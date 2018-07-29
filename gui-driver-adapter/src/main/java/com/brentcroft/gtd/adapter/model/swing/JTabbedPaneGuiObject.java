@@ -87,7 +87,7 @@ public class JTabbedPaneGuiObject< T extends JTabbedPane > extends JComponentGui
 				continue;
 			}
 
-			Object tabCandidate = (( GuiObject ) candidate).getObject();
+			Object tabCandidate = (( GuiObject< ? > ) candidate).getObject();
 
 			if ( !(tabCandidate instanceof Component) )
 			{
@@ -111,6 +111,7 @@ public class JTabbedPaneGuiObject< T extends JTabbedPane > extends JComponentGui
 		}
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{

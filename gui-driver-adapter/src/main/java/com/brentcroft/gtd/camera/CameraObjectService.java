@@ -36,6 +36,7 @@ import org.w3c.dom.html.HTMLTableElement;
 import org.w3c.dom.html.HTMLTextAreaElement;
 
 import com.brentcroft.gtd.adapter.model.DefaultGuiObject;
+import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.SnapshotGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxAccordionGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxButtonBarGuiObject;
@@ -129,7 +130,7 @@ public class CameraObjectService
 		return gom;
 	}
 
-	protected void addAdapters( List< AdapterSpecification > adapters, Properties properties )
+	protected < C, H extends GuiObject< ? super C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
 	{
 		adapters.addAll( buildDefaultAdapters( properties ) );
 		adapters.addAll( buildSwingAdapters( properties ) );
@@ -137,11 +138,11 @@ public class CameraObjectService
 		adapters.addAll( buildW3CAdapters( properties ) );
 	}
 
-	public void install( Properties properties )
+	public < C, H extends GuiObject< ? super C > > void install( Properties properties )
 	{
 		gom.clear();
 
-		List< AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
 		addAdapters( adapters, properties );
 
@@ -150,111 +151,115 @@ public class CameraObjectService
 		gom.configure( properties );
 	}
 
-	private List< CameraObjectManager.AdapterSpecification > buildDefaultAdapters( Properties properties )
+	@SuppressWarnings( "unchecked" )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildDefaultAdapters( Properties properties )
 	{
-		List< CameraObjectManager.AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
-		adapters.add( gom.newAdapterSpecification( Object.class, DefaultGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Snapshot.class, SnapshotGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Object.class, DefaultGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Snapshot.class, SnapshotGuiObject.class ) );
 
 		return adapters;
 	}
 
-	private List< CameraObjectManager.AdapterSpecification > buildSwingAdapters( Properties properties )
+	@SuppressWarnings( { "unchecked" } )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildSwingAdapters( Properties properties )
 	{
-		List< CameraObjectManager.AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
-		adapters.add( gom.newAdapterSpecification( AbstractButton.class, AbstractButtonGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Component.class, ComponentGuiObject.class,
-				new ComponentGuiObjectConsultant( properties ) ) );
-		adapters.add( gom.newAdapterSpecification( Container.class, ContainerGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JComboBox.class, JComboBoxGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JComponent.class, JComponentGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JDialog.class, JDialogGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JEditorPane.class, JEditorPaneGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JFrame.class, JFrameGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( AbstractButton.class, AbstractButtonGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Component.class, ComponentGuiObject.class,
+				new ComponentGuiObjectConsultant< Component >( properties ) ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Container.class, ContainerGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JComboBox.class, JComboBoxGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JComponent.class, JComponentGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JDialog.class, JDialogGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JEditorPane.class, JEditorPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JFrame.class, JFrameGuiObject.class ) );
 
 		// bridge to FX
-		adapters.add( gom.newAdapterSpecification( JFXPanel.class, JFXPanelGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JFXPanel.class, JFXPanelGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( JInternalFrame.class, JInternalFrameGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JLabel.class, JLabelGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JList.class, JListGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JMenu.class, JMenuGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JPanel.class, JPanelGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JSlider.class, JSliderGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JSpinner.class, JSpinnerGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JTabbedPane.class, JTabbedPaneGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JTable.class, JTableGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JTextComponent.class, JTextComponentGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( JTree.class, JTreeGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JInternalFrame.class, JInternalFrameGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JLabel.class, JLabelGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JList.class, JListGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JMenu.class, JMenuGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JPanel.class, JPanelGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JSlider.class, JSliderGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JSpinner.class, JSpinnerGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTabbedPane.class, JTabbedPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTable.class, JTableGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTextComponent.class, JTextComponentGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTree.class, JTreeGuiObject.class ) );
 
 		return adapters;
 	}
 
-	private List< CameraObjectManager.AdapterSpecification > buildFxAdapters( Properties properties )
+	@SuppressWarnings( "unchecked" )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildFxAdapters( Properties properties )
 	{
-		List< CameraObjectManager.AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
 		// fx - base
-		adapters.add( gom.newAdapterSpecification( Node.class, FxNodeGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( MenuItem.class, FxMenuItemGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Tab.class, FxTabGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Node.class, FxNodeGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( MenuItem.class, FxMenuItemGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Tab.class, FxTabGuiObject.class ) );
 
 		// bridge to swing
-		adapters.add( gom.newAdapterSpecification( SwingNode.class, FxSwingNodeGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( SwingNode.class, FxSwingNodeGuiObject.class ) );
 
 		// fx - extras
-		adapters.add( gom.newAdapterSpecification( Menu.class, FxMenuGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( TabPane.class, FxTabPaneGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( MenuBar.class, FxMenuBarGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Menu.class, FxMenuGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabPane.class, FxTabPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( MenuBar.class, FxMenuBarGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Parent.class, FxParentGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Parent.class, FxParentGuiObject.class ) );
 
 		// bridge to W3c
-		adapters.add( gom.newAdapterSpecification( WebView.class, W3cWebViewGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( WebView.class, W3cWebViewGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Control.class, FxControlGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Control.class, FxControlGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLEditor.class, FxHTMLEditorGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( TreeView.class, FxTreeViewGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( ListView.class, FxListViewGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( ButtonBar.class, FxButtonBarGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( ToolBar.class, FxToolbarGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( SplitPane.class, FxSplitPaneGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( Accordion.class, FxAccordionGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( ScrollPane.class, FxScrollPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLEditor.class, FxHTMLEditorGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TreeView.class, FxTreeViewGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ListView.class, FxListViewGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ButtonBar.class, FxButtonBarGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolBar.class, FxToolbarGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( SplitPane.class, FxSplitPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Accordion.class, FxAccordionGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ScrollPane.class, FxScrollPaneGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( Labeled.class, FxLabeledGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( TitledPane.class, FxTitledPaneGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( ButtonBase.class, FxButtonBaseGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Labeled.class, FxLabeledGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TitledPane.class, FxTitledPaneGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ButtonBase.class, FxButtonBaseGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( TextInputControl.class, FxTextInputControlGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TextInputControl.class, FxTextInputControlGuiObject.class ) );
 
 		return adapters;
 	}
 
-	private List< CameraObjectManager.AdapterSpecification > buildW3CAdapters( Properties properties )
+	@SuppressWarnings( "unchecked" )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildW3CAdapters( Properties properties )
 	{
-		List< CameraObjectManager.AdapterSpecification > adapters = new ArrayList<>();
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
 
-		adapters.add( gom.newAdapterSpecification( Text.class, W3cTextGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Text.class, W3cTextGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLElement.class, W3cHTMLElementGuiObject.class,
-				new W3CHTMLElementGuiObjectConsultant( properties ) ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLElement.class, W3cHTMLElementGuiObject.class,
+				new W3CHTMLElementGuiObjectConsultant< HTMLElement >( properties ) ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLIFrameElement.class, W3cHTMLIFrameElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLIFrameElement.class, W3cHTMLIFrameElementGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLAnchorElement.class, W3cHTMLAnchorElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLAnchorElement.class, W3cHTMLAnchorElementGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLButtonElement.class, W3cHTMLButtonElement.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLButtonElement.class, W3cHTMLButtonElement.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLSelectElement.class, W3cHTMLSelectElementGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( HTMLInputElement.class, W3cHTMLInputElementGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( HTMLTextAreaElement.class, W3cHTMLTextAreaElementGuiObject.class ) );
-		adapters.add( gom.newAdapterSpecification( HTMLTableElement.class, W3cHTMLTableGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLSelectElement.class, W3cHTMLSelectElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLInputElement.class, W3cHTMLInputElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLTextAreaElement.class, W3cHTMLTextAreaElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLTableElement.class, W3cHTMLTableGuiObject.class ) );
 
-		adapters.add( gom.newAdapterSpecification( HTMLLabelElement.class, W3cHTMLLabelElementGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( HTMLLabelElement.class, W3cHTMLLabelElementGuiObject.class ) );
 
 		return adapters;
 	}

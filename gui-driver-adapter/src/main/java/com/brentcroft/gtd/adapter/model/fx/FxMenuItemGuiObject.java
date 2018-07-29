@@ -60,6 +60,7 @@ public class FxMenuItemGuiObject< T extends MenuItem > extends DefaultGuiObject<
 
 	// no robot keys
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
 	{
