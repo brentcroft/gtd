@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- -->
+	<groupId>com.brentcroft.gtd</groupId>
+	<artifactId>gui-driver-parent</artifactId>
+	<version>${gui-driver.version}</version>
+	<!-- -->
+	<properties>
+		<gui-driver.version>0.3.2</gui-driver.version>
+		<!-- -->
+		<cucumber-core.version>1.2.4</cucumber-core.version>
+		<!-- <cucumber-java.version>1.2.4</cucumber-java.version> -->
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- -->
+		<log4j.version>1.2.16</log4j.version>
+		<junit.version>4.8</junit.version>
+		<mockito.version>1.10.19</mockito.version>
+	</properties>
+	<!-- -->
+	<name>Gui Driver Suite</name>
+	<packaging>pom</packaging>
+	<!-- -->
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit-dep</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<!-- -->
+	<modules>
+		<module>gui-driver-utils</module>
+		<module>gui-driver-events</module>
+		<!-- -->
+		<module>gui-driver-browser</module>
+		<module>jstl-el-templates</module>
+		<!-- -->
+		<module>gui-driver</module>
+		<!-- -->
+		<module>gui-driver-harness</module>
+		<module>gui-driver-adapter</module>
+		<!-- -->
+		<module>gui-driver-client</module>
+		<module>gui-driver-js</module>
+		<!-- -->
+		<module>gui-driver-cucumber</module>
+		<module>gui-driver-inspector</module>
+		<module>gui-driver-adapter-swt</module>
+	</modules>
+	<!-- configuration is used by: mvn javadoc:javadoc executions is used by: 
+		clean install and will create jar in target directory <build> <plugins> <plugin> 
+		<groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+		<version>3.0.0</version> <configuration> <show>public</show> <failOnError>false</failOnError> 
+		<reportOutputDirectory>${project.basedir}</reportOutputDirectory> <destDir>javadoc</destDir> 
+		</configuration> <executions> <execution> <id>attach-javadocs</id> <goals> 
+		<goal>jar</goal> </goals> </execution> </executions> </plugin> </plugins> 
+		</build> -->
+</project>
