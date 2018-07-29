@@ -60,7 +60,7 @@ public class WebUIController implements Initializable
         {
             String type = e.getType();
             EventTarget t = e.getTarget();
-            EventTarget ct = e.getCurrentTarget();
+            //EventTarget ct = e.getCurrentTarget();
 
             // assume are xml nodes
             Node node = ( Node ) t;

@@ -16,8 +16,6 @@ import static java.lang.String.format;
  */
 public class Browser extends Application
 {
-    private WebUIController controller = null;
-
     private static String TITLE = "Brentcroft Browser";
     private static int INST = 0;
 
@@ -26,7 +24,7 @@ public class Browser extends Application
     {
         stage.setTitle( format( "%s[%s]", TITLE, INST ) );
 
-        controller = newBrowser( stage );
+        newBrowser( stage );
     }
 
 

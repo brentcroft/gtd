@@ -1,20 +1,21 @@
 package com.brentcroft.gtd.browser;
 
+import static java.lang.String.format;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.function.BiConsumer;
-import javafx.application.Platform;
-import javax.swing.JFileChooser;
-import org.apache.log4j.Logger;
 
-import static java.lang.String.format;
+import javax.swing.JFileChooser;
+
+import javafx.application.Platform;
 
 public class Wc3BrowserModel
 {
-    private final static transient Logger logger = Logger.getLogger( Wc3BrowserModel.class );
+    //private final static transient Logger logger = Logger.getLogger( Wc3BrowserModel.class );
 
     /**
      * see: http://java-tech-world.blogspot.co.uk/2016/01/how-to-load-https-url-from-java-fx.html
