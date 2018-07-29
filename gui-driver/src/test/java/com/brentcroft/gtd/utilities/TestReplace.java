@@ -7,22 +7,22 @@ import org.junit.Test;
  */
 public class TestReplace
 {
-    @Test
-    public void test()
-    {
-        System.out.println(
-        "<br cd=\"12asdasd\" fg=\"123\">"
-            .replaceAll(
-                    "<br((?:\\s+\\w+=\"[^\"]*\")*)\\s*>",
-                    "<br $1/>" )
-        );
+	@Test
+	public void test()
+	{
+		System.out.println(
+				"<br cd=\"12asdasd\" fg=\"123\">"
+						.replaceAll(
+								"<br((?:\\s+\\w+=\"[^\"]*\")*)\\s*>",
+								"<br $1/>" )
+		);
 
-        System.out.println(
-                "<br>"
-                        .replaceAll(
-                                "<br((?:\\s+\\w+=\"[^\"]*\")*)\\s*>",
-                                "<br $1/>" )
-        );
-    }
+		System.out.println(
+				"<br>"
+						.replaceAll(
+								"<br((?:\\s+\\w+=\"[^\"]*\")*)\\s*>",
+								"<br $1/>" )
+		);
+	}
 
 }

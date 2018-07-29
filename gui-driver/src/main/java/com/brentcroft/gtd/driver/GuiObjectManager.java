@@ -6,10 +6,10 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 12/05/2017.
  */
-public interface GuiObjectManager<T>
+public interface GuiObjectManager< T >
 {
-    T adapt( Object object, Gob parent );
+	T adapt( Object object, Gob parent );
 
-    HashCache getHashCache();
+	HashCache getHashCache();
 
 }

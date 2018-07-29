@@ -1,10 +1,10 @@
 package com.brentcroft.gtd.driver;
 
-
 import java.io.Serializable;
 
 /**
- * When an object cannot be found.<p/>
+ * When an object cannot be found.
+ * <p/>
  *
  * This exception may be returned to a remote caller.
  *
@@ -12,15 +12,15 @@ import java.io.Serializable;
  */
 public class LocatorException extends RuntimeException implements Serializable
 {
-    private static final long serialVersionUID = 8953501596012804168L;
+	private static final long serialVersionUID = 8953501596012804168L;
 
-    public LocatorException( String message )
-    {
-        super( message );
-    }
+	public LocatorException( String message )
+	{
+		super( message );
+	}
 
-    public LocatorException( String message, Throwable cause )
-    {
-        super( message, cause );
-    }
+	public LocatorException( String message, Throwable cause )
+	{
+		super( message, cause );
+	}
 }
