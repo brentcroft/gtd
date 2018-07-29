@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- -->
+    <parent>
+        <groupId>com.brentcroft.gtd</groupId>
+        <artifactId>gui-driver-parent</artifactId>
+        <version>${gui-driver.version}</version>
+    </parent>
+    <!-- -->
+    <artifactId>gui-driver-inspector</artifactId>
+    <name>Gui Driver Inspector</name>
+    <!-- -->
+	<dependencies>
+		<dependency>
+			<groupId>com.brentcroft.gtd</groupId>
+			<artifactId>gui-driver-cucumber</artifactId>
+			<version>${gui-driver.version}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>
