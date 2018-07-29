@@ -1,12 +1,9 @@
 package com.brentcroft.util.xpath.gob;
 
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import static java.lang.String.format;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface Gob
 {
