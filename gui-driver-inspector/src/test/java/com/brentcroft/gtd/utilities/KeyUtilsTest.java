@@ -1,14 +1,10 @@
 package com.brentcroft.gtd.utilities;
 
-import com.brentcroft.util.XPathUtils;
-import com.brentcroft.util.XmlUtils;
-import java.net.URISyntaxException;
-import java.util.Properties;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import static org.junit.Assert.assertEquals;
+
+import java.net.URISyntaxException;
+
+import org.junit.Test;
 
 public class KeyUtilsTest
 {

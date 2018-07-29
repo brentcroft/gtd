@@ -4,6 +4,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Window;
 
+@SuppressWarnings( "restriction" )
 public class ModelObjectDialog extends TextInputDialog
 {
     public ModelObjectDialog withTitle( String title )

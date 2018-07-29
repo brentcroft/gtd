@@ -29,6 +29,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Logger;
 
+@SuppressWarnings( "restriction" )
 public abstract class CodeEditorPane extends SplitPane implements InspectorPane
 {
     protected static final Logger logger = Logger.getLogger( CodeEditorPane.class );
@@ -113,7 +114,7 @@ public abstract class CodeEditorPane extends SplitPane implements InspectorPane
 
     private final EventHandler< Event > actionCheckIfDirty = new EventHandler< Event >()
     {
-        @Override
+		@Override
         public void handle( Event event )
         {
             if ( codeEditor.isDirty() && new Alert(

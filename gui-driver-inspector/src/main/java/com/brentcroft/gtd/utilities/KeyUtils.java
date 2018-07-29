@@ -349,7 +349,7 @@ public class KeyUtils
             // the attribute value
             String value = sattr.getNodeValue();
 
-            if ( value == null || nameUtils.isEmpty( value ) )
+            if ( value == null || NameUtils.isEmpty( value ) )
             {
                 continue;
             }
@@ -388,7 +388,7 @@ public class KeyUtils
 
             if ( attributesToTx.contains( name ) )
             {
-                String tx = nameUtils.maybeReverseTranslate( value );
+                String tx = NameUtils.maybeReverseTranslate( value );
 
                 if ( ! value.equals( tx ) )
                 {
@@ -410,7 +410,7 @@ public class KeyUtils
                 else if ( txGenerateMissingTranslations )
                 {
                     // prefix
-                    tx = name + "." + nameUtils.cleanName( value );
+                    tx = name + "." + NameUtils.cleanName( value );
 
                     TextUtils.storeName( tx, value );
 

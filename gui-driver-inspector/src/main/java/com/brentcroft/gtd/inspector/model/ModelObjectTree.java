@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+@SuppressWarnings( "restriction" )
 public class ModelObjectTree
 {
     final static Image containerImage = new Image( ModelObjectTree.class.getResourceAsStream( "/container.png" ) );

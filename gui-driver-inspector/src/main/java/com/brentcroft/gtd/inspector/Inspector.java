@@ -1,6 +1,7 @@
 package com.brentcroft.gtd.inspector;
 
-import com.brentcroft.gtd.driver.Backend;
+import static java.lang.String.format;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,11 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.Logger;
+
+import com.brentcroft.gtd.driver.Backend;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,10 +28,8 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import org.apache.log4j.Logger;
 
-import static java.lang.String.format;
-
+@SuppressWarnings( "restriction" )
 public class Inspector
 {
     private final static Logger logger = Logger.getLogger( Inspector.class );

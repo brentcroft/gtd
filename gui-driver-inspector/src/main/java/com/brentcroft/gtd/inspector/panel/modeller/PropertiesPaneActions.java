@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import static java.lang.String.format;
 
+@SuppressWarnings( "restriction" )
 public class PropertiesPaneActions
 {
     public final static String SRC_KEY = "$src";

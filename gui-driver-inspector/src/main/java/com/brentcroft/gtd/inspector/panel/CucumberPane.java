@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import static com.brentcroft.util.DateUtils.timestamp;
 import static java.lang.String.format;
 
+@SuppressWarnings( "restriction" )
 public class CucumberPane extends CodeEditorPane implements InspectorPane
 {
     private final Button cucumberExecuteButton = new Button( "Run" );

@@ -1,25 +1,6 @@
 package com.brentcroft.gtd.inspector.panel.modeller;
 
 
-import com.brentcroft.gtd.inspector.ContextManager;
-import com.brentcroft.gtd.inspector.Inspector;
-import com.brentcroft.gtd.utilities.KeyUtils;
-import com.brentcroft.util.NodeVisitor;
-import com.brentcroft.util.Pipes;
-import com.brentcroft.util.Pipes.Pipe;
-import com.brentcroft.util.TextUtils;
-import com.brentcroft.util.XmlUtils;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import static com.brentcroft.gtd.driver.Backend.XML_NAMESPACE_TAG;
 import static com.brentcroft.gtd.driver.Backend.XML_NAMESPACE_URI;
 import static com.brentcroft.util.StringUpcaster.upcast;
@@ -29,6 +10,28 @@ import static com.brentcroft.util.XmlUtils.removeTrimmedEmptyTextNodes;
 import static com.brentcroft.util.XmlUtils.serialize;
 import static com.brentcroft.util.XmlUtils.transformToText;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import com.brentcroft.gtd.inspector.ContextManager;
+import com.brentcroft.gtd.inspector.Inspector;
+import com.brentcroft.gtd.utilities.KeyUtils;
+import com.brentcroft.gtd.utilities.NameUtils;
+import com.brentcroft.util.NodeVisitor;
+import com.brentcroft.util.Pipes;
+import com.brentcroft.util.Pipes.Pipe;
+import com.brentcroft.util.TextUtils;
+import com.brentcroft.util.XmlUtils;
+
+import javafx.application.Platform;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
+@SuppressWarnings( "restriction" )
 public class ModellerPane extends AbstractModellerPane
 {
     private Map< String, Object > parameters = new HashMap< String, Object >();
@@ -113,7 +116,8 @@ public class ModellerPane extends AbstractModellerPane
         setProgress( step, numPipes );
     }
 
-    private Pipe< String, ScriptObjectMirror > jsonToModelObjectPipe = Pipes.newPipe( String.class, ScriptObjectMirror.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< String, ScriptObjectMirror > jsonToModelObjectPipe = Pipes.newPipe( String.class, ScriptObjectMirror.class )
             .withName( "Model" )
             .withConditionIn( ( in ) -> in != null )
             .withProcessor( ( in ) -> context.generateModel( getSession(), in ) )
@@ -125,7 +129,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, String > xmlToJsonPipe = Pipes.newPipe( Node.class, String.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, String > xmlToJsonPipe = Pipes.newPipe( Node.class, String.class )
             .withName( "Jsonator" )
             .withConditionIn( ( in ) -> in != null && jsonTemplates != null )
             .withProcessor( ( in ) -> jstl.expandText(
@@ -142,7 +147,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > masteringPipe = Pipes.newPipe( Node.class, Node.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > masteringPipe = Pipes.newPipe( Node.class, Node.class )
             .withName( "Master" )
             .withConditionIn( ( in ) -> in != null )
             .withProcessor( ( in ) -> masterDocument == null || ! masterCheckBox.isSelected()
@@ -160,7 +166,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > accPipe = Pipes.newPipe( Node.class, Node.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > accPipe = Pipes.newPipe( Node.class, Node.class )
             .withName( "Accumulator" )
             .withConditionIn( ( in ) -> in != null )
             .withProcessor( ( in ) -> accumulatedSnapshot == null || ! accumulateCheckBox.isSelected()
@@ -175,7 +182,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > reducingPipe = Pipes.newPipe( Node.class, Node.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > reducingPipe = Pipes.newPipe( Node.class, Node.class )
             .withName( "Reducer" )
             .withConditionIn( Objects::nonNull )
             .withProcessor( ( in ) -> ( reducer == null || ! reduceTransformCheckBox.isSelected() )
@@ -191,7 +199,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > integratorPipe = Pipes.newPipe( Node.class, Node.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > integratorPipe = Pipes.newPipe( Node.class, Node.class )
             .withName( "integrator" )
             .withConditionIn( Objects::nonNull )
             .withProcessor( in -> ! integratorCheckBox.isSelected()
@@ -235,14 +244,15 @@ public class ModellerPane extends AbstractModellerPane
                                                 xpath );
 
 
-                                // NB: using client name
+                                keyUtils
+								        .getNameUtils();
+								// NB: using client name
                                 final String name = XmlUtils
                                         .disambiguateAttr(
                                                 ( Element ) node,
                                                 XML_NAMESPACE_URI,
                                                 "name",
-                                                keyUtils
-                                                        .getNameUtils()
+                                                NameUtils
                                                         .cleanName(
                                                                 keyUtils
                                                                         .getNameUtils()
@@ -268,7 +278,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > preReducingPipe = Pipes.newPipe( Node.class, Node.class )
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > preReducingPipe = Pipes.newPipe( Node.class, Node.class )
             .withName( "Pre-reducer" )
             .withConditionIn( Objects::nonNull )
             .withProcessor( ( in ) -> ( preReducer == null || ! preReduceCheckBox.isSelected() )
@@ -284,7 +295,8 @@ public class ModellerPane extends AbstractModellerPane
             .withLogMessages( logPipelineMessages );
 
 
-    private Pipe< Node, Node > buildPipeline()
+    @SuppressWarnings( "unchecked" )
+	private Pipe< Node, Node > buildPipeline()
     {
         return Pipes.newPipe( Node.class, Node.class )
                 .withName( "Snapper" )

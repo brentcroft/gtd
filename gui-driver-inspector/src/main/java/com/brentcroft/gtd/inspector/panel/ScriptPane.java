@@ -12,11 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 
+@SuppressWarnings( "restriction" )
 public class ScriptPane extends CodeEditorPane implements InspectorPane
 {
     public static final String TEMPLATE_FILENAME = WebTemplatePane.JS_TEMPLATE_FILENAME;
 
-    private final Button scriptExecuteButton = new Button( "Execute" );
+   
+	private final Button scriptExecuteButton = new Button( "Execute" );
     private final Button refreshButton = new Button( "Refresh" );
     //private final Button layerButton = new Button( "Layer" );
     //private final TextField layerKeyTextField = new TextField( "newLayer" );

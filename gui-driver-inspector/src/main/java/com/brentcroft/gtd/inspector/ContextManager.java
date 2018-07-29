@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 /**
  * Created by Alaric on 27/03/2017.
  */
+@SuppressWarnings( "restriction" )
 public interface ContextManager
 {
     ContextUnit getUnit();

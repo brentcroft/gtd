@@ -63,6 +63,7 @@ import static java.lang.String.format;
 /**
  * Created by Alaric on 01/12/2016.
  */
+@SuppressWarnings( "restriction" )
 public class AbstractModellerPane extends VBox
 {
     protected final static Logger logger = Logger.getLogger( AbstractModellerPane.class );

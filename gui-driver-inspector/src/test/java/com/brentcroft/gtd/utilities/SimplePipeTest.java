@@ -71,7 +71,8 @@ public class SimplePipeTest
     }
 
 
-    @Test
+    @SuppressWarnings( "unchecked" )
+	@Test
     @Ignore
     public void receivesMessage()
     {

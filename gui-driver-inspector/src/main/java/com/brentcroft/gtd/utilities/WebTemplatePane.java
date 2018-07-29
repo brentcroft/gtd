@@ -11,6 +11,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+@SuppressWarnings( "restriction" )
 public class WebTemplatePane extends VBox
 {
     public static final String DEFAULT_TEMPLATE_FILENAME = "html/defaultEditor-template.html";
@@ -63,7 +64,7 @@ public class WebTemplatePane extends VBox
 
     private TemplateType templateType = null;
 
-    private String editingCode;
+    //private String editingCode;
 
     /**
      * if the code has been edited since last saved

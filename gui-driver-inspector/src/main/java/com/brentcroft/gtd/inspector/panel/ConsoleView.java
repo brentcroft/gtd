@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
  * @author Yuhi Ishikura
  * @see: https://github.com/uphy/javafx-console
  */
+@SuppressWarnings( "restriction" )
 public class ConsoleView extends SplitPane implements InspectorPane
 {
     protected static final Logger logger = Logger.getLogger( ConsoleView.class );

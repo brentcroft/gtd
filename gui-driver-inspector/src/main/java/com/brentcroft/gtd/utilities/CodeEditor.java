@@ -18,6 +18,7 @@ import org.w3c.dom.html.HTMLTextAreaElement;
  * <p>
  * See http://codemirror.net for more information on using the codemirror editor.
  */
+@SuppressWarnings( "restriction" )
 public class CodeEditor extends StackPane
 {
     protected static final Logger logger = Logger.getLogger( CodeEditor.class );

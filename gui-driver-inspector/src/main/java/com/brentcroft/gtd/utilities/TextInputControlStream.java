@@ -23,6 +23,7 @@ import static java.lang.String.format;
 /**
  * @author Yuhi Ishikura
  */
+@SuppressWarnings( "restriction" )
 public class TextInputControlStream
 {
     // foreign logger may be null

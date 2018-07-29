@@ -75,7 +75,8 @@ public class NameUtils
         return this;
     }
 
-    public NameUtils withTagAttributes( String tagAttributes )
+    @SuppressWarnings( "unchecked" )
+	public NameUtils withTagAttributes( String tagAttributes )
     {
         Map< String, List< String > > info = new LinkedHashMap<>();
         StringUpcaster.upcastMapList( tagAttributes, info );
@@ -189,7 +190,8 @@ public class NameUtils
         String info;
         Function< String, String >[] extractors;
 
-        Namer( String attrName, String info, Function< String, String >... extractors )
+        @SafeVarargs
+		Namer( String attrName, String info, Function< String, String >... extractors )
         {
             this.attrName = attrName;
             this.info = info;

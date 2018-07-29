@@ -42,6 +42,7 @@ import org.xml.sax.SAXException;
 import static com.brentcroft.util.StringUpcaster.upcast;
 import static java.lang.String.format;
 
+@SuppressWarnings( "restriction" )
 public class HistoryPane extends VBox
 {
     protected final static Logger logger = Logger.getLogger( HistoryPane.class );

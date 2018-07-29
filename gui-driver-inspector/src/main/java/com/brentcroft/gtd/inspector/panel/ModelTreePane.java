@@ -42,6 +42,7 @@ import org.apache.log4j.Logger;
 
 import static java.lang.String.format;
 
+@SuppressWarnings( { "restriction", "unchecked" } )
 public class ModelTreePane extends SplitPane implements InspectorPane
 {
     private final static Logger logger = Logger.getLogger( ModelTreePane.class );

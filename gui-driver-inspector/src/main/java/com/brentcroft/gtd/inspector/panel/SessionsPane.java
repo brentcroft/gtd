@@ -1,16 +1,22 @@
 package com.brentcroft.gtd.inspector.panel;
 
 
+import static java.lang.String.format;
+
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import org.apache.log4j.Logger;
+
 import com.brentcroft.gtd.inspector.Inspector;
 import com.brentcroft.gtd.inspector.InspectorApplication;
 import com.brentcroft.gtd.inspector.panel.modeller.ModellerPane;
 import com.brentcroft.gtd.js.context.ContextUnit;
 import com.brentcroft.gtd.js.driver.JSGuiSession;
 import com.sun.javafx.stage.StageHelper;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -29,10 +35,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 
-import static java.lang.String.format;
-
+@SuppressWarnings( "restriction" )
 public class SessionsPane extends VBox
 {
     protected final static Logger logger = Logger.getLogger( SessionsPane.class );
@@ -58,11 +62,12 @@ public class SessionsPane extends VBox
 
     private ObservableList< JSGuiSession > olist;
 
-    private InspectorApplication contextManager;
+    //private InspectorApplication contextManager;
     private ContextUnit contextUnit;
 
 
-    private void replaceList()
+    
+	private void replaceList()
     {
         contextUnit
                 .getSessions()
@@ -79,7 +84,7 @@ public class SessionsPane extends VBox
 
     public SessionsPane( InspectorApplication contextManager )
     {
-        this.contextManager = contextManager;
+        //this.contextManager = contextManager;
         this.contextUnit = contextManager.getUnit();
 
 
@@ -220,10 +225,10 @@ public class SessionsPane extends VBox
         } );
     }
 
-    private String getSessionEventerKey( String sessionKey )
-    {
-        return format( "Events[%s]", sessionKey );
-    }
+//    private String getSessionEventerKey( String sessionKey )
+//    {
+//        return format( "Events[%s]", sessionKey );
+//    }
 
     private String getSessionModellerKey( String sessionKey )
     {

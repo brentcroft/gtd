@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
 
 import static java.lang.String.format;
 
-
+@SuppressWarnings( "restriction" )
 public class InspectorApplication extends Application implements ContextManager
 {
     protected final static Logger logger = Logger.getLogger( InspectorApplication.class );
