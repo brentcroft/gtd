@@ -73,7 +73,7 @@ public enum DataLimit
 
 	public static Map< String, Object > getMaxDataLimitsOptions()
 	{
-		Map< String, Object > options = new HashMap();
+		Map< String, Object > options = new HashMap<>();
 
 		// i.e. no restriction on limits
 		for ( DataLimit dl : DataLimit.values() )
@@ -86,7 +86,7 @@ public enum DataLimit
 
 	public static Map< String, Object > getShallowOptions()
 	{
-		Map< String, Object > options = new HashMap();
+		Map< String, Object > options = new HashMap< >();
 
 		options.put( Backend.MODEL_ATTRIBUTE, null );
 		options.put( Backend.SHALLOW_ATTRIBUTE, true );

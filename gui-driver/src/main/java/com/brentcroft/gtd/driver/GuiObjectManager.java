@@ -10,6 +10,6 @@ public interface GuiObjectManager< T >
 {
 	T adapt( Object object, Gob parent );
 
-	HashCache getHashCache();
+	HashCache<T> getHashCache();
 
 }
