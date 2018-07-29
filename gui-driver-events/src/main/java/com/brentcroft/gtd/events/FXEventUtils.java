@@ -42,11 +42,11 @@ public class FXEventUtils extends AbstractEventUtils< Event, EventHandler< Event
     }
 
 
-    private Map< Class< ? extends Event >, Set< EventType > > ignorable = new HashMap<>();
+    private Map< Class< ? extends Event >, Set< EventType<?> > > ignorable = new HashMap<>();
 
     // TODO: configurise
     {
-        Set< EventType > eventTypes = new HashSet<>();
+        Set< EventType<?> > eventTypes = new HashSet<>();
 
         eventTypes.add( MouseEvent.MOUSE_DRAGGED );
         eventTypes.add( MouseEvent.MOUSE_MOVED );
@@ -60,7 +60,7 @@ public class FXEventUtils extends AbstractEventUtils< Event, EventHandler< Event
 
 
     {
-        Set< EventType > eventTypes = new HashSet<>();
+        Set< EventType<?> > eventTypes = new HashSet<>();
 
         eventTypes.add( KeyEvent.KEY_PRESSED );
         eventTypes.add( KeyEvent.KEY_RELEASED );
@@ -70,7 +70,7 @@ public class FXEventUtils extends AbstractEventUtils< Event, EventHandler< Event
 
     public boolean canIgnore( Event event )
     {
-        Set< EventType > ignorableTypes = ignorable.get( event.getClass() );
+        Set< EventType<?> > ignorableTypes = ignorable.get( event.getClass() );
 
         if ( ignorableTypes != null && ! ignorableTypes.isEmpty() )
         {
