@@ -1,12 +1,13 @@
 package com.brentcroft.gtd.adapter.model.swing;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.camera.CameraObjectManager;
 import com.brentcroft.util.xpath.gob.Gob;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 import javafx.embed.swing.JFXPanel;
 
 /**
@@ -14,33 +15,30 @@ import javafx.embed.swing.JFXPanel;
  */
 public class JFXPanelGuiObject< T extends JFXPanel > extends JComponentGuiObject< T >
 {
-    public JFXPanelGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
-    {
-        super( go, parent, guiObjectConsultant, objectManager );
-    }
+	public JFXPanelGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
+	{
+		super( go, parent, guiObjectConsultant, objectManager );
+	}
 
-    @Override
-    public boolean hasChildren()
-    {
-        JFXPanel item = getObject();
+	@Override
+	public boolean hasChildren()
+	{
+		JFXPanel item = getObject();
 
-        return super.hasChildren()
-               || ( item.getScene() != null
-                    && item.getScene().getRoot() != null );
-    }
+		return super.hasChildren()
+				|| ((item.getScene() != null)
+						&& (item.getScene().getRoot() != null));
+	}
 
+	@Override
+	public List< GuiObject< ? > > loadChildren()
+	{
+		List< GuiObject< ? > > children = super.loadChildren();
 
-    @Override
-    public List< GuiObject > loadChildren()
-    {
-        List< GuiObject > children = new ArrayList<>();
+		Optional.of( getObject().getScene() )
+				.ifPresent( scene -> Optional.of( scene.getRoot() )
+						.ifPresent( root -> children.add( getManager().adapt( root, this ) ) ) );
 
-        children.addAll( super.loadChildren() );
-
-        Optional.of( getObject().getScene() )
-                .ifPresent( scene -> Optional.of( scene.getRoot() )
-                        .ifPresent( root -> children.add( getManager().adapt( root, this ) ) ) );
-
-        return children;
-    }
+		return children;
+	}
 }

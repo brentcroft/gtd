@@ -5,15 +5,16 @@ package com.brentcroft.gtd.adapter.model;
  */
 public interface ItemVisitor< T >
 {
-    boolean isDuplicate( T item );
+	boolean isDuplicate( T item );
 
-    ItemState open( T item );
+	ItemState open( T item );
 
-    boolean close( T item );
+	boolean close( T item );
 
-    enum ItemState
-    {
-        DUPLICATE,
-        INSERT
-    }
+	enum ItemState
+	{
+		LOST,
+		DUPLICATE,
+		INSERT
+	}
 }

@@ -1,9 +1,8 @@
 package com.brentcroft.gtd.adapter.model;
 
-import com.brentcroft.gtd.camera.CameraObjectManager;
-import com.brentcroft.gtd.driver.ObjectLostException;
-import com.brentcroft.util.xpath.gob.Attribute;
-import com.brentcroft.util.xpath.gob.Gob;
+import static com.brentcroft.util.XmlUtils.getClassIdentifier;
+import static java.lang.String.format;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,183 +11,180 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import static com.brentcroft.util.XmlUtils.getClassIdentifier;
-import static java.lang.String.format;
+import com.brentcroft.gtd.camera.CameraObjectManager;
+import com.brentcroft.gtd.driver.ObjectLostException;
+import com.brentcroft.util.xpath.gob.Attribute;
+import com.brentcroft.util.xpath.gob.Gob;
 
 /**
  * Created by Alaric on 14/07/2017.
  */
-public abstract class AbstractGuiObject< T > implements GuiObject< T >
+public abstract class AbstractGuiObject< T extends Object > implements GuiObject< T >
 {
-    // values
-    protected static String ATTRIBUTE_VALUE_TAB = "tab";
-    protected static String ATTRIBUTE_VALUE_TABS = "tabs";
-    protected static String ATTRIBUTE_VALUE_TABLE = "table";
-    protected static String ATTRIBUTE_VALUE_TREE = "tree";
-    protected static String ATTRIBUTE_VALUE_INDEX = "index";
-    protected static String ATTRIBUTE_VALUE_TEXT = "text";
-    protected static String ATTRIBUTE_VALUE_ROBOT = "robot";
-    protected static String ATTRIBUTE_VALUE_CLICK = "click";
+	// values
+	protected static String ATTRIBUTE_VALUE_TAB = "tab";
+	protected static String ATTRIBUTE_VALUE_TABS = "tabs";
+	protected static String ATTRIBUTE_VALUE_TABLE = "table";
+	protected static String ATTRIBUTE_VALUE_TREE = "tree";
+	protected static String ATTRIBUTE_VALUE_INDEX = "index";
+	protected static String ATTRIBUTE_VALUE_TEXT = "text";
+	protected static String ATTRIBUTE_VALUE_ROBOT = "robot";
+	protected static String ATTRIBUTE_VALUE_CLICK = "click";
 
-    protected static String ATTRIBUTE_HREF = "href";
+	protected static String ATTRIBUTE_HREF = "href";
 
+	protected final Gob parent;
+	private List< Attribute > attributes;
+	private Set< ? extends GuiObject< ? > > children;
 
-    protected final Gob parent;
-    private List< Attribute > attributes;
-    private Set< ? extends GuiObject > children;
+	protected final int guiObjectKey;
+	protected final transient WeakReference< T > guiObject;
+	protected final CameraObjectManager manager;
+	protected final GuiObjectConsultant< T > guiObjectConsultant;
 
-    protected final int guiObjectKey;
-    protected final transient WeakReference< T > guiObject;
-    protected final CameraObjectManager manager;
-    protected final GuiObjectConsultant< T > guiObjectConsultant;
+	protected List< AttrSpec< T > > attrSpec;
 
-    protected List< AttrSpec > attrSpec;
+	public AbstractGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
+	{
+		this.guiObject = new WeakReference< T >( go );
+		this.guiObjectKey = go.hashCode();
+		this.parent = parent;
+		this.guiObjectConsultant = guiObjectConsultant;
+		this.manager = objectManager;
+	}
 
+	@Override
+	public GuiObjectConsultant< T > getConsultant()
+	{
+		return guiObjectConsultant;
+	}
 
-    public AbstractGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
-    {
-        this.guiObject = new WeakReference< T >( go );
-        this.guiObjectKey = go.hashCode();
-        this.parent = parent;
-        this.guiObjectConsultant = guiObjectConsultant;
-        this.manager = objectManager;
-    }
+	/**
+	 * The underlying foreign object, if it still exists.
+	 * <p/>
+	 * If it doesn't exist any more then throws ObjectLostException.
+	 * <p/>
+	 * Be very careful NOT to allow implicit calls to the underlying object's
+	 * toString() method as this may require being on the FX or Swing thread.
+	 *
+	 * @return The underlying foreign object, if it still exists
+	 */
+	@Override
+	public T getObject()
+	{
+		T object = guiObject.get();
 
+		if ( object == null )
+		{
+			throw new ObjectLostException( format( "The object [%s] does not exist anymore.", guiObjectKey ) );
+		}
 
-    @Override
-    public GuiObjectConsultant< T > getConsultant()
-    {
-        return guiObjectConsultant;
-    }
+		return object;
+	}
 
+	@Override
+	public GuiObject< T > getThis()
+	{
+		return this;
+	}
 
-    /**
-     * The underlying foreign object, if it still exists.<p/>
-     * If it doesn't exist any more then throws ObjectLostException.
-     * <p/>
-     * Be very careful NOT to allow implicit calls to the
-     * underlying object's toString() method as this may
-     * require being on the FX or Swing thread.
-     *
-     * @return The underlying foreign object, if it still exists
-     */
-    @Override
-    public T getObject()
-    {
-        T object = guiObject.get();
+	@Override
+	public Gob getParent()
+	{
+		return parent;
+	}
 
-        if ( object == null )
-        {
-            throw new ObjectLostException( format( "The object [%s] does not exist anymore.", guiObjectKey ) );
-        }
+	@Override
+	public CameraObjectManager getManager()
+	{
+		return manager;
+	}
 
-        return object;
-    }
+	@Override
+	public String getComponentTag()
+	{
+		return getObject() == null
+				? "null"
+				: getClassIdentifier( getObject().getClass() );
+	}
 
-    @Override
-    public GuiObject< T > getThis()
-    {
-        return this;
-    }
+	/**
+	 * Never overridden.
+	 *
+	 * @return the cached attribute specifications
+	 */
+	@Override
+	public final List< AttrSpec< T > > getAttrSpec()
+	{
+		if ( attrSpec == null )
+		{
+			attrSpec = loadAttrSpec();
+		}
 
-    public Gob getParent()
-    {
-        return parent;
-    }
+		return attrSpec;
+	}
 
+	/**
+	 * Must be overridden (and called) by sub-types that extend attributes.
+	 *
+	 * @return the loaded attribute specifications
+	 */
+	@SuppressWarnings( "unchecked" )
+	public List< AttrSpec< T > > loadAttrSpec()
+	{
+		if ( attrSpec == null )
+		{
+			attrSpec = new ArrayList<>( Arrays.asList( ( AttrSpec< T >[] ) Attr.values() ) );
+		}
 
-    @Override
-    public CameraObjectManager getManager()
-    {
-        return manager;
-    }
+		return attrSpec;
+	}
 
-    @Override
-    public String getComponentTag()
-    {
-        return getObject() == null
-                ? "null"
-                : getClassIdentifier( getObject().getClass() );
-    }
+	enum Attr implements AttrSpec< Object >
+	{
+		HASH( "hash", go -> "" + go.hashCode() );
 
+		final String n;
+		final Function< Object, String > f;
 
-    /**
-     * Never overridden.
-     *
-     * @return the cached attribute specifications
-     */
-    public final List< AttrSpec > getAttrSpec()
-    {
-        if ( attrSpec == null )
-        {
-            attrSpec = loadAttrSpec();
-        }
+		Attr( String name, Function< Object, String > f )
+		{
+			this.n = name;
+			this.f = f;
+		}
 
-        return attrSpec;
-    }
+		@Override
+		public String getName()
+		{
+			return n;
+		}
 
-    /**
-     * Must be overridden by subtypes that extend attributes.
-     *
-     * @return the loaded attribute specifications
-     */
-    public List< AttrSpec > loadAttrSpec()
-    {
-        if ( attrSpec == null )
-        {
-            attrSpec = new ArrayList<>( Arrays.asList( Attr.values() ) );
-        }
+		@Override
+		public String getAttribute( Object go )
+		{
+			return f.apply( go );
+		}
+	}
 
-        return attrSpec;
-    }
+	@Override
+	public final List< Attribute > getAttributes()
+	{
+		if ( attributes == null )
+		{
+			attributes = readAttributes();
+		}
 
+		return attributes;
+	}
 
-    enum Attr implements AttrSpec< Object >
-    {
-        HASH( "hash", go -> "" + go.hashCode() );
+	@Override
+	public final List< ? extends GuiObject< ? > > getChildren()
+	{
+		if ( children == null )
+		{
+			children = new HashSet<>( loadChildren() );
+		}
 
-        final String n;
-        final Function< Object, String > f;
-
-        Attr( String name, Function< Object, String > f )
-        {
-            this.n = name;
-            this.f = f;
-        }
-
-        public String getName()
-        {
-            return n;
-        }
-
-        @Override
-        public String getAttribute( Object go )
-        {
-            return f.apply( go );
-        }
-    }
-
-
-    @Override
-    public final List< Attribute > getAttributes()
-    {
-        if ( attributes == null )
-        {
-            attributes = readAttributes();
-        }
-
-        return attributes;
-    }
-
-
-    @Override
-    public final List< ? extends GuiObject > getChildren()
-    {
-        if ( children == null )
-        {
-            children = new HashSet<>( loadChildren() );
-        }
-
-        return children == null ? null : new ArrayList<>( children );
-    }
+		return children == null ? null : new ArrayList<>( children );
+	}
 }

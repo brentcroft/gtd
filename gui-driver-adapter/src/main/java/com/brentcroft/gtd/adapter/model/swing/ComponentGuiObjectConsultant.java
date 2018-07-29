@@ -1,18 +1,20 @@
 package com.brentcroft.gtd.adapter.model.swing;
 
-import com.brentcroft.gtd.adapter.model.AbstractGuiObjectConsultant;
 import java.awt.Component;
 import java.util.Properties;
 
+import com.brentcroft.gtd.adapter.model.AbstractGuiObjectConsultant;
+
 public class ComponentGuiObjectConsultant< T extends Component > extends AbstractGuiObjectConsultant< T >
 {
-    public ComponentGuiObjectConsultant( Properties properties )
-    {
-        configure( properties, "Component" );
-    }
+	public ComponentGuiObjectConsultant( Properties properties )
+	{
+		configure( properties, "Component" );
+	}
 
-    public boolean isHidden( T t )
-    {
-        return ! t.isShowing();
-    }
+	@Override
+	public boolean isHidden( T t )
+	{
+		return !t.isShowing();
+	}
 }

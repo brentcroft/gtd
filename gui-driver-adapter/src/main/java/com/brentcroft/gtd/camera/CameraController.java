@@ -156,7 +156,7 @@ public class CameraController extends NotificationBroadcasterSupport implements 
     {
         CanonicalPath cp = CanonicalPath.newCanonicalPath( path );
 
-        HashCache< GuiObject > hc = camera.getObjectManager().getHashCache();
+        HashCache< GuiObject<?> > hc = camera.getObjectManager().getHashCache();
 
         if ( cp.hasHash() && hc.isEnabled() )
         {

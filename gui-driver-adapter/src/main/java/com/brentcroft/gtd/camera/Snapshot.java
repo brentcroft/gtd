@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * A synthetic top-level parent for all AWT and FX (and HTML) gui components.
  *
@@ -15,52 +14,41 @@ import org.apache.log4j.Logger;
  */
 public class Snapshot
 {
-	 private final static transient Logger logger = Logger.getLogger( Snapshot.class );
-	 
-    public < T extends Object > List< T > getChildren()
-    {
-        List children = new ArrayList<>();
+	private final static transient Logger logger = Logger.getLogger( Snapshot.class );
 
+	@SuppressWarnings( "unchecked" )
+	public < T extends Object > List< T > getChildren()
+	{
+		List< T > children = new ArrayList<>();
 
-//        children.addAll(
-//                List.of( java.awt.Window.getWindows() ) );
-//
-//        children.addAll(
-//                javafx.stage.Window.getWindows()
-//                        .stream()
-//                        .map( s -> s.getScene().getRoot() )
-//                        .collect( Collectors.toList() )
-//        );
+		children
+				.addAll( ( List< ? extends T > ) Arrays
+						.asList( java.awt.Window.getWindows() ) );
 
+		try
+		{
+			children
+					.addAll(
+							( List< ? extends T > ) com.sun.javafx.stage.StageHelper.getStages()
+									.stream()
+									.map( stage -> stage.getScene().getRoot() )
+									.collect( Collectors.toList() )
+					);
+		}
+		catch ( Throwable e )
+		{
+			logger.warn( e.getMessage() );
 
-        children
-                .addAll( Arrays
-                        .asList( java.awt.Window.getWindows() ) );
+			// java 9
 
-        try {
+			// children.addAll(
+			// javafx.stage.Window.getWindows()
+			// .stream()
+			// .map( s -> s.getScene().getRoot() )
+			// .collect( Collectors.toList() )
+			// );
+		}
 
-            children
-                    .addAll(
-                            com.sun.javafx.stage.StageHelper.getStages()
-                                    .stream()
-                                    .map(stage -> stage.getScene().getRoot())
-                                    .collect(Collectors.toList())
-                    );
-        }
-        catch (Throwable e)
-        {
-        	logger.warn(e.getMessage());
-        	
-        	// java 9
-        	
-//            children.addAll(
-//                javafx.stage.Window.getWindows()
-//                        .stream()
-//                        .map( s -> s.getScene().getRoot() )
-//                        .collect( Collectors.toList() )
-//            );
-        }
-
-        return children;
-    }
+		return children;
+	}
 }
