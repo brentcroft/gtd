@@ -50,7 +50,7 @@ public class Backend
      *
      * @return the JMX bean object name
      */
-    public static String getMBeanRef(Class controllerClass)
+    public static String getMBeanRef(Class< ? > controllerClass)
     {
         return format( "%s:type=%s",
                 controllerClass.getPackage().getName(),

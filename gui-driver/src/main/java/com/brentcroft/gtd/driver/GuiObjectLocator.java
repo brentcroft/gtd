@@ -1,20 +1,23 @@
 package com.brentcroft.gtd.driver;
 
-import com.brentcroft.util.DateUtils;
-import com.brentcroft.util.Waiter8;
-import com.brentcroft.util.XPathUtils;
-import com.brentcroft.util.xpath.gob.Gob;
+import static java.lang.String.format;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import static java.lang.String.format;
+import com.brentcroft.util.DateUtils;
+import com.brentcroft.util.Waiter8;
+import com.brentcroft.util.XPathUtils;
+import com.brentcroft.util.xpath.gob.Gob;
 
 public interface GuiObjectLocator< T >
 {
@@ -69,7 +72,8 @@ public interface GuiObjectLocator< T >
      *            the path to obtain the component.
      * @return the obtained object or null if none was found.
      */
-    default T getObjectAtPath( String path )
+    @SuppressWarnings( "unchecked" )
+	default T getObjectAtPath( String path )
     {
         // Gob gob = getGob();
         //
@@ -101,7 +105,7 @@ public interface GuiObjectLocator< T >
 
         return node == null
                 ? null
-                : (T) node.getUserData( Backend.GUI_OBJECT_KEY );
+				: ( T ) node.getUserData( Backend.GUI_OBJECT_KEY );
     }
 
     /**
@@ -111,7 +115,8 @@ public interface GuiObjectLocator< T >
      *            the set of paths to obtain the objects.
      * @return the found objects or null if none were found.
      */
-    default T[] getObjectsAtPaths( String... paths )
+    @SuppressWarnings( "unchecked" )
+	default T[] getObjectsAtPaths( String... paths )
     {
         if ( paths == null )
         {
