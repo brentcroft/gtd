@@ -1,22 +1,34 @@
 package com.brentcroft.gtd.camera;
 
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TabItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Node;
 
 import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.camera.model.swt.ButtonGuiObject;
+import com.brentcroft.gtd.camera.model.swt.TabItemGuiObject;
+import com.brentcroft.gtd.driver.utils.DataLimit;
 import com.brentcroft.gtd.swt.SwtApplication;
 import com.brentcroft.util.Waiter8;
+import com.brentcroft.util.XPathUtils;
 import com.brentcroft.util.XmlUtils;
 
 public class SwtCameraTest
@@ -37,7 +49,7 @@ public class SwtCameraTest
 				.withTimeoutMillis( 5 * 1000 )
 				.until( () -> app.isStarted() );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+		//System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
 	}
 
 	@After
@@ -104,10 +116,11 @@ public class SwtCameraTest
 				.onTimeout( timeout -> assertTrue( wasClicked.get() ) )
 				.until( () -> wasClicked.get() );
 
-//		new Waiter8()
-//				.withTimeoutMillis( 100 )
-//				.onTimeout( timeout -> assertTrue( wasClicked.get() ) )
-//				.until( () -> camera.getController().notExists( SwtApplication.buttonXPath, 5, 1 ) );
+		// new Waiter8()
+		// .withTimeoutMillis( 100 )
+		// .onTimeout( timeout -> assertTrue( wasClicked.get() ) )
+		// .until( () -> camera.getController().notExists( SwtApplication.buttonXPath,
+		// 5, 1 ) );
 	}
 
 	@Test
@@ -216,4 +229,63 @@ public class SwtCameraTest
 		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 	}
 
+	@Test
+	public void testTabClick()
+	{
+
+		@SuppressWarnings( "unchecked" )
+		TabItemGuiObject< TabItem > guiObject = ( TabItemGuiObject< TabItem > ) camera.getGuiObject( 1, 5, "//TabItem[@index=1]" );
+
+		assertNotNull( guiObject );
+
+		TabItem tabItem = guiObject.getObject();
+
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( tabItem, null ) ) );
+
+		TabItemGuiObject.onDisplayThread( tabItem, go -> {
+			go.addListener( -1, new Listener()
+			{
+				@Override
+				public void handleEvent( Event event )
+				{
+					System.out.println( "widgetSelected: " + event );
+				}
+			} );
+			return null;
+		} );
+
+		guiObject.asClick().click();
+
+		// assertEquals( "true", getComponentResult( camera, "//TabItem[@index=1]", "@visible" ) );
+
+		// Composite a:actions="click" guid="SamplePanel02"
+
+	}
+
+	public static String getComponentResult( Camera camera, String componentPath, String resultPath )
+	{
+		Map< String, Object > options = DataLimit.getMaxDataLimitsOptions();
+
+		String xmlText = camera.getController().getSnapshotXmlText( componentPath, options );
+
+		try
+		{
+			Node node = XmlUtils.parse( xmlText );
+
+			return ( String ) XPathUtils
+					.getCompiledPath( resultPath )
+					.evaluate(
+							node,
+							XPathConstants.STRING );
+		}
+		catch ( XPathExpressionException e )
+		{
+			throw new RuntimeException(
+					format(
+							"Failed to process xpath [%s] at location [%s].",
+							resultPath,
+							componentPath ),
+					e );
+		}
+	}
 }

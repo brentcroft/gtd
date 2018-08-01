@@ -18,6 +18,7 @@ import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.camera.CameraObjectManager;
+import com.brentcroft.gtd.driver.utils.DataLimit;
 import com.brentcroft.util.xpath.gob.Gob;
 
 /**
@@ -36,24 +37,17 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 	@Override
 	public void click()
 	{
-		onDisplayThread( getObject(), go -> go.setFocus() );
-
-		onDisplayThread( getObject(), go -> {
-			go.getShell().setActive();
-			return null;
-		} );
-
-		if ( onDisplayThread( getObject(), go -> go.isFocusControl() ) &&
-				onDisplayThread( getObject(), go -> go.isVisible() ) )
-		{
-			click( getObject() );
-		}
-		else
-		{
-			logger.warn( "Object is not in focus" );
-		}
+		click(1);
 	}
 
+	
+	@Override
+	public void rightClick()
+	{
+		click(3);
+	}
+	
+	
 	@Override
 	public int[] getLocation()
 	{
@@ -73,8 +67,29 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 
 		return new int[] { p.x, p.y };
 	}
+	
+	protected void click( int mouseButton )
+	{
+		onDisplayThread( getObject(), go -> go.setFocus() );
 
-	public static void click( Control control )
+		onDisplayThread( getObject(), go -> {
+			go.getShell().setActive();
+			return null;
+		} );
+
+		if ( onDisplayThread( getObject(), go -> go.isFocusControl() ) &&
+				onDisplayThread( getObject(), go -> go.isVisible() ) )
+		{
+			click( getObject(), mouseButton );
+		}
+		else
+		{
+			logger.warn( "Object is not in focus" );
+		}
+	}
+	
+
+	public static void click( Control control, int mouseButton )
 	{
 		long delay = 80;
 
@@ -103,7 +118,7 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 							{
 								type = SWT.MouseDown;
 								display = controlDisplay;
-								button = 1;
+								button = mouseButton;
 							}
 						},
 						new Event()
@@ -111,10 +126,9 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 							{
 								type = SWT.MouseUp;
 								display = control.getDisplay();
-								button = 1;
+								button = mouseButton;
 							}
 						}
-
 				}, delay );
 	}
 
@@ -140,14 +154,13 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 		return attrSpec;
 	}
 
-	// "disabled", "visible", "focus"
 	enum Attr implements AttrSpec< Control >
 	{
 		DISABLED( "disabled", go -> go.isEnabled() ? null : "true" ),
-
 		VISIBLE( "visible", go -> go.isVisible() ? "true" : null ),
-
-		FOCUS( "focus", go -> go.isFocusControl() ? "true" : null );
+		FOCUS( "focus", go -> go.isFocusControl() ? "true" : null ),
+		TOOLTIP( "tooltip", go -> DataLimit.MAX_TEXT_LENGTH.maybeTruncate( go.getToolTipText() ) ),
+		;
 
 		final String n;
 		final Function< Control, Object > f;

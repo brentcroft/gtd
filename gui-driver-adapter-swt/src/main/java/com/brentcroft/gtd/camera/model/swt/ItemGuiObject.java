@@ -61,5 +61,4 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 			return onSwtDisplayThreadAsText( go, f );
 		}
 	}
-
 }

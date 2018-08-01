@@ -70,6 +70,8 @@ public class SwtCameraSessionTest
 	public void setUp()
 	{
 		session.start();
+		
+		System.out.println( session.getDriver().getSnapshotXmlText() );
 	}
 
 	@After
@@ -110,6 +112,19 @@ public class SwtCameraSessionTest
 		session.getDriver().setText( SwtApplication.textXPath, SwtApplication.finalText );
 
 		assertEquals( SwtApplication.finalText, session.getDriver().getComponentResultText( SwtApplication.textXPath, "@text" ) );
+	}
+	
+	
+	@Test
+	public void testToolItemsExist()
+	{
+		for (int i : new int[] { 0, 1, 2, 3, 4 }) {
+			String xpath = format("//ToolItem[@text='TI-%d']", i );
+			
+			assertTrue( session.getDriver().exists( xpath ) );
+			
+			session.getDriver().click( xpath );
+		}
 	}
 
 }

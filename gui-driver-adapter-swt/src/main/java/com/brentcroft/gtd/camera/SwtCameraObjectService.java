@@ -12,8 +12,12 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 
@@ -30,8 +34,12 @@ import com.brentcroft.gtd.camera.model.swt.MenuGuiObject;
 import com.brentcroft.gtd.camera.model.swt.MenuItemGuiObject;
 import com.brentcroft.gtd.camera.model.swt.SwtGuiObjectConsultant;
 import com.brentcroft.gtd.camera.model.swt.SwtSnapshotGuiObject;
+import com.brentcroft.gtd.camera.model.swt.TabFolderGuiObject;
+import com.brentcroft.gtd.camera.model.swt.TabItemGuiObject;
 import com.brentcroft.gtd.camera.model.swt.TableGuiObject;
 import com.brentcroft.gtd.camera.model.swt.TextGuiObject;
+import com.brentcroft.gtd.camera.model.swt.ToolBarGuiObject;
+import com.brentcroft.gtd.camera.model.swt.ToolItemGuiObject;
 import com.brentcroft.gtd.camera.model.swt.TreeGuiObject;
 import com.brentcroft.gtd.camera.model.swt.WidgetGuiObject;
 
@@ -78,6 +86,12 @@ public class SwtCameraObjectService extends CameraObjectService
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Table.class, TableGuiObject.class ) );
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Tree.class, TreeGuiObject.class ) );
+
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolBar.class, ToolBarGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolItem.class, ToolItemGuiObject.class ) );
+
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabFolder.class, TabFolderGuiObject.class ) );
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabItem.class, TabItemGuiObject.class ) );
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( SwtSnapshot.class, SwtSnapshotGuiObject.class ) );
 

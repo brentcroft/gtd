@@ -19,7 +19,7 @@ public class SwtSnapshot
 {
 	private static Logger logger = Logger.getLogger( SwtSnapshot.class );
 
-	private Snapshot snapshot = new Snapshot();
+	private FxSnapshot snapshot = new FxSnapshot();
 
 	@SuppressWarnings( "unchecked" )
 	public < T extends Object > List< T > getChildren()
