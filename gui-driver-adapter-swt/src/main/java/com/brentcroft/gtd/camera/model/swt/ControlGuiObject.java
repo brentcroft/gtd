@@ -1,5 +1,7 @@
 package com.brentcroft.gtd.camera.model.swt;
 
+import static com.brentcroft.gtd.adapter.model.AttrSpec.trueOrNull;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -35,19 +37,70 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 	}
 
 	@Override
-	public void click()
+	public void buildProperties( Element element, Map< String, Object > options )
 	{
-		click(1);
+		super.buildProperties( element, options );
+
+		// every Control is clickable
+		addClickAction( element, options );
 	}
 
-	
+	@SuppressWarnings( "unchecked" )
+	@Override
+	public List< AttrSpec< T > > loadAttrSpec()
+	{
+		if ( attrSpec == null )
+		{
+			attrSpec = super.loadAttrSpec();
+			attrSpec.addAll( Arrays.asList( ( AttrSpec< T >[] ) Attr.values() ) );
+		}
+
+		return attrSpec;
+	}
+
+	enum Attr implements AttrSpec< Control >
+	{
+		DISABLED( "disabled", go -> trueOrNull( !go.isEnabled() ) ),
+		VISIBLE( "visible", go -> trueOrNull( go.isVisible() ) ),
+		FOCUS( "focus", go -> trueOrNull( go.isFocusControl() ) ),
+
+		TOOLTIP( "tooltip", go -> DataLimit.MAX_TEXT_LENGTH.maybeTruncate( go.getToolTipText() ) ),
+		;
+
+		final String n;
+		final Function< Control, Object > f;
+
+		Attr( String name, Function< Control, Object > f )
+		{
+			this.n = name;
+			this.f = f;
+		}
+
+		@Override
+		public String getName()
+		{
+			return n;
+		}
+
+		@Override
+		public String getAttribute( Control go )
+		{
+			return onSwtDisplayThreadAsText( go, f );
+		}
+	}
+
+	@Override
+	public void click()
+	{
+		click( 1 );
+	}
+
 	@Override
 	public void rightClick()
 	{
-		click(3);
+		click( 3 );
 	}
-	
-	
+
 	@Override
 	public int[] getLocation()
 	{
@@ -67,7 +120,7 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 
 		return new int[] { p.x, p.y };
 	}
-	
+
 	protected void click( int mouseButton )
 	{
 		onDisplayThread( getObject(), go -> go.setFocus() );
@@ -87,7 +140,6 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 			logger.warn( "Object is not in focus" );
 		}
 	}
-	
 
 	public static void click( Control control, int mouseButton )
 	{
@@ -132,55 +184,4 @@ public class ControlGuiObject< T extends Control > extends WidgetGuiObject< T > 
 				}, delay );
 	}
 
-	@Override
-	public void buildProperties( Element element, Map< String, Object > options )
-	{
-		super.buildProperties( element, options );
-
-		// every Control is clickable
-		addClickAction( element, options );
-	}
-
-	@SuppressWarnings( "unchecked" )
-	@Override
-	public List< AttrSpec< T > > loadAttrSpec()
-	{
-		if ( attrSpec == null )
-		{
-			attrSpec = super.loadAttrSpec();
-			attrSpec.addAll( Arrays.asList( ( AttrSpec< T >[] ) Attr.values() ) );
-		}
-
-		return attrSpec;
-	}
-
-	enum Attr implements AttrSpec< Control >
-	{
-		DISABLED( "disabled", go -> go.isEnabled() ? null : "true" ),
-		VISIBLE( "visible", go -> go.isVisible() ? "true" : null ),
-		FOCUS( "focus", go -> go.isFocusControl() ? "true" : null ),
-		TOOLTIP( "tooltip", go -> DataLimit.MAX_TEXT_LENGTH.maybeTruncate( go.getToolTipText() ) ),
-		;
-
-		final String n;
-		final Function< Control, Object > f;
-
-		Attr( String name, Function< Control, Object > f )
-		{
-			this.n = name;
-			this.f = f;
-		}
-
-		@Override
-		public String getName()
-		{
-			return n;
-		}
-
-		@Override
-		public String getAttribute( Control go )
-		{
-			return onSwtDisplayThreadAsText( go, f );
-		}
-	}
 }

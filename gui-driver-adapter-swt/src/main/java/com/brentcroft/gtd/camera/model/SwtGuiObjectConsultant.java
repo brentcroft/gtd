@@ -1,4 +1,4 @@
-package com.brentcroft.gtd.camera.model.swt;
+package com.brentcroft.gtd.camera.model;
 
 import java.util.Properties;
 
