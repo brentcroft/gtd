@@ -21,9 +21,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -41,12 +44,12 @@ public class SwtApplication
 	private static final Logger logger = Logger.getLogger( SwtApplication.class
 			.getName() );
 
-	public static final String buttonName = "Abort";
+	public static final String buttonName = "Close";
 	public static final String buttonXPath = format( "//Button[ @text='%s' ]",
 			buttonName );
 
-	public static final String initialText = "text01";
-	public static final String finalText = "text02";
+	public static final String initialText = "Lorem ipsum dolor sit amet,\nmaiestatis dissentiunt ei mea, \ncu eam vidit sanctus epicurei. \nTe ius viderer complectitur, \nte eam iuvaret suscipit insolens.";
+	public static final String finalText = "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system";
 	public static final String textXPath = format( "//Text" );
 
 	public final Display[] display = { null };
@@ -86,13 +89,31 @@ public class SwtApplication
 		}
 	}
 
-
 	public void run()
 	{
 		display[ 0 ] = new Display();
-		shell[ 0 ] = new Shell( display[ 0 ], SWT.ON_TOP );
+		shell[ 0 ] = new Shell( display[ 0 ] );
 
 		shell[ 0 ].setText( "SWT Application Example" );
+
+		{
+
+			Menu bar = new Menu( shell[ 0 ], SWT.BAR );
+
+			shell[ 0 ].setMenuBar( bar );
+
+			MenuItem fileItem = new MenuItem( bar, SWT.CASCADE );
+			fileItem.setText( "&File" );
+			
+			Menu submenu = new Menu( shell[ 0 ], SWT.DROP_DOWN );
+			fileItem.setMenu( submenu );
+			
+			MenuItem item = new MenuItem( submenu, SWT.PUSH );
+			item.addListener( SWT.Selection, e -> System.out.println( "Select All" ) );
+			item.setText( "Select &All\tCtrl+A" );
+			item.setAccelerator( SWT.MOD1 + 'A' );
+
+		}
 
 		shell[ 0 ].setLayout( new FillLayout() );
 
@@ -124,7 +145,6 @@ public class SwtApplication
 
 		logger.info( "Finished." );
 	}
-	
 
 	interface NamedControl
 	{
@@ -220,7 +240,7 @@ public class SwtApplication
 	private Composite buildSamplePanel01( Composite parent )
 	{
 		// Composite composite = shell[ 0 ];
-		Composite composite = new Composite( parent, SWT.EMBEDDED );
+		Composite composite = new Composite( parent, SWT.NONE );
 		composite.setData( "GUID", "SamplePanel01" );
 
 		{
@@ -246,62 +266,75 @@ public class SwtApplication
 		}
 
 		{
-			Button button = new Button( composite, SWT.PUSH );
-			button.setData( "GUID", "bunionButton" );
-			button.setText( buttonName );
-			button.setBounds( new Rectangle( 50, 50, 200, 30 ) );
-			button.pack();
 
-			button.addSelectionListener( new SelectionAdapter()
+			Group group = new Group( composite, SWT.SHADOW_ETCHED_OUT );
+
+			group.setData( "GUID", "generalGroup" );
+			group.setText( "Scalar Controls" );
+
+			group.setBounds( new Rectangle( 5, 10, 300, 300 ) );
+
 			{
+				Button button = new Button( group, SWT.PUSH );
+				button.setData( "GUID", "bunionButton" );
+				button.setText( buttonName );
+				button.setBounds( new Rectangle( 100, 30, 50, 30 ) );
+				button.pack();
 
-				@Override
-				public void widgetSelected( SelectionEvent e )
+				button.addSelectionListener( new SelectionAdapter()
 				{
-					shutdown();
-				}
-			} );
+
+					@Override
+					public void widgetSelected( SelectionEvent e )
+					{
+						shutdown();
+					}
+				} );
+			}
+
+			{
+				Label label = new Label( group, SWT.NONE );
+				label.setData( "GUID", "larryLabel" );
+
+				label.setText( "Press to close: " );
+				label.setBounds( new Rectangle( 5, 30, 50, 30 ) );
+				label.pack();
+			}
+
+			{
+				Combo combo = new Combo( group, SWT.EMBEDDED );
+				combo.setData( "GUID", "carrieCombo" );
+				combo.add( "blue" );
+				combo.add( "green" );
+				combo.add( "red" );
+				combo.add( "yellow" );
+
+				combo.select( 0 );
+
+				combo.setBounds( new Rectangle( 5, 60, 50, 30 ) );
+				combo.pack();
+			}
+
+			group.pack();
 		}
 
 		{
 
 			Text text = new Text( composite, SWT.NONE );
+			text.setEditable( true );
 			text.setData( "GUID", "travisText" );
 
 			text.setText( initialText );
-			text.setBounds( new Rectangle( 50, 100, 200, 30 ) );
+			text.setBounds( new Rectangle( 5, 100, 400, 200 ) );
 			text.pack();
 
 			text.addMouseListener( new TestMouseAdapter( "text" ) );
 		}
 
 		{
-			Label label = new Label( composite, SWT.NONE );
-			label.setData( "GUID", "larryLabel" );
-
-			label.setText( "My label" );
-			label.setBounds( new Rectangle( 50, 150, 200, 30 ) );
-			label.pack();
-		}
-
-		{
-			Combo combo = new Combo( composite, SWT.EMBEDDED );
-			combo.setData( "GUID", "carrieCombo" );
-			combo.add( "blue" );
-			combo.add( "green" );
-			combo.add( "red" );
-			combo.add( "yellow" );
-
-			combo.select( 0 );
-
-			combo.setBounds( new Rectangle( 150, 50, 200, 30 ) );
-			combo.pack();
-		}
-
-		{
 			List list = new List( composite, SWT.EMBEDDED );
 			list.setData( "GUID", "lucasList" );
-			list.setBounds( new Rectangle( 150, 100, 200, 30 ) );
+			list.setBounds( new Rectangle( 200, 20, 200, 30 ) );
 
 			list.add( "apple" );
 			list.add( "banana" );
