@@ -18,7 +18,6 @@ import org.w3c.dom.Element;
 import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
-import com.brentcroft.gtd.adapter.utils.FXUtils;
 import com.brentcroft.gtd.adapter.utils.SwingUtils;
 import com.brentcroft.gtd.camera.CameraObjectManager;
 import com.brentcroft.gtd.driver.utils.DataLimit;
@@ -59,7 +58,7 @@ public class JComboBoxGuiObject< T extends JComboBox< ? > > extends JComponentGu
 	@Override
 	public void setText( String text )
 	{
-		FXUtils.maybeInvokeNowOnFXThread( () -> getObject().getEditor().setItem( text ) );
+		SwingUtils.maybeInvokeNowOnEventThread( () -> getObject().getEditor().setItem( text ) );
 	}
 
 	@Override

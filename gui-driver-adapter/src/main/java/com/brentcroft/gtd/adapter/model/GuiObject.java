@@ -302,7 +302,15 @@ public interface GuiObject< T > extends Gob
 
 	interface Click extends Robot
 	{
-		void click();
+		default void click()
+		{
+			throw new UnsupportedOperationException();
+		}
+		
+		default void rightClick()
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	interface Text

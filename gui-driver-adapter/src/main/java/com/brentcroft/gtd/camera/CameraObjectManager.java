@@ -233,9 +233,9 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 	public class AdapterSpecification< C, H extends GuiObject< ? super C > >
 	{
-		Class< C > adapteeClass;
-		Class< H > adapterClass;
-		GuiObjectConsultant< C > adapterGuiObjectConsultant;
+		public Class< C > adapteeClass;
+		public Class< H > adapterClass;
+		public GuiObjectConsultant< C > adapterGuiObjectConsultant;
 
 		public AdapterSpecification( Class< C > adapteeClass, Class< H > adapterClass,
 				GuiObjectConsultant< C > adapterGuiObjectConsultant )
@@ -280,7 +280,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				}
 				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
 				{
-					throw new RuntimeException( e );
+					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
 				}
 			}
 

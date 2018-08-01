@@ -64,6 +64,13 @@ public class JComponentGuiObject< T extends JComponent > extends ContainerGuiObj
 		getObject().requestFocus();
 	}
 
+	@Override
+	public void rightClick()
+	{
+		getObject().requestFocus();
+	}
+	
+	
 	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()
