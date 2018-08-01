@@ -17,6 +17,11 @@
 			<groupId>com.brentcroft.gtd</groupId>
 			<artifactId>gui-driver-adapter</artifactId>
 			<version>${gui-driver.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>com.brentcroft.gtd</groupId>
+			<artifactId>gui-driver-adapter-fx</artifactId>
+			<version>${gui-driver.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.swt</groupId>
