@@ -37,7 +37,7 @@
                 driver.notifyDOMEvents( 'NONE' );
             ">
         <driver
-                rmxUri="service:jmx:rmi:///jndi/rmi://:9909/jmxrmi"
+                rmxUri="service:jmx:rmi:///jndi/rmi://:9900/jmxrmi"
                 pollDelay="1.0"
                 timeout="3.0"
                 relax="0.5"/>
@@ -61,7 +61,7 @@
                 <vmOptions>
                     -Xmx1024m
                     -Dsun.awt.disablegrab=true
-                    -Dcom.sun.management.jmxremote.port=9909
+                    -Dcom.sun.management.jmxremote.port=9900
                     -Dcom.sun.management.jmxremote.authenticate=false
                     -Dcom.sun.management.jmxremote.ssl=false
                 </vmOptions>
@@ -74,6 +74,7 @@
             </java>
         </launcher>
     </session>
+		
     <!--
 
 
