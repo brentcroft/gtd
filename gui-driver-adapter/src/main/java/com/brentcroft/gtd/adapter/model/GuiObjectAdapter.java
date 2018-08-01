@@ -42,6 +42,8 @@ public interface GuiObjectAdapter< T >
 	 */
 	GuiObject< ? super T > adapt( T t, Gob parent );
 
+	< H extends GuiObject< T > > Class< H > getAdapterClass();
+
 	/**
 	 * How many super-adaptersByClass does this adapter have.
 	 * <p>
@@ -68,4 +70,5 @@ public interface GuiObjectAdapter< T >
 				Integer.MAX_VALUE - getOrder(),
 				handler().getName() );
 	}
+
 }

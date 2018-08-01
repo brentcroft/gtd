@@ -58,6 +58,18 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	{
 	}
 
+	@SuppressWarnings( "unchecked" )
+	public < T, H extends GuiObject< T > > Map< Class< T >, Class< H > > getAdapterMap()
+	{
+		Map< Class< T >, Class< H > > adapterMap = new HashMap<>();
+
+		adaptersByRank
+				.stream()
+				.forEach( adapter -> adapterMap.put( ( Class< T > ) adapter.handler(), ( Class< H > ) adapter.getAdapterClass() ) );
+
+		return adapterMap;
+	}
+
 	public void clear()
 	{
 		usedAdaptersByClass.clear();
@@ -197,7 +209,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				t == null ? null : t.getClass().getName(), t ) );
 	}
 
-	public < C, H extends GuiObject< ? super C > > void install( List< ? extends AdapterSpecification< C, H > > adapters )
+	public < C, H extends GuiObject< C > > void install( List< AdapterSpecification< C, H > > adapters )
 	{
 		// addAdapters(
 		// adapters
@@ -219,14 +231,17 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		linkSuperAdapters();
 	}
 
-	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
-			Class< C > adapteeClass, Class< H > adapterClass )
+	public < C, H extends GuiObject< C > > AdapterSpecification< C, H > newAdapterSpecification(
+			Class< C > adapteeClass, 
+			Class< H > adapterClass )
 	{
 		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, null );
 	}
 
 	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
-			Class< C > adapteeClass, Class< H > adapterClass, GuiObjectConsultant< C > adapterGuiObjectConsultant )
+			Class< C > adapteeClass, 
+			Class< H > adapterClass, 
+			GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
 		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, adapterGuiObjectConsultant );
 	}
@@ -246,7 +261,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 	}
 
-	private < C, H extends GuiObject< ? super C > > GuiObjectAdapter< C > newAdapter(
+	private < C, H extends GuiObject< C > > GuiObjectAdapter< C > newAdapter(
 			Class< C > adapteeClass,
 			Class< H > adapterClass,
 			GuiObjectConsultant< C > adapterGuiObjectConsultant )
@@ -282,6 +297,13 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				{
 					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
 				}
+			}
+
+			@SuppressWarnings( "unchecked" )
+			@Override
+			public Class< H > getAdapterClass()
+			{
+				return adapterClass;
 			}
 
 			@Override

@@ -62,13 +62,13 @@ public class CameraObjectService
 		return gom;
 	}
 
-	protected < C, H extends GuiObject< ? super C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
+	protected < C, H extends GuiObject< C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
 	{
 		adapters.addAll( buildDefaultAdapters( properties ) );
 		adapters.addAll( buildSwingAdapters( properties ) );
 	}
 
-	public < C, H extends GuiObject< ? super C > > CameraObjectService install( Properties properties )
+	public < C, H extends GuiObject< C > > CameraObjectService install( Properties properties )
 	{
 		gom.clear();
 

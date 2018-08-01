@@ -19,7 +19,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 15/07/2017.
  */
-public abstract class DefaultGuiObject< T extends Object > extends AbstractGuiObject< T > implements GuiObject.Robot
+public class DefaultGuiObject< T extends Object > extends AbstractGuiObject< T > implements GuiObject.Robot
 {
 	public DefaultGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
 	{
@@ -80,11 +80,11 @@ public abstract class DefaultGuiObject< T extends Object > extends AbstractGuiOb
 			String convert( Object value );
 		}
 
-		private static final  Map< Class<?>, ValueConverter > converters = new HashMap< >();
+		private static final Map< Class< ? >, ValueConverter > converters = new HashMap<>();
 
-		public static void addConverter( ValueConverter processor, Class<?>... targets )
+		public static void addConverter( ValueConverter processor, Class< ? >... targets )
 		{
-			for ( Class<?> target : targets )
+			for ( Class< ? > target : targets )
 			{
 				converters.put( target, processor );
 			}

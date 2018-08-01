@@ -221,6 +221,7 @@ public interface GuiObject< T > extends Gob
 		}
 	}
 
+	
 	static boolean isShallow( Map< String, Object > options )
 	{
 		return (options != null)
