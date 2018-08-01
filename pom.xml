@@ -49,23 +49,25 @@
 	</dependencies>
 	<!-- -->
 	<modules>
+		<module>jstl-el-templates</module>
+		<!-- -->
 		<module>gui-driver-utils</module>
 		<module>gui-driver-events</module>
 		<!-- -->
 		<module>gui-driver-browser</module>
-		<module>jstl-el-templates</module>
 		<!-- -->
 		<module>gui-driver</module>
 		<!-- -->
 		<module>gui-driver-harness</module>
 		<module>gui-driver-adapter</module>
+		<module>gui-driver-adapter-fx</module>
+		<module>gui-driver-adapter-swt</module>
 		<!-- -->
 		<module>gui-driver-client</module>
 		<module>gui-driver-js</module>
 		<!-- -->
 		<module>gui-driver-cucumber</module>
 		<module>gui-driver-inspector</module>
-		<module>gui-driver-adapter-swt</module>
 	</modules>
 	<!-- configuration is used by: mvn javadoc:javadoc executions is used by: 
 		clean install and will create jar in target directory <build> <plugins> <plugin> 
