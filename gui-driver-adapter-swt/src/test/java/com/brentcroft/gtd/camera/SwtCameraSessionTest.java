@@ -71,7 +71,7 @@ public class SwtCameraSessionTest
 	{
 		session.start();
 		
-		System.out.println( session.getDriver().getSnapshotXmlText() );
+		//System.out.println( session.getDriver().getSnapshotXmlText() );
 	}
 
 	@After

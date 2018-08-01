@@ -49,7 +49,7 @@ public class SwtCameraTest
 				.withTimeoutMillis( 5 * 1000 )
 				.until( () -> app.isStarted() );
 
-		//System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
 	}
 
 	@After
