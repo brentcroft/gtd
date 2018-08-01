@@ -19,6 +19,7 @@ import javafx.scene.web.HTMLEditor;
 /**
  * Created by Alaric on 15/07/2017.
  */
+@SuppressWarnings( "restriction" )
 public class FxHTMLEditorGuiObject< T extends HTMLEditor > extends FxControlGuiObject< T > implements GuiObject.Text
 {
 

@@ -12,6 +12,7 @@ import javafx.scene.control.Accordion;
 /**
  * Created by Alaric on 15/07/2017.
  */
+@SuppressWarnings( "restriction" )
 public class FxAccordionGuiObject< T extends Accordion > extends FxControlGuiObject< T >
 {
 	public FxAccordionGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )

@@ -9,6 +9,7 @@ import javafx.scene.web.WebView;
 /**
  * Created by Alaric on 15/07/2017.
  */
+@SuppressWarnings( "restriction" )
 public class FxWebViewGuiObject extends FxParentGuiObject< WebView >
 {
 	public FxWebViewGuiObject( WebView t, Gob parent, GuiObjectConsultant< WebView > guiObjectConsultant, CameraObjectManager hgom )

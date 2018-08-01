@@ -15,7 +15,9 @@ import org.w3c.dom.html.HTMLSelectElement;
 import org.w3c.dom.html.HTMLTableElement;
 import org.w3c.dom.html.HTMLTextAreaElement;
 
+import com.brentcroft.gtd.adapter.model.FxSnapshotGuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObject;
+import com.brentcroft.gtd.adapter.model.W3CHTMLElementGuiObjectConsultant;
 import com.brentcroft.gtd.adapter.model.fx.FxAccordionGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxButtonBarGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxButtonBaseGuiObject;
@@ -37,8 +39,7 @@ import com.brentcroft.gtd.adapter.model.fx.FxTextInputControlGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxTitledPaneGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxToolbarGuiObject;
 import com.brentcroft.gtd.adapter.model.fx.FxTreeViewGuiObject;
-import com.brentcroft.gtd.adapter.model.swing.JFXPanelGuiObject;
-import com.brentcroft.gtd.adapter.model.w3c.W3CHTMLElementGuiObjectConsultant;
+import com.brentcroft.gtd.adapter.model.fx.JFXPanelGuiObject;
 import com.brentcroft.gtd.adapter.model.w3c.W3cHTMLAnchorElementGuiObject;
 import com.brentcroft.gtd.adapter.model.w3c.W3cHTMLButtonElement;
 import com.brentcroft.gtd.adapter.model.w3c.W3cHTMLElementGuiObject;
@@ -84,14 +85,28 @@ public class FxCameraObjectService extends CameraObjectService
 {
 
 	@Override
-	protected < C, H extends GuiObject< ? super C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
+	protected < C, H extends GuiObject< C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
 	{
 		super.addAdapters( adapters, properties );
 
+		adapters.addAll( buildDefaultAdapters( properties ) );
 		adapters.addAll( buildFxAdapters( properties ) );
 		adapters.addAll( buildW3CAdapters( properties ) );
 	}
 
+	@SuppressWarnings( "unchecked" )
+	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildDefaultAdapters( Properties properties )
+	{
+		CameraObjectManager gom = getManager();
+		
+		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
+
+		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( FxSnapshot.class, FxSnapshotGuiObject.class ) );
+
+		return adapters;
+	}	
+	
+	
 	@SuppressWarnings( "unchecked" )
 	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildFxAdapters( Properties properties )
 	{

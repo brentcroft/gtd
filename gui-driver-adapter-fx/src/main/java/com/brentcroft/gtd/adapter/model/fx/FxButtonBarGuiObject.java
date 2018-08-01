@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonBar;
 /**
  * Created by Alaric on 15/07/2017.
  */
+@SuppressWarnings( "restriction" )
 public class FxButtonBarGuiObject< T extends ButtonBar > extends FxControlGuiObject< T >
 {
 	public FxButtonBarGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )

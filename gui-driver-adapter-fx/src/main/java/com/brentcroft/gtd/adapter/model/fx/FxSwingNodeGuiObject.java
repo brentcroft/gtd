@@ -15,6 +15,7 @@ import javafx.embed.swing.SwingNode;
 /**
  * Created by Alaric on 15/07/2017.
  */
+@SuppressWarnings( "restriction" )
 public class FxSwingNodeGuiObject< T extends SwingNode > extends FxNodeGuiObject< T >
 {
 	public FxSwingNodeGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
