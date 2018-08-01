@@ -67,7 +67,7 @@ public class GuiLocalSession extends AbstractGuiSession
 
 			if ( !launcher.isLaunchable() )
 			{
-				throw new RuntimeException();
+				throw new RuntimeException("Application not accessible and has no launcher!");
 			}
 
 			logger.info( "About to start the application..." );
@@ -225,8 +225,8 @@ public class GuiLocalSession extends AbstractGuiSession
 
 		// TODO should this have its own timeout??
 		// the adapter is free to set a smaller one
-		return guiAdapter != null
-				&& guiAdapter.isLoggedIn( getLoginTimeoutSeconds() );
+		return guiAdapter == null
+				|| guiAdapter.isLoggedIn( getLoginTimeoutSeconds() );
 	}
 
 	@Override
