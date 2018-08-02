@@ -48,8 +48,8 @@ public class SwtApplication
 	public static final String buttonXPath = format( "//Button[ @text='%s' ]",
 			buttonName );
 
-	public static final String initialText = "Lorem ipsum dolor sit amet,\nmaiestatis dissentiunt ei mea, \ncu eam vidit sanctus epicurei. \nTe ius viderer complectitur, \nte eam iuvaret suscipit insolens.";
-	public static final String finalText = "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system";
+	public static final String initialText = "Lorem ipsum dolor sit amet.";
+	public static final String finalText = "a complete account of the system";
 	public static final String textXPath = format( "//Text" );
 
 	public final Display[] display = { null };
