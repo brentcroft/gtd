@@ -66,7 +66,7 @@ public class SwtCameraObjectServiceTest implements ObjectServiceInstall
 
 		gos = new SwtCameraObjectService().install( properties );
 		
-		System.out.println( CODE_GENERATOR.apply( gos.getManager() ) );
+		//System.out.println( CODE_GENERATOR.apply( gos.getManager() ) );
 	}
 
 

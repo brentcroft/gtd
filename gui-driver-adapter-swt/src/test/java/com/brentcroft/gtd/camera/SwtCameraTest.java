@@ -49,7 +49,7 @@ public class SwtCameraTest
 				.withTimeoutMillis( 5 * 1000 )
 				.until( () -> app.isStarted() );
 
-		System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+		//System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
 	}
 
 	@After
@@ -240,7 +240,7 @@ public class SwtCameraTest
 
 		TabItem tabItem = guiObject.getObject();
 
-		System.out.println( XmlUtils.serialize( camera.takeSnapshot( tabItem, null ) ) );
+		//System.out.println( XmlUtils.serialize( camera.takeSnapshot( tabItem, null ) ) );
 
 		TabItemGuiObject.onDisplayThread( tabItem, go -> {
 			go.addListener( -1, new Listener()

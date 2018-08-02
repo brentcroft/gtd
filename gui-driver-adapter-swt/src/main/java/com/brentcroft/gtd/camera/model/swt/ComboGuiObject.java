@@ -18,7 +18,7 @@ import com.brentcroft.util.xpath.gob.Gob;
  * Created by Alaric on 14/07/2017.
  */
 public class ComboGuiObject< T extends Combo > extends CompositeGuiObject< T >
-		implements GuiObject.Index, GuiObject.Text
+		implements GuiObject.Text, GuiObject.Index
 {
 	public ComboGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
@@ -34,7 +34,7 @@ public class ComboGuiObject< T extends Combo > extends CompositeGuiObject< T >
 		appendListModelElement(
 				element,
 				options,
-				getItemCount(),
+				onDisplayThread( getObject(), go -> go.getItemCount() ),
 				onDisplayThread( getObject(), go -> go.getItems() ) );
 
 		addTextAction( element, options );
