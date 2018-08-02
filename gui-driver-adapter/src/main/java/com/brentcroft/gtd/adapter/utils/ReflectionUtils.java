@@ -27,6 +27,12 @@ public class ReflectionUtils
 	}
 
 	private final static Class< ? >[] NO_PARAMS = {};
+	
+	
+	public static void setLoggerlevel(Level level)
+	{
+		logger.setLevel( level );
+	}
 
 	public static Class< ? >[] getParamTypes( Object... args )
 	{

@@ -5,18 +5,22 @@ import static java.lang.String.format;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.brentcroft.gtd.adapter.model.AbstractGuiObjectAdapter;
@@ -93,7 +97,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	@Override
 	public GuiObject< ? > adapt( Object object, Gob parent )
 	{
-		return findAdapter( object ).adapt( object, parent );
+		return findAdapter( object, parent ).adapt( object, parent );
 	}
 
 	public void addAdapter( GuiObjectAdapter< ? > adapter )
@@ -183,9 +187,9 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private < T > GuiObjectAdapter< ? super T > findAdapter( T t )
+	private < T > GuiObjectAdapter< ? super T > findAdapter( T t, Gob parent )
 	{
-		GuiObjectAdapter< ? super T > specificHandler = ( GuiObjectAdapter< ? super T > ) usedAdaptersByClass.get( t.getClass() );
+		GuiObjectAdapter< T > specificHandler = ( GuiObjectAdapter< T > ) usedAdaptersByClass.get( t.getClass() );
 
 		if ( specificHandler != null )
 		{
@@ -197,10 +201,19 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		{
 			if ( adapter.handles( t ) )
 			{
+				// maybe adapter can provide a specialised version
+				// and we've established it's of T
+				GuiObjectAdapter< T > specialist = (( GuiObjectAdapter< T > ) adapter).getSpecialist( t, parent );
+
+				if ( specialist != null )
+				{
+					adapter = specialist;
+				}
+
 				// late entry - avoid walk again
 				usedAdaptersByClass.put( t.getClass(), adapter );
 
-				return ( GuiObjectAdapter< ? super T > ) adapter;
+				return ( GuiObjectAdapter< T > ) adapter;
 			}
 		}
 
@@ -232,15 +245,15 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	}
 
 	public < C, H extends GuiObject< C > > AdapterSpecification< C, H > newAdapterSpecification(
-			Class< C > adapteeClass, 
+			Class< C > adapteeClass,
 			Class< H > adapterClass )
 	{
 		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, null );
 	}
 
 	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
-			Class< C > adapteeClass, 
-			Class< H > adapterClass, 
+			Class< C > adapteeClass,
+			Class< H > adapterClass,
 			GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
 		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, adapterGuiObjectConsultant );
@@ -301,6 +314,42 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 			@SuppressWarnings( "unchecked" )
 			@Override
+			public GuiObjectAdapter< C > getSpecialist( C t, Gob parent )
+			{
+				ReflectionUtils.setLoggerlevel( Level.OFF );
+				
+				// looks for declared static getSpecialist on adapterClass
+				try
+				{
+					//Method method = ReflectionUtils.findMethodWithArgs( adapterClass, "getSpecialist", t, parent, getConsultant(), CameraObjectManager.this );
+					
+					Optional< Method > method = Arrays
+							.asList( adapterClass.getDeclaredMethods() )
+							.stream()
+							.filter( m -> m.getName().equals( "getSpecialist" ) )
+							.findAny();
+
+					if ( method.isPresent() )
+					{
+						return ( GuiObjectAdapter< C > ) valueOrRuntimeException(
+								this, // i.e. the adapter; ignored if static method
+								method.get(),
+								t,
+								parent,
+								getConsultant(),
+								CameraObjectManager.this
+								);
+					}
+				}
+				catch ( Exception e )
+				{
+					logger.warn( "Error creating specialist", e );
+				}
+				return this;
+			}
+
+			@SuppressWarnings( "unchecked" )
+			@Override
 			public Class< H > getAdapterClass()
 			{
 				return adapterClass;
@@ -312,6 +361,44 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				return adapterClass.getSimpleName();
 			}
 		};
+	}
+	
+	public static Object voidOrRuntimeException( Object go, Method method, Object... args )
+	{
+		try
+		{
+			method.invoke( go, args );
+			return null;
+		}
+		catch ( Exception e )
+		{
+			throw new RuntimeException( e );
+		}
+	}
+	
+
+	public static Object valueOrRuntimeException( Object go, Method method, Object... args )
+	{
+		try
+		{
+			return method.invoke( go, args );
+		}
+		catch ( Exception e )
+		{
+			throw new RuntimeException( e );
+		}
+	}
+
+	public static Object[] arrayOrRuntimeException( Object go, Method method, Object... args )
+	{
+		try
+		{
+			return ( Object[] ) method.invoke( go, args );
+		}
+		catch ( Exception e )
+		{
+			throw new RuntimeException( e );
+		}
 	}
 
 	@Override

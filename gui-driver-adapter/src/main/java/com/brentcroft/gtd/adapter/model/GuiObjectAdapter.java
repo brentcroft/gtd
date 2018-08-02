@@ -24,6 +24,17 @@ public interface GuiObjectAdapter< T >
 	void setConsultant( GuiObjectConsultant< ? > guiObjectConsultant );
 
 	Class< T > handler();
+	
+	/**
+	 * An adapter may provide a specialised version (typically, but not necessarily,  of itself).
+	 * 
+	 * @param s
+	 * @return
+	 */
+	default GuiObjectAdapter< T > getSpecialist( T t, Gob parent )
+	{
+		return null;
+	}
 
 	/**
 	 * Is the object a T (handled by this adapter)?
@@ -70,5 +81,6 @@ public interface GuiObjectAdapter< T >
 				Integer.MAX_VALUE - getOrder(),
 				handler().getName() );
 	}
+
 
 }

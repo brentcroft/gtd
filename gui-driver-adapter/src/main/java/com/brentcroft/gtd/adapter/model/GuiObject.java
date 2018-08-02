@@ -4,6 +4,7 @@ import static com.brentcroft.util.XmlUtils.maybeSetElementAttribute;
 import static java.lang.String.format;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,10 @@ public interface GuiObject< T > extends Gob
 						.orElseGet( null );
 	}
 
-	List< AttrSpec< T > > getAttrSpec();
+	default List< AttrSpec< T > > getAttrSpec()
+	{
+		return Collections.emptyList();
+	}
 
 	default List< Attribute > readAttributes()
 	{
