@@ -19,6 +19,8 @@ public class ReflectionUtils
 {
 	private final static Logger logger = Logger.getLogger( ReflectionUtils.class );
 
+	private final static boolean SUPPRESS_THROWABLE = true;
+
 	private final static Object[] EMPTY_OBJECT_ARRAY = {};
 
 	// represents the class of null values
@@ -27,9 +29,8 @@ public class ReflectionUtils
 	}
 
 	private final static Class< ? >[] NO_PARAMS = {};
-	
-	
-	public static void setLoggerlevel(Level level)
+
+	public static void setLoggerlevel( Level level )
 	{
 		logger.setLevel( level );
 	}
@@ -73,14 +74,14 @@ public class ReflectionUtils
 	 * @return the Method if found otherwise null (i.e. does not throw
 	 *         NoSuchMethodException)
 	 */
-	public static Method findMethodWithArgs( Class<?> clazz, String methodName, Object... args )
+	public static Method findMethodWithArgs( Class< ? > clazz, String methodName, Object... args )
 	{
 		if ( args == null )
 		{
 			args = EMPTY_OBJECT_ARRAY;
 		}
 
-		Class<?>[] pTypes = getParamTypes( args );
+		Class< ? >[] pTypes = getParamTypes( args );
 
 		return findMethod( clazz, methodName, pTypes );
 	}
@@ -159,6 +160,26 @@ public class ReflectionUtils
 
 			return null;
 		}
+		catch ( Throwable t )
+		{
+			if ( SUPPRESS_THROWABLE )
+			{
+				return null;
+			}
+			throw new RuntimeException( t );
+		}
+	}
+
+	public static < T > Constructor< T > findConstructorWithArgs( Class< T > clazz, Object... args )
+	{
+		if ( args == null )
+		{
+			args = EMPTY_OBJECT_ARRAY;
+		}
+
+		Class< ? >[] pTypes = getParamTypes( args );
+
+		return findConstructor( clazz, pTypes );
 	}
 
 	/**
@@ -233,9 +254,17 @@ public class ReflectionUtils
 
 			return null;
 		}
+		catch ( Throwable t )
+		{
+			if ( SUPPRESS_THROWABLE )
+			{
+				return null;
+			}
+			throw new RuntimeException( t );
+		}
 	}
 
-	private static boolean compatibleParamTypes( Class<?>[] paramTypes, Class<?>[] candidateTypes )
+	private static boolean compatibleParamTypes( Class< ? >[] paramTypes, Class< ? >[] candidateTypes )
 	{
 		// both empty - compatible
 		if ( ((candidateTypes == null) || (candidateTypes.length == 0))

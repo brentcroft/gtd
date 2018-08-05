@@ -29,6 +29,7 @@ import com.brentcroft.gtd.adapter.model.GuiObjectAdapter;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.adapter.utils.HashCacheImpl;
 import com.brentcroft.gtd.adapter.utils.ReflectionUtils;
+import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.driver.GuiObjectManager;
 import com.brentcroft.gtd.driver.utils.HashCache;
 import com.brentcroft.util.xpath.gob.Gob;
@@ -38,7 +39,7 @@ import com.brentcroft.util.xpath.gob.Gob;
  */
 public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 {
-	private static final Logger logger = Logger.getLogger( CameraObjectManager.class.getName() );
+	private static final Logger logger = Logger.getLogger( CameraObjectManager.class );
 
 	private final HashCache< GuiObject< ? > > hashCache = new HashCacheImpl<>();
 
@@ -273,8 +274,61 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			this.adapterGuiObjectConsultant = adapterGuiObjectConsultant;
 		}
 	}
+	
+	
+	
 
-	private < C, H extends GuiObject< C > > GuiObjectAdapter< C > newAdapter(
+	public < C, H extends GuiObject< C > >GuiObjectAdapter< C > newAdapter( 
+			Class< C > adapteeClass, 
+			Class< H > adapterClass, 
+			GuiObjectConsultant< C > guiObjectConsultant,
+			Map< SpecialistMethod, Object > candidate )
+	{
+		return new AbstractGuiObjectAdapter< C >( adapteeClass )
+		{
+			private Constructor< H > constructor;
+
+			{
+				constructor = ReflectionUtils.findConstructor(
+						adapterClass,
+						adapteeClass,
+						Gob.class,
+						GuiObjectConsultant.class,
+						CameraObjectManager.class,
+						Map.class) ;
+
+				if ( constructor == null )
+				{
+					throw new RuntimeException( format( "No constructor found for args: class=%s", adapterClass ) );
+				}
+
+				setConsultant( guiObjectConsultant );
+			}
+
+			@Override
+			public H adapt( C c, Gob parent )
+			{
+				try
+				{
+					return constructor.newInstance( c, parent, getConsultant(), CameraObjectManager.this, candidate );
+				}
+				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
+				{
+					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
+				}
+			}
+
+			@SuppressWarnings( "unchecked" )
+			@Override
+			public Class< H > getAdapterClass()
+			{
+				return adapterClass;
+			}
+		};
+	}	
+	
+
+	public < C, H extends GuiObject< C > > GuiObjectAdapter< C > newAdapter(
 			Class< C > adapteeClass,
 			Class< H > adapterClass,
 			GuiObjectConsultant< C > adapterGuiObjectConsultant )
@@ -293,7 +347,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 				if ( constructor == null )
 				{
-					throw new RuntimeException( "No constructor found for args." );
+					throw new RuntimeException( format( "No constructor found for args: class=%s", adapterClass ) );
 				}
 
 				setConsultant( adapterGuiObjectConsultant );
@@ -316,13 +370,15 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			@Override
 			public GuiObjectAdapter< C > getSpecialist( C t, Gob parent )
 			{
-				ReflectionUtils.setLoggerlevel( Level.OFF );
-				
 				// looks for declared static getSpecialist on adapterClass
 				try
 				{
-					//Method method = ReflectionUtils.findMethodWithArgs( adapterClass, "getSpecialist", t, parent, getConsultant(), CameraObjectManager.this );
-					
+					// Method method = ReflectionUtils.findMethodWithArgs( adapterClass,
+					// "getSpecialist", t, parent, getConsultant(), CameraObjectManager.this );
+
+					/*
+					 * Only want a specialist of this type (and not of a supertype)
+					 */
 					Optional< Method > method = Arrays
 							.asList( adapterClass.getDeclaredMethods() )
 							.stream()
@@ -345,7 +401,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				{
 					logger.warn( "Error creating specialist", e );
 				}
-				return this;
+				return null;
 			}
 
 			@SuppressWarnings( "unchecked" )
@@ -362,7 +418,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			}
 		};
 	}
-	
+
 	public static Object voidOrRuntimeException( Object go, Method method, Object... args )
 	{
 		try
@@ -375,7 +431,6 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			throw new RuntimeException( e );
 		}
 	}
-	
 
 	public static Object valueOrRuntimeException( Object go, Method method, Object... args )
 	{
@@ -419,5 +474,6 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		return b.toString();
 	}
+
 
 }

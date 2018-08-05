@@ -14,6 +14,7 @@ import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.brentcroft.gtd.adapter.model.GuiObject;
@@ -130,17 +131,16 @@ public class CameraController extends NotificationBroadcasterSupport implements 
 		GuiObject< ? > guiObject = getGuiObject( path, 0, 0 );
 
 		long started = System.currentTimeMillis();
+		
+		Document document = XmlUtils.newDocument();		
 
-		// a client snapshot
-		Element element = XmlUtils.parse( format( "<snapshot xmlns:%s=\"%s\"/>",
-				XML_NAMESPACE_TAG,
-				XML_NAMESPACE_URI ) ).getDocumentElement();
-
-		guiObject.accept( new GuiObjectVisitor( element, options ) );
+		guiObject.accept( new GuiObjectVisitor( document, options ) );
 
 		long finished = System.currentTimeMillis();
 		long duration = (finished - started);
 
+		Element element = document.getDocumentElement();
+		
 		element.setAttribute( "duration", "" + duration );
 		XmlUtils.maybeSetElementAttribute( element, null, "options", options );
 		element.setAttribute( "timestamp", DateUtils.timestamp() );

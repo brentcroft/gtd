@@ -90,10 +90,9 @@ public interface GuiObject< T > extends Gob
 						.orElseGet( null );
 	}
 
-	default List< AttrSpec< T > > getAttrSpec()
-	{
-		return Collections.emptyList();
-	}
+	List< AttrSpec< T > > getAttrSpec();
+
+	List< AttrSpec< GuiObject< ? > > > getSpec();
 
 	default List< Attribute > readAttributes()
 	{
@@ -103,6 +102,7 @@ public interface GuiObject< T > extends Gob
 				.forEach( attr -> {
 
 					String attrName = attr.getName();
+
 					String attrValue = attr.getAttribute( getObject() );
 
 					// only non null and non-empty values
@@ -115,6 +115,25 @@ public interface GuiObject< T > extends Gob
 										attrValue ) );
 					}
 				} );
+
+		Optional
+				.ofNullable( getSpec() )
+				.ifPresent( spec -> spec.forEach( attr -> {
+
+					String attrName = attr.getName();
+
+					String attrValue = attr.getSpecialAttribute( this );
+
+					// only non null and non-empty values
+					// to improve name and key generation
+					if ( (attrValue != null) && !attrValue.isEmpty() )
+					{
+						attributes.add(
+								attributeForNameAndValue(
+										attrName,
+										attrValue ) );
+					}
+				} ) );
 
 		return attributes;
 	}
@@ -225,7 +244,6 @@ public interface GuiObject< T > extends Gob
 		}
 	}
 
-	
 	static boolean isShallow( Map< String, Object > options )
 	{
 		return (options != null)
@@ -311,7 +329,7 @@ public interface GuiObject< T > extends Gob
 		{
 			throw new UnsupportedOperationException();
 		}
-		
+
 		default void rightClick()
 		{
 			throw new UnsupportedOperationException();
@@ -320,39 +338,78 @@ public interface GuiObject< T > extends Gob
 
 	interface Text
 	{
-		String getText();
+		default String getText()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void setText( String text );
+		default void setText( String text )
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	interface Index
 	{
-		Integer getItemCount();
+		default Integer getItemCount()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		Integer getSelectedIndex();
+		default Integer getSelectedIndex()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void setSelectedIndex( final int index );
+		default void setSelectedIndex( final int index )
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	interface Table
 	{
-		Integer getColumnCount();
+		default Integer getColumnCount()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		Integer getRowCount();
+		default Integer getRowCount()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		Integer getSelectionIndex();
+		default Integer getSelectionIndex()
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void selectRow( int row );
+		default void selectRow( int row )
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void selectColumn( int column );
+		default void selectColumn( int column )
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void selectCell( int row, int column );
+		default void selectCell( int row, int column )
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	interface Tree
 	{
-		String getPath( String path );
+		default String getPath( String path )
+		{
+			throw new UnsupportedOperationException();
+		}
 
-		void selectPath( String path );
+		default void selectPath( String path )
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 }

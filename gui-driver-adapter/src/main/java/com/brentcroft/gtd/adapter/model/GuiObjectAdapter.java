@@ -82,5 +82,4 @@ public interface GuiObjectAdapter< T >
 				handler().getName() );
 	}
 
-
 }

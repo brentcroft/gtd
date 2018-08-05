@@ -43,6 +43,7 @@ public abstract class AbstractGuiObject< T extends Object > implements GuiObject
 	protected final GuiObjectConsultant< T > guiObjectConsultant;
 
 	protected List< AttrSpec< T > > attrSpec;
+	protected List< AttrSpec< GuiObject< ? > > > spec;
 
 	public AbstractGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager )
 	{
@@ -122,6 +123,12 @@ public abstract class AbstractGuiObject< T extends Object > implements GuiObject
 		}
 
 		return attrSpec;
+	}
+	
+	@Override
+	public List< AttrSpec< GuiObject< ? > > > getSpec()
+	{
+		return spec;
 	}
 
 	/**

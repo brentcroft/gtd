@@ -55,4 +55,11 @@ public abstract class AbstractGuiObjectAdapter< T > implements GuiObjectAdapter<
 	{
 		return clazz.isInstance( t );
 	}
+	
+
+	@Override
+	public String toString()
+	{
+		return getAdapterClass().getSimpleName();
+	}
 }
