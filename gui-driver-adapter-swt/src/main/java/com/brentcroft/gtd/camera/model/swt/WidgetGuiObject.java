@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
@@ -95,37 +96,45 @@ public class WidgetGuiObject< T extends Widget > extends DefaultGuiObject< T >
 	{
 		Object[] value = { null };
 
-		if ( !widget.getDisplay().isDisposed() )
+		try
 		{
-			widget.getDisplay().asyncExec( () -> {
+			if ( !widget.getDisplay().isDisposed() )
+			{
+				widget.getDisplay().asyncExec( () -> {
+					try
+					{
+						value[ 0 ] = function.apply( widget );
+					}
+					finally
+					{
+						synchronized ( value )
+						{
+							value.notifyAll();
+						}
+					}
+				} );
+
 				try
-				{
-					value[ 0 ] = function.apply( widget );
-				}
-				finally
 				{
 					synchronized ( value )
 					{
-						value.notifyAll();
+						value.wait( 100 );
 					}
 				}
-			} );
-
-			try
-			{
-				synchronized ( value )
+				catch ( InterruptedException e )
 				{
-					value.wait( 100 );
+					logger.warn( "Interrupted waiting for Display Thread task to complete." );
 				}
 			}
-			catch ( InterruptedException e )
+			else
 			{
-				logger.warn( "Interrupted waiting for Display Thread task to complete." );
+				logger.warn( format( "Display already disposed" ) );
 			}
 		}
-		else
+		catch ( SWTException e )
 		{
-			logger.warn( format( "Display already disposed" ) );
+			// duh... because display is disposed
+			logger.warn( format( "SWTException: %s", e.getMessage() ) );
 		}
 
 		return ( V ) value[ 0 ];

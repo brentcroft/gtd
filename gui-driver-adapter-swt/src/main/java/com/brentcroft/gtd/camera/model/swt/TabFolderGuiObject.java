@@ -7,19 +7,18 @@ import org.w3c.dom.Element;
 
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.camera.CameraObjectManager;
-import com.brentcroft.gtd.camera.model.swt.CompositeGuiObject.IndexCompositeGuiObject;
 import com.brentcroft.util.xpath.gob.Gob;
 
 /**
  * Created by Alaric on 14/07/2017.
  * 
  */
-public class TabFolderGuiObject< T extends TabFolder > extends IndexCompositeGuiObject< T >
+public class TabFolderGuiObject< T extends TabFolder > extends CompositeGuiObject< T >
 {
 	public TabFolderGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
 	{
-		super( go, parent, guiObjectConsultant, objectManager, getMethods( go ) );
+		super( go, parent, guiObjectConsultant, objectManager );
 	}
 
 	@Override

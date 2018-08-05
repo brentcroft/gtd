@@ -3,6 +3,7 @@ package com.brentcroft.gtd.camera.model.swt;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.swt.SWT;
@@ -52,7 +53,9 @@ public class TabItemGuiObject< T extends TabItem > extends ItemGuiObject< T > im
 	{
 		List< GuiObject< ? > > children = super.loadChildren();
 
-		children.add( getManager().adapt( onDisplayThread( getObject(), go -> go.getControl() ), this ) );
+		Optional
+				.ofNullable( onDisplayThread( getObject(), go -> go.getControl() ) )
+				.ifPresent( child -> children.add( getManager().adapt( child, this ) ) );
 
 		return children;
 	}

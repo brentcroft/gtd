@@ -84,7 +84,7 @@ public class SwtCameraObjectService extends FxCameraObjectService
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Link.class, LinkGuiObject.class ) );
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Menu.class, MenuGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( MenuItem.class, MenuItemGuiObject.class ) );
+		//adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( MenuItem.class, MenuItemGuiObject.class ) );
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Button.class, ButtonGuiObject.class ) );
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Text.class, TextGuiObject.class ) );
@@ -98,10 +98,10 @@ public class SwtCameraObjectService extends FxCameraObjectService
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Tree.class, TreeGuiObject.class ) );
 
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolBar.class, ToolBarGuiObject.class ) );
+		//adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolBar.class, ToolBarGuiObject.class ) );
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( ToolItem.class, ToolItemGuiObject.class ) );
 
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabFolder.class, TabFolderGuiObject.class ) );
+		//adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabFolder.class, TabFolderGuiObject.class ) );
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( TabItem.class, TabItemGuiObject.class ) );
 
 		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( SwtSnapshot.class, SwtSnapshotGuiObject.class ) );

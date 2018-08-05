@@ -10,7 +10,7 @@ public class SwtGuiObjectConsultant< T extends Widget > extends AbstractGuiObjec
 {
 	public SwtGuiObjectConsultant( Properties properties )
 	{
-		configure( properties, "Widget" );
+		configure( properties, "SWTWidget" );
 	}
 
 	@Override
