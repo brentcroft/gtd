@@ -1,5 +1,6 @@
 package com.brentcroft.gtd.camera;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,11 +16,11 @@ import com.sun.javafx.stage.StageHelper;
 @SuppressWarnings( "restriction" )
 public class FxSnapshot
 {
-	private static Logger logger = Logger.getLogger( FxSnapshot.class );
-
+	private static final Logger logger = Logger.getLogger( FxSnapshot.class );
+	
 	private Snapshot snapshot = new Snapshot();
 
-	@SuppressWarnings( { "unchecked" } )
+	@SuppressWarnings( { "unchecked", "deprecation" } )
 	public < T extends Object > List< T > getChildren()
 	{
 		List< T > children = snapshot.getChildren();
@@ -36,7 +37,22 @@ public class FxSnapshot
 		}
 		catch ( Throwable e )
 		{
-			logger.warn( e );
+			logger.warn("Failed loading top-level Stages [method 1]: " + e);
+			
+			try
+			{
+				// see:
+				// https://stackoverflow.com/questions/15239122/how-to-get-all-top-level-window-javafx
+				for ( Iterator< ? > windowIt = javafx.stage.Window.impl_getWindows(); windowIt.hasNext(); )
+				{
+					children.add( ( T ) windowIt.next() );
+				}
+
+			}
+			catch ( Throwable t )
+			{
+				logger.warn("Failed loading top-level Stages [method 2]: " + e);
+			}
 
 			// java 9
 
@@ -50,4 +66,5 @@ public class FxSnapshot
 
 		return children;
 	}
+
 }
