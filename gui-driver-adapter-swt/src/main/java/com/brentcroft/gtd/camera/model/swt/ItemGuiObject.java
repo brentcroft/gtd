@@ -5,23 +5,31 @@ import static com.brentcroft.util.XmlUtils.maybeAppendElementAttribute;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Widget;
 import org.w3c.dom.Element;
 
 import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
-import com.brentcroft.gtd.adapter.model.GuiObjectAdapter;
+import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
-import com.brentcroft.gtd.adapter.utils.ReflectionUtils;
+import com.brentcroft.gtd.adapter.model.SpecialistGuiObject;
+import com.brentcroft.gtd.adapter.model.SpecialistGuiObject.SpecialistFunctions;
 import com.brentcroft.gtd.adapter.utils.Specialist;
 import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.camera.CameraObjectManager;
+import com.brentcroft.util.TriFunction;
 import com.brentcroft.util.xpath.gob.Gob;
 
 /**
@@ -30,6 +38,8 @@ import com.brentcroft.util.xpath.gob.Gob;
  */
 public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 {
+	private static Logger logger = Logger.getLogger( ItemGuiObject.class );
+
 	public ItemGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
 	{
@@ -88,14 +98,92 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 	 * @return
 	 */
 	@SuppressWarnings( "unchecked" )
-	public static < T extends Item > GuiObjectAdapter< T > getSpecialist( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
+	public static < T extends Item > GuiObjectFactory< T > getSpecialist( T go, Gob parent, GuiObjectConsultant< T > consultant,
 			CameraObjectManager objectManager )
 	{
-		Map< SpecialistMethod, Object > candidate = ItemWithControl.getSpecialistMethods( go );
+		GuiObjectFactory< T > specialist = null;
 
-		if ( ItemWithControl.isComplete(candidate) )
+		if ( consultant.specialise( go ) )
 		{
-			return objectManager.newAdapter( ( Class< T > ) go.getClass(), ItemWithControlGuiObject.class, guiObjectConsultant, candidate );
+			final Map< String, Object > availableFunctions = SpecialistFunctions.getSpecialistFunctions( go );
+
+			ItemWithControl
+					.getSpecialistFunctions( go )
+					.entrySet()
+					.stream()
+					.filter( entry -> entry.getValue() != null )
+					.forEach( af -> {
+						availableFunctions.remove( af.getKey() );
+						availableFunctions.put( af.getKey(), af.getValue() );
+					} );
+			
+			final Map< String, Object > wrappedFunctions = availableFunctions
+					.entrySet()
+					.stream()
+					.filter( entry -> entry.getValue() != null )
+					.collect( Collectors.toMap( entry -> entry.getKey(), entry -> {
+						final Object function = entry.getValue();
+						try
+						{
+							if ( function instanceof Function )
+							{
+								Function< Object, Object > innerFunction = ( Function< Object, Object > ) entry.getValue();
+								Function< Object, Object > outerFunction = widget -> onDisplayThread( ( Widget ) widget, w -> innerFunction.apply( w ) );
+								return outerFunction;
+							}
+							else if ( function instanceof BiFunction )
+							{
+								BiFunction< Object, Object, Object > innerFunction = ( BiFunction< Object, Object, Object > ) entry.getValue();
+								BiFunction< Object, Object, Object > outerFunction = ( widget, args ) -> onDisplayThread( ( Widget ) widget,
+										w -> innerFunction.apply( w, args ) );
+								return outerFunction;
+							}
+							else if ( function instanceof TriFunction )
+							{
+								TriFunction< Object, Object, Object, Object > innerFunction = ( TriFunction< Object, Object, Object, Object > ) entry.getValue();
+								TriFunction< Object, Object, Object, Object > outerFunction = ( widget, args, e ) -> onDisplayThread( ( Widget ) widget,
+										w -> innerFunction.apply( w, args, e ) );
+								return outerFunction;
+							}
+
+							throw new IllegalArgumentException( "Unknown function type: " + function );
+						}
+						catch ( Exception e )
+						{
+							throw new IllegalStateException( String.format( "Error wrapping function [%s] %s", entry.getKey(), function ), e );
+						}
+					} ) );			
+
+			// Map< String, AttrSpec< GuiObject< ? > > > availableAttributes =
+			// SpecialistGuiObject.SpecialistAttributes.getAttributes( go );
+
+			Map< String, AttrSpec< GuiObject< ? > > > availableAttributes = new HashMap<>();
+
+			availableAttributes = availableAttributes
+					.entrySet()
+					.stream()
+					.filter( Objects::nonNull )
+					.collect( Collectors.toMap( e -> e.getKey(), e -> new AttrSpec< GuiObject< ? > >()
+					{
+
+						@Override
+						public String getSpecialAttribute( GuiObject< ? > gob )
+						{
+							return onDisplayThread( ( Composite ) gob.getObject(), go -> e.getValue().getSpecialAttribute( gob ) );
+						}
+
+						@Override
+						public String getName()
+						{
+							return e.getKey();
+						}
+					} ) );
+
+			specialist = objectManager.newSoftFactory( ( Class< T > ) go.getClass(), SpecialistGuiObject.class, consultant, wrappedFunctions, availableAttributes );
+
+			logger.info( String.format( "Adpating [%s] with specialist: %s", go.getClass().getName(), specialist ) );
+
+			return specialist;
 		}
 
 		return null;
@@ -110,7 +198,7 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 		{
 			super( go, parent, guiObjectConsultant, objectManager );
 
-			getControlMethod = methods.get( ItemWithControl.Required.GET_CONTROL );
+			getControlMethod = methods.get( ItemWithControl.Functions.GET_CONTROL );
 		}
 
 		@Override
@@ -119,11 +207,10 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 			super.buildProperties( element, options );
 
 			maybeAppendElementAttribute( options, element, XML_NAMESPACE_URI, "a:spec", "item" );
-			
+
 			// the last action in the list is the prime action
-		}		
-		
-		
+		}
+
 		@Override
 		public boolean hasChildren()
 		{
@@ -148,24 +235,19 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 
 interface ItemWithControl
 {
-	static Map< SpecialistMethod, Object > getSpecialistMethods( Object go )
+	public static Map< String, Object > getSpecialistFunctions( Object go )
 	{
-		return Specialist.getSpecialistMethods( go, Arrays.asList( Required.values() ) );
-	}
-	
-	static boolean isComplete(Map< SpecialistMethod, Object > methods)
-	{
-		return Required.values().length == methods.size();
+		return Specialist.extractFunctions( go, Arrays.asList( Functions.values() ) );
 	}
 
-	enum Required implements SpecialistMethod
+	public enum Functions implements SpecialistMethod
 	{
 		GET_CONTROL( "getControl" );
 
 		private final String methodName;
 		private final Class< ? >[] args;
 
-		Required( String name, Class< ? >... args )
+		Functions( String name, Class< ? >... args )
 		{
 			this.methodName = name;
 			this.args = args;
@@ -180,38 +262,11 @@ interface ItemWithControl
 		{
 			return args;
 		}
-		
 
 		@Override
 		public Object getFunctionFrom( Object owner )
 		{
-			Method m = ReflectionUtils.findMethod( 
-					owner.getClass(),
-					getMethodName(),
-					getArgs()
-			);
-			
-			if ( m == null )
-			{
-				return null;
-			}
-			
-			if ( args == null || args.length < 1)
-			{
-				Function< Object, Object > fn = t -> CameraObjectManager.valueOrRuntimeException( t, m, null );
-			
-				return fn;
-			}
-			switch(args.length)
-			{
-				case 1:
-					BiFunction< Object, Object, Object > fn = (t, a) -> CameraObjectManager.valueOrRuntimeException( t, m, a );
-					
-					return fn;
-					
-			}
-
-			return null;
-		}		
+			return WidgetGuiObject.onDisplayThread( ( Widget ) owner, w -> getFunction( w ) );
+		}
 	}
 }

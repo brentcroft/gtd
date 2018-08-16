@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import com.brentcroft.gtd.adapter.model.SpecialistGuiObject;
 import com.brentcroft.gtd.camera.model.SwtSnapshotGuiObject;
 import com.brentcroft.gtd.camera.model.swt.BrowserGuiObject;
 import com.brentcroft.gtd.camera.model.swt.ButtonGuiObject;
@@ -54,9 +55,6 @@ import com.brentcroft.gtd.camera.model.swt.WidgetGuiObject;
 
 public class SwtCameraObjectServiceTest implements ObjectServiceInstall
 {
-	@Mock
-	Properties properties;
-
 	CameraObjectService gos;
 
 	@Before
@@ -64,6 +62,10 @@ public class SwtCameraObjectServiceTest implements ObjectServiceInstall
 	{
 		initMocks( this );
 
+		Properties properties = new Properties();
+		
+		properties.setProperty( "camera.SWTWidget.widgetsToSpecialise", "*" );		
+		
 		gos = new SwtCameraObjectService().install( properties );
 		
 		//System.out.println( CODE_GENERATOR.apply( gos.getManager() ) );
@@ -78,14 +80,21 @@ public class SwtCameraObjectServiceTest implements ObjectServiceInstall
 	}
 
 	@Override
+	@Test
 	public void installsServiceAdapters() throws Exception
 	{
 		assertEquals( BrowserGuiObject.class, adapteeClass( gos, Mockito.mock( Browser.class ) ) );
 		assertEquals( ButtonGuiObject.class, adapteeClass( gos, Mockito.mock( Button.class ) ) );
 		assertEquals( ComboGuiObject.class, adapteeClass( gos, Mockito.mock( Combo.class ) ) );
-		assertEquals( CompositeGuiObject.class, adapteeClass( gos, Mockito.mock( Composite.class ) ) );
+		
+		//assertEquals( CompositeGuiObject.class, adapteeClass( gos, Mockito.mock( Composite.class ) ) );
+		assertEquals( SpecialistGuiObject.class, adapteeClass( gos, Mockito.mock( Composite.class ) ) );
+		
 		assertEquals( ControlGuiObject.class, adapteeClass( gos, Mockito.mock( Control.class ) ) );
-		assertEquals( ItemGuiObject.class, adapteeClass( gos, Mockito.mock( Item.class ) ) );
+		
+		//assertEquals( ItemGuiObject.class, adapteeClass( gos, Mockito.mock( Item.class ) ) );
+		assertEquals( SpecialistGuiObject.class, adapteeClass( gos, Mockito.mock( Item.class ) ) );
+		
 		assertEquals( LabelGuiObject.class, adapteeClass( gos, Mockito.mock( Label.class ) ) );
 		assertEquals( LinkGuiObject.class, adapteeClass( gos, Mockito.mock( Link.class ) ) );
 		assertEquals( ListGuiObject.class, adapteeClass( gos, Mockito.mock( List.class ) ) );
@@ -93,11 +102,17 @@ public class SwtCameraObjectServiceTest implements ObjectServiceInstall
 		assertEquals( MenuItemGuiObject.class, adapteeClass( gos, Mockito.mock( MenuItem.class ) ) );
 		assertEquals( ShellGuiObject.class, adapteeClass( gos, Mockito.mock( Shell.class ) ) );
 		assertEquals( SwtSnapshotGuiObject.class, adapteeClass( gos, Mockito.mock( SwtSnapshot.class ) ) );
-		assertEquals( TabFolderGuiObject.class, adapteeClass( gos, Mockito.mock( TabFolder.class ) ) );
+		
+		//assertEquals( TabFolderGuiObject.class, adapteeClass( gos, Mockito.mock( TabFolder.class ) ) );
+		assertEquals( SpecialistGuiObject.class, adapteeClass( gos, Mockito.mock( TabFolder.class ) ) );
+		
 		assertEquals( TabItemGuiObject.class, adapteeClass( gos, Mockito.mock( TabItem.class ) ) );
 		assertEquals( TableGuiObject.class, adapteeClass( gos, Mockito.mock( Table.class ) ) );
 		assertEquals( TextGuiObject.class, adapteeClass( gos, Mockito.mock( Text.class ) ) );
-		assertEquals( ToolBarGuiObject.class, adapteeClass( gos, Mockito.mock( ToolBar.class ) ) );
+		
+		//assertEquals( ToolBarGuiObject.class, adapteeClass( gos, Mockito.mock( ToolBar.class ) ) );
+		assertEquals( SpecialistGuiObject.class, adapteeClass( gos, Mockito.mock( ToolBar.class ) ) );
+		
 		assertEquals( ToolItemGuiObject.class, adapteeClass( gos, Mockito.mock( ToolItem.class ) ) );
 		assertEquals( TreeGuiObject.class, adapteeClass( gos, Mockito.mock( Tree.class ) ) );
 		assertEquals( WidgetGuiObject.class, adapteeClass( gos, Mockito.mock( Widget.class ) ) );

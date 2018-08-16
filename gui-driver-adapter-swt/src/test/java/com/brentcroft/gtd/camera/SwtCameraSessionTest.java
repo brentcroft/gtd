@@ -71,7 +71,7 @@ public class SwtCameraSessionTest
 	{
 		session.start();
 		
-		//System.out.println( session.getDriver().getSnapshotXmlText() );
+		System.out.println( session.getDriver().getSnapshotXmlText() );
 	}
 
 	@After
@@ -118,7 +118,8 @@ public class SwtCameraSessionTest
 	@Test
 	public void testToolItemsExist()
 	{
-		for (int i : new int[] { 0, 1, 2, 3, 4 }) {
+		for (int i : new int[] { 0, 1, 2, 3, 4 }) 
+		{
 			String xpath = format("//ToolItem[@text='TI-%d']", i );
 			
 			assertTrue( session.getDriver().exists( xpath ) );

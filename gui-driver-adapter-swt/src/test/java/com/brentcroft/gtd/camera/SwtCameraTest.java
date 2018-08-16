@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.xpath.XPathConstants;
@@ -41,6 +42,12 @@ public class SwtCameraTest
 	{
 		app = new SwtApplication();
 		camera = new SwtCamera();
+		
+		Properties properties = new Properties();
+		
+		properties.setProperty( "camera.SWTWidget.widgetsToSpecialise", "*" );
+		
+		camera.setProperties(properties);
 
 		new Thread( () -> app.run() ).start();
 
@@ -49,7 +56,7 @@ public class SwtCameraTest
 				.withTimeoutMillis( 5 * 1000 )
 				.until( () -> app.isStarted() );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
 	}
 
 	@After
