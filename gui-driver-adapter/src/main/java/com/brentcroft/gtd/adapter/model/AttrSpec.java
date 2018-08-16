@@ -12,16 +12,17 @@ public interface AttrSpec< T >
 	default String getSpecialAttribute( T go )
 	{
 		return null;
-	}	
-	
-	
-	static Object trueOrNull(Boolean b)
-	{
-		return b!= null && b ? b : null;
 	}
-	
-	static String stringOrNull(Object b)
+
+
+
+	static Object trueOrNull( Boolean b )
 	{
-		return b!= null ? b.toString() : null;
+		return b != null && b ? b : null;
+	}
+
+	static String stringOrNull( Object b )
+	{
+		return b != null ? b.toString() : null;
 	}
 }

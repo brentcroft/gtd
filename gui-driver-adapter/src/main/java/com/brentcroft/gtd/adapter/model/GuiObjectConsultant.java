@@ -13,4 +13,9 @@ public interface GuiObjectConsultant< T >
 	boolean ignoreAttribute( String name );
 
 	void extendElement( GuiObject< T > t, Element element );
+
+	default boolean specialise( T go )
+	{
+		return false;
+	}
 }

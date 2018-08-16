@@ -10,14 +10,14 @@ import com.brentcroft.util.xpath.gob.Gob;
  *
  *
  */
-public interface GuiObjectAdapter< T >
+public interface GuiObjectFactory< T >
 {
-	GuiObjectAdapter< ? super T > getSuperAdapter();
+	GuiObjectFactory< ? super T > getSuperFactory();
 
 	// TODO: would like to enforce < ? super T >
 	// but leads to problems with adapter.setSuperAdapter( candidate ); in
 	// GuiCameraObjectManager
-	void setSuperAdapter( GuiObjectAdapter< ? > adapter );
+	void setSuperAdapter( GuiObjectFactory< ? > adapter );
 
 	GuiObjectConsultant< ? super T > getConsultant();
 
@@ -31,7 +31,7 @@ public interface GuiObjectAdapter< T >
 	 * @param s
 	 * @return
 	 */
-	default GuiObjectAdapter< T > getSpecialist( T t, Gob parent )
+	default GuiObjectFactory< T > getSpecialist( T t, Gob parent )
 	{
 		return null;
 	}
@@ -53,7 +53,7 @@ public interface GuiObjectAdapter< T >
 	 */
 	GuiObject< ? super T > adapt( T t, Gob parent );
 
-	< H extends GuiObject< T > > Class< H > getAdapterClass();
+	< H extends GuiObject< T > > Class< H > getFactoryClass();
 
 	/**
 	 * How many super-adaptersByClass does this adapter have.
@@ -64,9 +64,9 @@ public interface GuiObjectAdapter< T >
 	 */
 	default int getOrder()
 	{
-		return (getSuperAdapter() == null)
+		return (getSuperFactory() == null)
 				? 0
-				: getSuperAdapter().getOrder() + 1;
+				: getSuperFactory().getOrder() + 1;
 	}
 
 	/**

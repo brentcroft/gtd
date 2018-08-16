@@ -1,46 +1,26 @@
 package com.brentcroft.gtd.adapter.utils;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public interface Specialist
 {
-	static Map< SpecialistMethod, Object > getSpecialistMethods( Object go, Collection< SpecialistMethod > requiredMethods )
+	static Map< String, Object > extractFunctions( Object go, List< SpecialistMethod > methods )
 	{
-		Map< SpecialistMethod, Object > methods = new HashMap<>();
+		Map< String, Object > functions = new LinkedHashMap<>();
 
-		requiredMethods.forEach( sm -> {
-
-			Method m = ReflectionUtils.findMethod(
-					go.getClass(),
-					sm.getMethodName(),
-					sm.getArgs()
-			);
-
-			if ( m != null )
-			{
-				methods.put( sm, m );
-			}
-		} );
-
-		return methods;
-	}
-
-	static Map< SpecialistMethod, Object > getSpecialistFunctions( Object go, Collection< SpecialistMethod > requiredMethods )
-	{
-		return requiredMethods
+		methods
 				.stream()
-				.collect( Collectors.toMap( Function.identity(), rm -> Optional.ofNullable( rm.getFunctionFrom( go ) ) ) )
-				.entrySet()
-				.stream()
-				.filter( e -> e.getValue().isPresent() )
-				.collect( Collectors.toMap( e -> e.getKey(), e -> e.getValue().get() ) );
+				.forEachOrdered( m -> Optional
+						.ofNullable( m.getFunctionFrom( go ) )
+						.ifPresent( functionFrom -> {
+							functions.remove( m.getMethodName() );
+							functions.put( m.getMethodName(), functionFrom );
+						} ) );
+
+		return functions;
 	}
 
 }

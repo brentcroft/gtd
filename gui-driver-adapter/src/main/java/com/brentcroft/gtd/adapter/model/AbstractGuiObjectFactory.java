@@ -3,13 +3,13 @@ package com.brentcroft.gtd.adapter.model;
 /**
  * Created by Alaric on 17/07/2017.
  */
-public abstract class AbstractGuiObjectAdapter< T > implements GuiObjectAdapter< T >
+public abstract class AbstractGuiObjectFactory< T > implements GuiObjectFactory< T >
 {
 	private Class< T > clazz = null;
-	private GuiObjectAdapter< ? super T > superAdapter = null;
+	private GuiObjectFactory< ? super T > superAdapter = null;
 	private GuiObjectConsultant< ? super T > consultant;
 
-	public AbstractGuiObjectAdapter( Class< T > clazz )
+	public AbstractGuiObjectFactory( Class< T > clazz )
 	{
 		this.clazz = clazz;
 	}
@@ -31,15 +31,15 @@ public abstract class AbstractGuiObjectAdapter< T > implements GuiObjectAdapter<
 
 	@SuppressWarnings( "unchecked" )
 	@Override
-	public void setSuperAdapter( GuiObjectAdapter< ? > adapter )
+	public void setSuperAdapter( GuiObjectFactory< ? > adapter )
 	{
 		// TODO: would like to enforce < ? super T >
 		// but leads to problems with adapter.setSuperAdapter( candidate );
-		this.superAdapter = ( GuiObjectAdapter< ? super T > ) adapter;
+		this.superAdapter = ( GuiObjectFactory< ? super T > ) adapter;
 	}
 
 	@Override
-	public GuiObjectAdapter< ? super T > getSuperAdapter()
+	public GuiObjectFactory< ? super T > getSuperFactory()
 	{
 		return this.superAdapter;
 	}
@@ -60,6 +60,6 @@ public abstract class AbstractGuiObjectAdapter< T > implements GuiObjectAdapter<
 	@Override
 	public String toString()
 	{
-		return getAdapterClass().getSimpleName();
+		return getFactoryClass().getSimpleName();
 	}
 }

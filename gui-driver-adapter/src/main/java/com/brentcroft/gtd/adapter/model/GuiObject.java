@@ -4,7 +4,6 @@ import static com.brentcroft.util.XmlUtils.maybeSetElementAttribute;
 import static java.lang.String.format;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,16 +173,16 @@ public interface GuiObject< T > extends Gob
 
 	default void buildProperties( Element element, Map< String, Object > options )
 	{
-		GuiObjectConsultant< T > gos = getConsultant();
+		GuiObjectConsultant< T > goc = getConsultant();
 
 		getAttributes()
 				.stream()
-				.filter( attribute -> (gos == null) || !gos.ignoreAttribute( attribute.getName() ) )
+				.filter( attribute -> (goc == null) || !goc.ignoreAttribute( attribute.getName() ) )
 				.forEach( attribute -> maybeSetAttribute( element, attribute, options ) );
 
-		if ( gos != null )
+		if ( goc != null )
 		{
-			gos.extendElement( this, element );
+			goc.extendElement( this, element );
 		}
 	}
 
@@ -225,7 +224,10 @@ public interface GuiObject< T > extends Gob
 				return;
 
 			default:
-				if ( !isShallow( visitor.getOptions() ) && hasChildren() )
+				boolean deep = !isShallow( visitor.getOptions() );
+				boolean parent = hasChildren();
+				
+				if ( deep && parent )
 				{
 					Optional
 							.ofNullable( loadChildren() )
@@ -348,13 +350,17 @@ public interface GuiObject< T > extends Gob
 			throw new UnsupportedOperationException();
 		}
 	}
-
-	interface Index
+	
+	interface Indexed
 	{
 		default Integer getItemCount()
 		{
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	interface Index extends Indexed
+	{
 
 		default Integer getSelectedIndex()
 		{

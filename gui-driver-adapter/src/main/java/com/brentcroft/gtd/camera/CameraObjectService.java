@@ -47,7 +47,7 @@ import com.brentcroft.gtd.adapter.model.swing.JTabbedPaneGuiObject;
 import com.brentcroft.gtd.adapter.model.swing.JTableGuiObject;
 import com.brentcroft.gtd.adapter.model.swing.JTextComponentGuiObject;
 import com.brentcroft.gtd.adapter.model.swing.JTreeGuiObject;
-import com.brentcroft.gtd.camera.CameraObjectManager.AdapterSpecification;
+import com.brentcroft.gtd.camera.CameraObjectManager.FactorySpecification;
 
 
 /**
@@ -62,7 +62,7 @@ public class CameraObjectService
 		return gom;
 	}
 
-	protected < C, H extends GuiObject< C > > void addAdapters( List< AdapterSpecification< C, H > > adapters, Properties properties )
+	protected < C, H extends GuiObject< C > > void addAdapters( List< FactorySpecification< C, H > > adapters, Properties properties )
 	{
 		adapters.addAll( buildDefaultAdapters( properties ) );
 		adapters.addAll( buildSwingAdapters( properties ) );
@@ -72,7 +72,7 @@ public class CameraObjectService
 	{
 		gom.clear();
 
-		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
+		List< FactorySpecification< C, H > > adapters = new ArrayList<>();
 
 		addAdapters( adapters, properties );
 
@@ -84,42 +84,42 @@ public class CameraObjectService
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildDefaultAdapters( Properties properties )
+	private < C, H extends GuiObject< ? super C > > List< FactorySpecification< C, H > > buildDefaultAdapters( Properties properties )
 	{
-		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
+		List< FactorySpecification< C, H > > adapters = new ArrayList<>();
 
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Object.class, DefaultGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Snapshot.class, SnapshotGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( Object.class, DefaultGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( Snapshot.class, SnapshotGuiObject.class ) );
 
 		return adapters;
 	}
 
 	@SuppressWarnings( { "unchecked" } )
-	private < C, H extends GuiObject< ? super C > > List< AdapterSpecification< C, H > > buildSwingAdapters( Properties properties )
+	private < C, H extends GuiObject< ? super C > > List< FactorySpecification< C, H > > buildSwingAdapters( Properties properties )
 	{
-		List< AdapterSpecification< C, H > > adapters = new ArrayList<>();
+		List< FactorySpecification< C, H > > adapters = new ArrayList<>();
 
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( AbstractButton.class, AbstractButtonGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Component.class, ComponentGuiObject.class,
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( AbstractButton.class, AbstractButtonGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( Component.class, ComponentGuiObject.class,
 				new ComponentGuiObjectConsultant< Component >( properties ) ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( Container.class, ContainerGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JComboBox.class, JComboBoxGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JComponent.class, JComponentGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JDialog.class, JDialogGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JEditorPane.class, JEditorPaneGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JFrame.class, JFrameGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( Container.class, ContainerGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JComboBox.class, JComboBoxGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JComponent.class, JComponentGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JDialog.class, JDialogGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JEditorPane.class, JEditorPaneGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JFrame.class, JFrameGuiObject.class ) );
 
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JInternalFrame.class, JInternalFrameGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JLabel.class, JLabelGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JList.class, JListGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JMenu.class, JMenuGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JPanel.class, JPanelGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JSlider.class, JSliderGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JSpinner.class, JSpinnerGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTabbedPane.class, JTabbedPaneGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTable.class, JTableGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTextComponent.class, JTextComponentGuiObject.class ) );
-		adapters.add( ( AdapterSpecification< C, H > ) gom.newAdapterSpecification( JTree.class, JTreeGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JInternalFrame.class, JInternalFrameGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JLabel.class, JLabelGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JList.class, JListGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JMenu.class, JMenuGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JPanel.class, JPanelGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JSlider.class, JSliderGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JSpinner.class, JSpinnerGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JTabbedPane.class, JTabbedPaneGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JTable.class, JTableGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JTextComponent.class, JTextComponentGuiObject.class ) );
+		adapters.add( ( FactorySpecification< C, H > ) gom.newFactorySpecification( JTree.class, JTreeGuiObject.class ) );
 
 		return adapters;
 	}

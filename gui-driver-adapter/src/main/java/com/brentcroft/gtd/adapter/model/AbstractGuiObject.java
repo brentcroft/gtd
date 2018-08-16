@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -35,7 +36,7 @@ public abstract class AbstractGuiObject< T extends Object > implements GuiObject
 
 	protected final Gob parent;
 	private List< Attribute > attributes;
-	private Set< ? extends GuiObject< ? > > children;
+	private Set< GuiObject< ? > > children;
 
 	protected final int guiObjectKey;
 	protected final transient WeakReference< T > guiObject;
@@ -124,7 +125,7 @@ public abstract class AbstractGuiObject< T extends Object > implements GuiObject
 
 		return attrSpec;
 	}
-	
+
 	@Override
 	public List< AttrSpec< GuiObject< ? > > > getSpec()
 	{
@@ -185,11 +186,16 @@ public abstract class AbstractGuiObject< T extends Object > implements GuiObject
 	}
 
 	@Override
+	/**
+	 * This method ensures that children are only loaded once.
+	 */
 	public final List< ? extends GuiObject< ? > > getChildren()
 	{
 		if ( children == null )
 		{
-			children = new HashSet<>( loadChildren() );
+			Optional
+					.ofNullable( loadChildren() )
+					.ifPresent( c -> children = new HashSet<>( c ) );
 		}
 
 		return children == null ? null : new ArrayList<>( children );

@@ -20,16 +20,15 @@ import java.util.Properties;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.brentcroft.gtd.adapter.model.AbstractGuiObjectAdapter;
+import com.brentcroft.gtd.adapter.model.AbstractGuiObjectFactory;
+import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
-import com.brentcroft.gtd.adapter.model.GuiObjectAdapter;
+import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.adapter.utils.HashCacheImpl;
 import com.brentcroft.gtd.adapter.utils.ReflectionUtils;
-import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.driver.GuiObjectManager;
 import com.brentcroft.gtd.driver.utils.HashCache;
 import com.brentcroft.util.xpath.gob.Gob;
@@ -43,7 +42,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 	private final HashCache< GuiObject< ? > > hashCache = new HashCacheImpl<>();
 
-	private final static Comparator< GuiObjectAdapter< ? > > COMPARATOR = ( h1, h2 ) -> {
+	private final static Comparator< GuiObjectFactory< ? > > COMPARATOR = ( h1, h2 ) -> {
 		try
 		{
 			return h1.getOrderKey().compareTo( h2.getOrderKey() );
@@ -54,10 +53,10 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 	};
 
-	private final Map< Class< ? >, GuiObjectAdapter< ? > > adaptersByClass = new LinkedHashMap<>();
-	private final Map< Class< ? >, GuiObjectAdapter< ? > > usedAdaptersByClass = new HashMap<>();
+	private final Map< Class< ? >, GuiObjectFactory< ? > > adaptersByClass = new LinkedHashMap<>();
+	private final Map< Class< ? >, GuiObjectFactory< ? > > usedAdaptersByClass = new HashMap<>();
 
-	private final List< GuiObjectAdapter< ? > > adaptersByRank = new ArrayList<>();
+	private final List< GuiObjectFactory< ? > > adaptersByRank = new ArrayList<>();
 
 	public void configure( Properties properties )
 	{
@@ -70,7 +69,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		adaptersByRank
 				.stream()
-				.forEach( adapter -> adapterMap.put( ( Class< T > ) adapter.handler(), ( Class< H > ) adapter.getAdapterClass() ) );
+				.forEach( adapter -> adapterMap.put( ( Class< T > ) adapter.handler(), ( Class< H > ) adapter.getFactoryClass() ) );
 
 		return adapterMap;
 	}
@@ -101,17 +100,17 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		return findAdapter( object, parent ).adapt( object, parent );
 	}
 
-	public void addAdapter( GuiObjectAdapter< ? > adapter )
+	public void addAdapter( GuiObjectFactory< ? > adapter )
 	{
 		adaptersByClass.put( adapter.handler(), adapter );
 
 		linkSuperAdapters();
 	}
 
-	public void addAdapters( Collection< ? extends GuiObjectAdapter< ? > > newAdapters )
+	public void addAdapters( Collection< ? extends GuiObjectFactory< ? > > newAdapters )
 	{
 		newAdapters.forEach( adapter -> {
-			GuiObjectAdapter< ? > replaced = adaptersByClass.put( adapter.handler(), adapter );
+			GuiObjectFactory< ? > replaced = adaptersByClass.put( adapter.handler(), adapter );
 
 			if ( replaced != null )
 			{
@@ -143,14 +142,14 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 							.values()
 							.stream()
 							.filter( candidate -> !candidate.equals( adapter ) )
-							.filter( candidate -> candidate != adapter.getSuperAdapter() )
+							.filter( candidate -> candidate != adapter.getSuperFactory() )
 							.filter( candidate -> candidate.handler().isAssignableFrom( adapter.handler() ) )
 							.forEach( candidate -> {
 								// must be sequential
 								// any candidate might make an improvement - less super
-								if ( (adapter.getSuperAdapter() == null)
+								if ( (adapter.getSuperFactory() == null)
 										// switcheroo - we want the least super
-										|| adapter.getSuperAdapter().handler().isAssignableFrom( candidate.handler() ) )
+										|| adapter.getSuperFactory().handler().isAssignableFrom( candidate.handler() ) )
 								{
 									adapter.setSuperAdapter( candidate );
 								}
@@ -174,11 +173,11 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 									return d2;
 								} ) )
 				.stream()
-				.map( adapter -> ( GuiObjectAdapter< ? > ) adapter )
+				.map( adapter -> ( GuiObjectFactory< ? > ) adapter )
 				.filter( adapter -> adapter.getConsultant() == null )
-				.filter( adapter -> adapter.getSuperAdapter() != null )
+				.filter( adapter -> adapter.getSuperFactory() != null )
 				// since sorted
-				.forEach( adapter -> adapter.setConsultant( adapter.getSuperAdapter().getConsultant() ) );
+				.forEach( adapter -> adapter.setConsultant( adapter.getSuperFactory().getConsultant() ) );
 
 		// TODO: half the previous code is meant to isolate this array from being
 		// resorted
@@ -188,9 +187,9 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private < T > GuiObjectAdapter< ? super T > findAdapter( T t, Gob parent )
+	private < T > GuiObjectFactory< ? super T > findAdapter( T t, Gob parent )
 	{
-		GuiObjectAdapter< T > specificHandler = ( GuiObjectAdapter< T > ) usedAdaptersByClass.get( t.getClass() );
+		GuiObjectFactory< T > specificHandler = ( GuiObjectFactory< T > ) usedAdaptersByClass.get( t.getClass() );
 
 		if ( specificHandler != null )
 		{
@@ -198,13 +197,13 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 
 		// then walk through the handlers by rank
-		for ( GuiObjectAdapter< ? > adapter : adaptersByRank )
+		for ( GuiObjectFactory< ? > adapter : adaptersByRank )
 		{
 			if ( adapter.handles( t ) )
 			{
 				// maybe adapter can provide a specialised version
 				// and we've established it's of T
-				GuiObjectAdapter< T > specialist = (( GuiObjectAdapter< T > ) adapter).getSpecialist( t, parent );
+				GuiObjectFactory< T > specialist = (( GuiObjectFactory< T > ) adapter).getSpecialist( t, parent );
 
 				if ( specialist != null )
 				{
@@ -214,7 +213,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				// late entry - avoid walk again
 				usedAdaptersByClass.put( t.getClass(), adapter );
 
-				return ( GuiObjectAdapter< T > ) adapter;
+				return ( GuiObjectFactory< T > ) adapter;
 			}
 		}
 
@@ -223,7 +222,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				t == null ? null : t.getClass().getName(), t ) );
 	}
 
-	public < C, H extends GuiObject< C > > void install( List< AdapterSpecification< C, H > > adapters )
+	public < C, H extends GuiObject< C > > void install( List< FactorySpecification< C, H > > adapters )
 	{
 		// addAdapters(
 		// adapters
@@ -234,7 +233,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		// 1.8
 		adapters.stream()
-				.map( spec -> ( GuiObjectAdapter< ? > ) newAdapter( spec.adapteeClass, spec.adapterClass, spec.adapterGuiObjectConsultant ) )
+				.map( spec -> ( GuiObjectFactory< ? > ) newHardFactory( spec.adapteeClass, spec.adapterClass, spec.adapterGuiObjectConsultant ) )
 				// .forEach( adapter -> {
 				// adaptersByClass.put( adapter.handler(), adapter );
 				// } );
@@ -245,28 +244,28 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		linkSuperAdapters();
 	}
 
-	public < C, H extends GuiObject< C > > AdapterSpecification< C, H > newAdapterSpecification(
+	public < C, H extends GuiObject< C > > FactorySpecification< C, H > newFactorySpecification(
 			Class< C > adapteeClass,
 			Class< H > adapterClass )
 	{
-		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, null );
+		return new FactorySpecification< C, H >( adapteeClass, adapterClass, null );
 	}
 
-	public < C, H extends GuiObject< ? super C > > AdapterSpecification< C, H > newAdapterSpecification(
+	public < C, H extends GuiObject< ? super C > > FactorySpecification< C, H > newFactorySpecification(
 			Class< C > adapteeClass,
 			Class< H > adapterClass,
 			GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
-		return new AdapterSpecification< C, H >( adapteeClass, adapterClass, adapterGuiObjectConsultant );
+		return new FactorySpecification< C, H >( adapteeClass, adapterClass, adapterGuiObjectConsultant );
 	}
 
-	public class AdapterSpecification< C, H extends GuiObject< ? super C > >
+	public class FactorySpecification< C, H extends GuiObject< ? super C > >
 	{
 		public Class< C > adapteeClass;
 		public Class< H > adapterClass;
 		public GuiObjectConsultant< C > adapterGuiObjectConsultant;
 
-		public AdapterSpecification( Class< C > adapteeClass, Class< H > adapterClass,
+		public FactorySpecification( Class< C > adapteeClass, Class< H > adapterClass,
 				GuiObjectConsultant< C > adapterGuiObjectConsultant )
 		{
 			this.adapteeClass = adapteeClass;
@@ -274,66 +273,14 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			this.adapterGuiObjectConsultant = adapterGuiObjectConsultant;
 		}
 	}
-	
-	
-	
 
-	public < C, H extends GuiObject< C > >GuiObjectAdapter< C > newAdapter( 
-			Class< C > adapteeClass, 
-			Class< H > adapterClass, 
-			GuiObjectConsultant< C > guiObjectConsultant,
-			Map< SpecialistMethod, Object > candidate )
-	{
-		return new AbstractGuiObjectAdapter< C >( adapteeClass )
-		{
-			private Constructor< H > constructor;
 
-			{
-				constructor = ReflectionUtils.findConstructor(
-						adapterClass,
-						adapteeClass,
-						Gob.class,
-						GuiObjectConsultant.class,
-						CameraObjectManager.class,
-						Map.class) ;
-
-				if ( constructor == null )
-				{
-					throw new RuntimeException( format( "No constructor found for args: class=%s", adapterClass ) );
-				}
-
-				setConsultant( guiObjectConsultant );
-			}
-
-			@Override
-			public H adapt( C c, Gob parent )
-			{
-				try
-				{
-					return constructor.newInstance( c, parent, getConsultant(), CameraObjectManager.this, candidate );
-				}
-				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
-				{
-					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
-				}
-			}
-
-			@SuppressWarnings( "unchecked" )
-			@Override
-			public Class< H > getAdapterClass()
-			{
-				return adapterClass;
-			}
-		};
-	}	
-	
-
-	public < C, H extends GuiObject< C > > GuiObjectAdapter< C > newAdapter(
+	public < C, H extends GuiObject< C > > GuiObjectFactory< C > newHardFactory(
 			Class< C > adapteeClass,
 			Class< H > adapterClass,
 			GuiObjectConsultant< C > adapterGuiObjectConsultant )
 	{
-		return new AbstractGuiObjectAdapter< C >( adapteeClass )
+		return new AbstractGuiObjectFactory< C >( adapteeClass )
 		{
 			private Constructor< H > constructor;
 
@@ -368,7 +315,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 			@SuppressWarnings( "unchecked" )
 			@Override
-			public GuiObjectAdapter< C > getSpecialist( C t, Gob parent )
+			public GuiObjectFactory< C > getSpecialist( C t, Gob parent )
 			{
 				// looks for declared static getSpecialist on adapterClass
 				try
@@ -387,7 +334,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 					if ( method.isPresent() )
 					{
-						return ( GuiObjectAdapter< C > ) valueOrRuntimeException(
+						return ( GuiObjectFactory< C > ) valueOrRuntimeException(
 								this, // i.e. the adapter; ignored if static method
 								method.get(),
 								t,
@@ -399,14 +346,14 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				}
 				catch ( Exception e )
 				{
-					logger.warn( "Error creating specialist", e );
+					logger.warn( format("Error creating specialist for class [%s]", adapteeClass ), e );
 				}
 				return null;
 			}
 
 			@SuppressWarnings( "unchecked" )
 			@Override
-			public Class< H > getAdapterClass()
+			public Class< H > getFactoryClass()
 			{
 				return adapterClass;
 			}
@@ -418,6 +365,68 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			}
 		};
 	}
+	
+
+	/**
+	 * 
+	 * @param adapteeClass
+	 * @param adapterClass
+	 * @param guiObjectConsultant
+	 * @param candidateMethods
+	 * @param candidateAttributes
+	 * @return
+	 */
+	public < C, H extends GuiObject< C > > GuiObjectFactory< C > newSoftFactory(
+			Class< C > adapteeClass,
+			Class< H > adapterClass,
+			GuiObjectConsultant< C > guiObjectConsultant,
+			Map< String, Object > candidateMethods,
+			Map< String, AttrSpec< GuiObject< ? > > > candidateAttributes )
+	{
+		return new AbstractGuiObjectFactory< C >( adapteeClass )
+		{
+			private Constructor< H > constructor;
+			
+			{
+				constructor = ReflectionUtils.findConstructor(
+						adapterClass,
+						adapteeClass,
+						Gob.class,
+						GuiObjectConsultant.class,
+						CameraObjectManager.class,
+						Map.class,
+						Map.class );
+
+				if ( constructor == null )
+				{
+					throw new RuntimeException( format( "No constructor found for args: class=%s", adapterClass ) );
+				}
+
+				setConsultant( guiObjectConsultant );
+			}
+
+			@Override
+			public H adapt( C c, Gob parent )
+			{
+				try
+				{
+					return constructor.newInstance( c, parent, getConsultant(), CameraObjectManager.this, candidateMethods, candidateAttributes );
+				}
+				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
+				{
+					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
+				}
+			}
+
+			@SuppressWarnings( "unchecked" )
+			@Override
+			public Class< H > getFactoryClass()
+			{
+				return adapterClass;
+			}
+		};
+	}	
+	
 
 	public static Object voidOrRuntimeException( Object go, Method method, Object... args )
 	{
@@ -428,7 +437,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( e );
+			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
 		}
 	}
 
@@ -440,7 +449,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( e );
+			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
 		}
 	}
 
@@ -452,7 +461,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( e );
+			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
 		}
 	}
 
@@ -466,7 +475,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		b.append( adaptersByRank.stream()
 				.map( adapter -> format( "%n  %-40s %-40s %-40s %s", "(" + adapter.getOrder() + ")" + adapter,
-						adapter.getSuperAdapter(),
+						adapter.getSuperFactory(),
 						adapter.getConsultant() == null ? "null"
 								: getClassIdentifier( adapter.getConsultant().getClass() ),
 						adapter.handler().getName() ) )
@@ -474,6 +483,5 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		return b.toString();
 	}
-
 
 }

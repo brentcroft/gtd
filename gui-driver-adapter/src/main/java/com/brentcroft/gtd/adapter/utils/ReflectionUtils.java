@@ -135,7 +135,7 @@ public class ReflectionUtils
 				}
 			}
 
-			if ( logger.isEnabledFor( Level.WARN ) )
+			if ( logger.isEnabledFor( Level.DEBUG ) )
 			{
 				StringBuilder b = new StringBuilder();
 
@@ -152,7 +152,7 @@ public class ReflectionUtils
 					}
 				}
 
-				logger.warn( format( "Class [%s] has no compatible method named [%s] with args [%s].",
+				logger.debug( format( "Class [%s] has no compatible method named [%s] with args [%s].",
 						clazz.getSimpleName(),
 						methodName,
 						b ) );
@@ -230,7 +230,7 @@ public class ReflectionUtils
 				}
 			}
 
-			if ( logger.isEnabledFor( Level.WARN ) )
+			if ( logger.isEnabledFor( Level.DEBUG ) )
 			{
 				StringBuilder b = new StringBuilder();
 
@@ -247,7 +247,7 @@ public class ReflectionUtils
 					}
 				}
 
-				logger.warn( format( "Class [%s] has no compatible constructor with args [%s].",
+				logger.debug( format( "Class [%s] has no compatible constructor with args [%s].",
 						clazz.getSimpleName(),
 						b ) );
 			}
