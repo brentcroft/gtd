@@ -74,6 +74,49 @@
             </java>
         </launcher>
     </session>
+
+    <!-- -->
+    <session name="SwtSet2" dir="." mbean-ref="com.brentcroft.gtd.camera:type=CameraController"  onStarted="
+                driver.logNotifications( 0 );
+
+                driver.hashCache( 1 );
+                driver.notifyAWTEvents( 3801 );
+                driver.notifyFXEvents( 'NONE' );
+                driver.notifyDOMEvents( 'NONE' );
+            ">
+        <properties src="swtset2/swtset2.properties">
+        	<entry key="rmiPort">9300</entry>
+        </properties>
+        <driver
+                rmxUri="service:jmx:rmi:///jndi/rmi://:${ rmiPort }/jmxrmi"
+                pollDelay="1.0"
+                timeout="3.0"
+                relax="0.5"/>
+        <model
+                name="swtset2"
+                xml="swtset2/swtset2.xml"/>
+        <launcher
+                echoTimeout="5.0"
+                command="cmd /C ${ javaCommand }"
+                directory=".">
+            <java shutdownHook="true">
+                <vmOptions>
+                    -Xmx1024m
+                    -Dsun.awt.disablegrab=true
+                    -Dcom.sun.management.jmxremote.port=${ rmiPort }
+                    -Dcom.sun.management.jmxremote.authenticate=false
+                    -Dcom.sun.management.jmxremote.ssl=false
+                </vmOptions>
+                <classpath root="">lib/*</classpath>
+                <application
+                        main="com.brentcroft.gtd.swt.SwtApplication"
+                        service="com.brentcroft.gtd.camera.SwtCamera"
+                        notify="664"
+                />
+            </java>
+        </launcher>
+    </session>
+		
 		
     <!--
 

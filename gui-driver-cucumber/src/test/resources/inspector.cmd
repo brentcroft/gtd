@@ -16,7 +16,7 @@ set configFile=config.xml
 
 set inspectorClass=com.brentcroft.gtd.inspector.InspectorApplication
 
-set javaCommand=C:/Java/jdk1.8.0_171/bin/java
+set javaCommand=C:/Java/jdk1.8.0_161/bin/java
 
 ::set vm=-Xmx2048m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001
 

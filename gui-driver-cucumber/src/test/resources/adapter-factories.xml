@@ -1,0 +1,68 @@
+<factories>
+
+    <factory base="org.eclipse.swt.widgets.Widget">    
+        <method target="getChildren">
+            <method name="getChildren"/>
+            <method name="getItems"/>
+            <method name="getControl"/>
+        </method>
+        <method target="getText"/>
+        <method target="setText" args="String"/>
+        <!-- 
+        
+        -->
+        <method target="getItemCount"/>
+        <!-- 
+        -->
+        <method target="getSelectedIndex">
+            <method name="getSelectionIndex" return="Integer"/>
+        </method>
+        <method target="setSelectedIndex" args="Integer">
+            <method name="select"/>
+        </method>
+        <!-- 
+        
+        -->
+        <method target="getPath" args="String"/>
+        <method target="selectPath" args="String"/>    
+    </factory>
+    <!-- 
+    
+    
+    -->
+    <factory base="org.eclipse.swt.widgets.Table" extends-factory="org.eclipse.swt.widgets.Widget">    
+        <methods>
+            <method target="getHeadings">
+                <method target="getColumns"/>
+            </method>
+            <method target="getRowCount">
+                <method target="getItemCount"/>
+            </method>
+            <method target="getColumnCount">
+            <!-- -->
+            <method target="selectRow" args="Integer">
+                <method target="select"/>
+            </method>
+            <method target="selectColumn" args="Integer"/>
+            <method target="selectCell" args="Integer, Integer"/>
+        </methods>
+        
+        <build-properties>
+        
+            ( parent, options, )
+        
+        
+        	appendTableModel( Element parent,
+			Map< String, Object > options,
+			int rowCount,
+			int colCount,
+			String[] headings,
+			T[] items,
+			BiFunction< T, Integer, S > columnGetter )
+        
+        </build-properties>
+        
+    </factory>
+
+
+</factories>
