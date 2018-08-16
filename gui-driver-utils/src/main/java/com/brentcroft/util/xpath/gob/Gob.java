@@ -15,6 +15,15 @@ public interface Gob
 
     String getAttribute( String name );
 
+    /**
+     * Implementations of this method should not load children!<p/>
+     * 
+     * If there is no direct method, and there might be children, then return true.
+     * 
+     * Only return false if there are definitely no children.
+     * 
+     * @return
+     */
     boolean hasChildren();
 
     List< ? extends Gob > getChildren();
