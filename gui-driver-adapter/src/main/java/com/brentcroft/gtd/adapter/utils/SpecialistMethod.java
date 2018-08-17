@@ -14,7 +14,7 @@ public interface SpecialistMethod
 
 	Class< ? >[] getArgs();
 
-	Object getFunctionFrom( Object owner );
+	//Object getFunctionFrom( Object owner );
 
 	default int compareTo( SpecialistMethod other )
 	{

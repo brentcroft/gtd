@@ -14,7 +14,7 @@ public interface Specialist
 		methods
 				.stream()
 				.forEachOrdered( m -> Optional
-						.ofNullable( m.getFunctionFrom( go ) )
+						.ofNullable( m.getFunction( go ) )
 						.ifPresent( functionFrom -> {
 							functions.remove( m.getMethodName() );
 							functions.put( m.getMethodName(), functionFrom );

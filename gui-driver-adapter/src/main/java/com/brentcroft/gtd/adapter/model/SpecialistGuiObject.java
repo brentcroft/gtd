@@ -21,6 +21,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 
 public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements GuiObject.Text, GuiObject.Index, GuiObject.Tree, GuiObject.Table
 {
+	protected List< ? extends AttrSpec< T > > attr;
 
 	protected Function< T, String > fn_getText;
 	protected BiFunction< T, String, Object > fn_setText;
@@ -35,8 +36,10 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 	protected BiFunction< T, String, String > fn_selectPath;
 
 	@SuppressWarnings( "unchecked" )
-	public SpecialistGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager,
-			Map< String, Object > methods, Map< String, AttrSpec< GuiObject< ? > > > extraAttr )
+	public SpecialistGuiObject( T go, Gob parent,
+			GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager,
+			Map< String, Object > methods,
+			List< AttrSpec< T > > attr )
 	{
 		super( go, parent, guiObjectConsultant, objectManager );
 
@@ -56,13 +59,12 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 			fn_selectPath = ( BiFunction< T, String, String > ) methods.get( SpecialistFunctions.SELECT_PATH.getMethodName() );
 		}
 
-		spec = (extraAttr == null)
-				? new ArrayList<>()
-				: extraAttr
-						.entrySet()
-						.stream()
-						.map( attr -> attr.getValue() )
-						.collect( Collectors.toList() );
+		if ( attr != null )
+		{
+			this.attr = attr;
+		}
+
+		spec = new ArrayList<>();
 
 		if ( fn_getText != null )
 		{
@@ -77,6 +79,21 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 			spec.add( SpecialistAttributes.SELECTED_INDEX );
 		}
 
+	}
+
+	@Override
+	public List< AttrSpec< T > > loadAttrSpec()
+	{
+		if ( attrSpec == null )
+		{
+			attrSpec = super.loadAttrSpec();
+			if ( attr != null )
+			{
+				attrSpec.addAll( attr );
+			}
+		}
+
+		return attrSpec;
 	}
 
 	@Override
@@ -277,11 +294,11 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 			return args;
 		}
 
-		@Override
-		public Object getFunctionFrom( Object owner )
-		{
-			return getFunction( owner );
-		}
+		// @Override
+		// public Object getFunctionFrom( Object owner )
+		// {
+		// return getFunction( owner );
+		// }
 
 		/**
 		 * Provides a map of named functions, as specified by this enum, on a "go".

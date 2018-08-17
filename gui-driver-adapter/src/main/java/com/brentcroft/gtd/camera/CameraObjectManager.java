@@ -25,8 +25,8 @@ import org.apache.log4j.Logger;
 import com.brentcroft.gtd.adapter.model.AbstractGuiObjectFactory;
 import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
-import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
+import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.adapter.utils.HashCacheImpl;
 import com.brentcroft.gtd.adapter.utils.ReflectionUtils;
 import com.brentcroft.gtd.driver.GuiObjectManager;
@@ -274,7 +274,6 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 	}
 
-
 	public < C, H extends GuiObject< C > > GuiObjectFactory< C > newHardFactory(
 			Class< C > adapteeClass,
 			Class< H > adapterClass,
@@ -346,7 +345,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				}
 				catch ( Exception e )
 				{
-					logger.warn( format("Error creating specialist for class [%s]", adapteeClass ), e );
+					logger.warn( format( "Error creating specialist for class [%s]", adapteeClass ), e );
 				}
 				return null;
 			}
@@ -365,7 +364,6 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			}
 		};
 	}
-	
 
 	/**
 	 * 
@@ -381,12 +379,12 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			Class< H > adapterClass,
 			GuiObjectConsultant< C > guiObjectConsultant,
 			Map< String, Object > candidateMethods,
-			Map< String, AttrSpec< GuiObject< ? > > > candidateAttributes )
+			List< AttrSpec< ? > > attr )
 	{
 		return new AbstractGuiObjectFactory< C >( adapteeClass )
 		{
 			private Constructor< H > constructor;
-			
+
 			{
 				constructor = ReflectionUtils.findConstructor(
 						adapterClass,
@@ -395,7 +393,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 						GuiObjectConsultant.class,
 						CameraObjectManager.class,
 						Map.class,
-						Map.class );
+						List.class );
 
 				if ( constructor == null )
 				{
@@ -410,7 +408,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 			{
 				try
 				{
-					return constructor.newInstance( c, parent, getConsultant(), CameraObjectManager.this, candidateMethods, candidateAttributes );
+					return constructor.newInstance( c, parent, getConsultant(), CameraObjectManager.this, candidateMethods, attr );
 				}
 				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
 				{
@@ -425,8 +423,16 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				return adapterClass;
 			}
 		};
-	}	
-	
+	}
+
+	private static String formatCallDetails( Object go, Method method, Object... args )
+	{
+		return format( "Error calling [%s] with args [%s] on [%s]",
+				method,
+				args == null || args.length == 0 ? "" : Arrays.asList( args ),
+				go
+				);
+	}
 
 	public static Object voidOrRuntimeException( Object go, Method method, Object... args )
 	{
@@ -437,7 +443,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
+			throw new RuntimeException( formatCallDetails( go, method, args ), e );
 		}
 	}
 
@@ -449,7 +455,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
+			throw new RuntimeException( formatCallDetails( go, method, args ), e );
 		}
 	}
 
@@ -461,7 +467,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 		}
 		catch ( Exception e )
 		{
-			throw new RuntimeException( format( "Error calling [%s] with args [%s]", method.getName(), args ), e );
+			throw new RuntimeException( formatCallDetails( go, method, args ), e );
 		}
 	}
 

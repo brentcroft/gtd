@@ -22,8 +22,6 @@ public interface GuiObjectFactory< T >
 	GuiObjectConsultant< ? super T > getConsultant();
 
 	void setConsultant( GuiObjectConsultant< ? > guiObjectConsultant );
-
-	Class< T > handler();
 	
 	/**
 	 * An adapter may provide a specialised version (typically, but not necessarily,  of itself).
@@ -35,6 +33,15 @@ public interface GuiObjectFactory< T >
 	{
 		return null;
 	}
+	
+	
+	/**
+	 * The type of objects for which this factory provides adapters.
+	 * 
+	 * @return
+	 */
+	Class< T > handler();
+
 
 	/**
 	 * Is the object a T (handled by this adapter)?
@@ -53,6 +60,12 @@ public interface GuiObjectFactory< T >
 	 */
 	GuiObject< ? super T > adapt( T t, Gob parent );
 
+	
+	/**
+	 * The type of adapter this factory provides
+	 * 
+	 * @return
+	 */
 	< H extends GuiObject< T > > Class< H > getFactoryClass();
 
 	/**
