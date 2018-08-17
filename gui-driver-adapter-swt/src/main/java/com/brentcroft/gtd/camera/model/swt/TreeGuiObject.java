@@ -19,7 +19,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class TreeGuiObject< T extends org.eclipse.swt.widgets.Tree > extends CompositeGuiObject< T >
+public class TreeGuiObject< T extends org.eclipse.swt.widgets.Tree > extends WidgetGuiObject< T >
 		implements GuiObject.Tree
 {
 	public TreeGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
@@ -44,6 +44,13 @@ public class TreeGuiObject< T extends org.eclipse.swt.widgets.Tree > extends Com
 		addTreeAction( element, options );
 	}
 
+	@Override
+	public boolean hasChildren()
+	{
+		return false;
+	}
+	
+	
 	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< AttrSpec< T > > loadAttrSpec()

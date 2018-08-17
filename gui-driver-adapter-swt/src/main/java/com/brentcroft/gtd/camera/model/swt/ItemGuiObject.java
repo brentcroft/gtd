@@ -27,8 +27,10 @@ import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.adapter.model.SpecialistGuiObject;
 import com.brentcroft.gtd.adapter.model.SpecialistGuiObject.SpecialistFunctions;
 import com.brentcroft.gtd.adapter.utils.Specialist;
+import com.brentcroft.gtd.adapter.utils.SpecialistAttribute;
 import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.camera.CameraObjectManager;
+import com.brentcroft.gtd.camera.model.swt.WidgetGuiObject.Attributes;
 import com.brentcroft.util.TriFunction;
 import com.brentcroft.util.xpath.gob.Gob;
 
@@ -157,27 +159,8 @@ public class ItemGuiObject< T extends Item > extends WidgetGuiObject< T >
 			// Map< String, AttrSpec< GuiObject< ? > > > availableAttributes =
 			// SpecialistGuiObject.SpecialistAttributes.getAttributes( go );
 
-			Map< String, AttrSpec< GuiObject< ? > > > availableAttributes = new HashMap<>();
 
-			availableAttributes = availableAttributes
-					.entrySet()
-					.stream()
-					.filter( Objects::nonNull )
-					.collect( Collectors.toMap( e -> e.getKey(), e -> new AttrSpec< GuiObject< ? > >()
-					{
-
-						@Override
-						public String getSpecialAttribute( GuiObject< ? > gob )
-						{
-							return onDisplayThread( ( Composite ) gob.getObject(), go -> e.getValue().getSpecialAttribute( gob ) );
-						}
-
-						@Override
-						public String getName()
-						{
-							return e.getKey();
-						}
-					} ) );
+			List< AttrSpec< ? > > availableAttributes = Attributes.getAttributes( go );
 
 			specialist = objectManager.newSoftFactory( ( Class< T > ) go.getClass(), SpecialistGuiObject.class, consultant, wrappedFunctions, availableAttributes );
 
@@ -264,7 +247,7 @@ interface ItemWithControl
 		}
 
 		@Override
-		public Object getFunctionFrom( Object owner )
+		public Object getFunction( Object owner )
 		{
 			return WidgetGuiObject.onDisplayThread( ( Widget ) owner, w -> getFunction( w ) );
 		}

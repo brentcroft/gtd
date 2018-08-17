@@ -24,8 +24,8 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.brentcroft.gtd.adapter.model.GuiObject;
-import com.brentcroft.gtd.camera.model.swt.ButtonGuiObject;
 import com.brentcroft.gtd.camera.model.swt.TabItemGuiObject;
+import com.brentcroft.gtd.camera.model.swt.WidgetGuiObject;
 import com.brentcroft.gtd.driver.utils.DataLimit;
 import com.brentcroft.gtd.swt.SwtApplication;
 import com.brentcroft.util.Waiter8;
@@ -42,12 +42,12 @@ public class SwtCameraTest
 	{
 		app = new SwtApplication();
 		camera = new SwtCamera();
-		
+
 		Properties properties = new Properties();
-		
+
 		properties.setProperty( "camera.SWTWidget.widgetsToSpecialise", "*" );
-		
-		camera.setProperties(properties);
+
+		camera.setProperties( properties );
 
 		new Thread( () -> app.run() ).start();
 
@@ -87,20 +87,18 @@ public class SwtCameraTest
 	@Test
 	public void testButtonClick()
 	{
-
-		@SuppressWarnings( "unchecked" )
-		ButtonGuiObject< Button > guiObject = ( ButtonGuiObject< Button > ) camera.getGuiObject( 1, 5, SwtApplication.buttonXPath );
+		WidgetGuiObject< ? > guiObject = ( WidgetGuiObject< ? > ) camera.getGuiObject( 1, 5, SwtApplication.buttonXPath );
 
 		assertNotNull( guiObject );
 
-		Button button = guiObject.getObject();
+		Button button = ( Button ) guiObject.getObject();
 
 		// System.out.println( XmlUtils.serialize( camera.takeSnapshot( button, null ) )
 		// );
 
 		final AtomicBoolean wasClicked = new AtomicBoolean( false );
 
-		ButtonGuiObject.onDisplayThread( button, go -> {
+		WidgetGuiObject.onDisplayThread( button, go -> {
 			go.addSelectionListener( new SelectionAdapter()
 			{
 

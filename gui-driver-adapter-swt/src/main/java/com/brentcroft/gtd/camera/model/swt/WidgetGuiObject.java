@@ -2,11 +2,12 @@ package com.brentcroft.gtd.camera.model.swt;
 
 import static java.lang.String.format;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -16,11 +17,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 import com.brentcroft.gtd.adapter.model.AttrSpec;
-import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
 import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.adapter.model.SpecialistGuiObject;
 import com.brentcroft.gtd.adapter.utils.Specialist;
+import com.brentcroft.gtd.adapter.utils.SpecialistAttribute;
 import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.camera.CameraObjectManager;
 import com.brentcroft.util.TriFunction;
@@ -49,10 +50,13 @@ public class WidgetGuiObject< T extends Widget > extends SpecialistGuiObject< T 
 		super( go, parent, guiObjectConsultant, objectManager, null, null );
 	}
 
-	public WidgetGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager,
-			Map< String, Object > methods, Map< String, AttrSpec< GuiObject< ? > > > extraAttr )
+	public WidgetGuiObject(
+			T go, Gob parent,
+			GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager,
+			Map< String, Object > methods,
+			List< AttrSpec< T > > attr )
 	{
-		super( go, parent, guiObjectConsultant, objectManager, methods, extraAttr );
+		super( go, parent, guiObjectConsultant, objectManager, methods, attr );
 	}
 
 	@SuppressWarnings( "unchecked" )
@@ -263,39 +267,12 @@ public class WidgetGuiObject< T extends Widget > extends SpecialistGuiObject< T 
 						}
 					} ) );
 
-			// availableFunctions = availableFunctions.entrySet()
-			// .stream()
-			// .filter( Objects::nonNull )
-			// .collect( Collectors.toMap( e -> e.getValue(), e -> e.getValue() ) );
-
-			// Map< String, AttrSpec< GuiObject< ? > > > availableAttributes =
-			// SpecialistGuiObject.Attributes.getAttributes( go );
-
-			Map< String, AttrSpec< GuiObject< ? > > > availableAttributes = new HashMap<>();
-
-			availableAttributes = availableAttributes
-					.entrySet()
-					.stream()
-					.filter( Objects::nonNull )
-					.collect( Collectors.toMap( e -> e.getKey(), e -> new AttrSpec< GuiObject< ? > >()
-					{
-
-						@Override
-						public String getSpecialAttribute( GuiObject< ? > gob )
-						{
-							return onDisplayThread( ( Widget ) gob.getObject(), go -> e.getValue().getSpecialAttribute( gob ) );
-						}
-
-						@Override
-						public String getName()
-						{
-							return e.getKey();
-						}
-					} ) );
+			List< AttrSpec< ? > > availableAttributes = Attributes.getAttributes( go );
 
 			specialist = objectManager.newSoftFactory( ( Class< T > ) go.getClass(), WidgetGuiObject.class, consultant, wrappedFunctions, availableAttributes );
 
-			//logger.info( String.format( "Adpating [%s] with specialist: %s", go.getClass().getName(), specialist ) );
+			// logger.info( String.format( "Adpating [%s] with specialist: %s",
+			// go.getClass().getName(), specialist ) );
 		}
 
 		return specialist;
@@ -350,7 +327,7 @@ public class WidgetGuiObject< T extends Widget > extends SpecialistGuiObject< T 
 		}
 
 		@Override
-		public Object getFunctionFrom( Object owner )
+		public Object getFunction( Object owner )
 		{
 			return getFunction( owner, getOverridingMethodName() );
 		}
@@ -358,6 +335,75 @@ public class WidgetGuiObject< T extends Widget > extends SpecialistGuiObject< T 
 		public static Map< String, Object > getSpecialistFunctions( Object go )
 		{
 			return Specialist.extractFunctions( go, Arrays.asList( values() ) );
+		}
+	}
+
+	public enum Attributes implements SpecialistAttribute< Widget >
+	{
+		ENABLED( "enabled", "isEnabled" ),
+		VISIBLE( "visible", "isVisible" ),
+		FOCUS( "focus", "isFocusControl" ),
+		TOOLTIP( "tooltip", "getToolTipText" ),
+		;
+
+		private final String n;
+		private final String m;
+		private final Class< ? >[] args;
+
+		Attributes( String name, String methodName, Class< ? >... args )
+		{
+			this.n = name;
+			this.m = methodName;
+			this.args = args;
+		}
+
+		@Override
+		public String getName()
+		{
+			return n;
+		}
+
+		@Override
+		public String getMethodName()
+		{
+			return m;
+		}
+
+		@Override
+		public Class< ? >[] getArgs()
+		{
+			return args;
+		}
+
+		public static List< AttrSpec< ? > > getAttributes( Widget w )
+		{
+			Map< String, AttrSpec< ? > > attributes = new LinkedHashMap<>();
+
+			Arrays
+					.asList( values() )
+					.forEach( a -> Optional
+							.ofNullable( a.getFunction( w ) )
+							.ifPresent( functionFrom -> {
+								attributes.remove( a.getName() );
+								attributes.put( a.getName(), new AttrSpec< Widget >()
+								{
+									Function< Widget, Object > f = ( Function< Widget, Object > ) a.getFunction( w, a.getMethodName() );
+
+									@Override
+									public String getName()
+									{
+										return a.getName();
+									}
+
+									@Override
+									public String getAttribute( Widget go )
+									{
+										return AttrSpec.stringOrNull( onDisplayThread( go, f ) );
+									}
+								} );
+							} ) );
+
+			return new ArrayList<>( attributes.values() );
 		}
 	}
 }

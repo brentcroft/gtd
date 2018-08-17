@@ -18,7 +18,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class TableGuiObject< T extends org.eclipse.swt.widgets.Table > extends CompositeGuiObject< T >
+public class TableGuiObject< T extends org.eclipse.swt.widgets.Table > extends WidgetGuiObject< T >
 		implements GuiObject.Table
 {
 	public TableGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,

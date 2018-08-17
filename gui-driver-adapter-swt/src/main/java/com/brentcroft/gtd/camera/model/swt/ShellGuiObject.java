@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -21,7 +22,7 @@ import com.brentcroft.util.xpath.gob.Gob;
  *
  */
 // using: org.eclipse.swt.widgets.Text avoid clash
-public class ShellGuiObject< T extends Shell > extends CompositeGuiObject< T >
+public class ShellGuiObject< T extends Shell > extends WidgetGuiObject< T >
 {
 	public ShellGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
 			CameraObjectManager objectManager )
@@ -93,6 +94,12 @@ public class ShellGuiObject< T extends Shell > extends CompositeGuiObject< T >
 				.filter( Objects::nonNull )
 				.map( child -> getManager().adapt( child, this ) )
 				.ifPresent( children::add );
+
+		Arrays
+				.asList( onDisplayThread( getObject(), go -> go.getChildren() ) )
+				.stream()
+				.map( child -> getManager().adapt( child, this ) )
+				.forEach( children::add );
 
 		children
 				.addAll( super.loadChildren() );

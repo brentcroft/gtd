@@ -16,7 +16,7 @@ import com.brentcroft.util.xpath.gob.Gob;
 /**
  * Created by Alaric on 14/07/2017.
  */
-public class ListGuiObject< T extends org.eclipse.swt.widgets.List > extends ControlGuiObject< T >
+public class ListGuiObject< T extends org.eclipse.swt.widgets.List > extends WidgetGuiObject< T >
 		implements GuiObject.Index
 {
 	public ListGuiObject( T go, Gob parent, GuiObjectConsultant< T > guiObjectConsultant,
