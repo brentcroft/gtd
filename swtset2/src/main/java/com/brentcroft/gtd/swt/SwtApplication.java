@@ -385,6 +385,9 @@ public class SwtApplication
 		{
 
 			final Tree tree = new Tree( composite, SWT.VIRTUAL | SWT.BORDER );
+			
+			tree.setData( "GUID", "tommyTree" );
+			
 			tree.setSize( 290, 260 );
 			tree.setBounds( new Rectangle( 350, 50, 150, 300 ) );
 			for ( int loopIndex0 = 0; loopIndex0 < 5; loopIndex0++ )
