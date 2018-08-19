@@ -3,8 +3,8 @@ package com.brentcroft.gtd.camera.model.swt;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.w3c.dom.Element;
@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import com.brentcroft.gtd.adapter.model.AttrSpec;
 import com.brentcroft.gtd.adapter.model.GuiObject;
 import com.brentcroft.gtd.adapter.model.GuiObjectConsultant;
+import com.brentcroft.gtd.adapter.model.GuiObjectFactory;
 import com.brentcroft.gtd.camera.CameraObjectManager;
 import com.brentcroft.util.xpath.gob.Gob;
 
@@ -26,6 +27,46 @@ public class TableGuiObject< T extends org.eclipse.swt.widgets.Table > extends W
 	{
 		super( go, parent, guiObjectConsultant, objectManager );
 	}
+
+	public TableGuiObject(
+			T go, Gob parent,
+			GuiObjectConsultant< T > guiObjectConsultant, CameraObjectManager objectManager,
+			Map< String, Object > methods,
+			List< AttrSpec< T > > attr )
+	{
+		super( go, parent, guiObjectConsultant, objectManager, methods, attr );
+	}
+
+	@SuppressWarnings( "unchecked" )
+	public static < T extends Control > GuiObjectFactory< T > getSpecialist( T go, Gob parent, GuiObjectConsultant< T > consultant,
+			CameraObjectManager objectManager )
+	{
+		GuiObjectFactory< T > specialist = null;
+
+		if ( consultant.specialise( go ) )
+		{
+			specialist = objectManager.newSoftFactory(
+					( Class< T > ) go.getClass(),
+					TableGuiObject.class,
+					consultant,
+					wrapAvailableFunctions(
+							WidgetGuiObject.getAvailableFunctions( go, ( haplotype, availableFunctions ) -> {
+								installFunctions( haplotype, parent, availableFunctions );
+								return null;
+							} )
+					),
+					wrapAvailableAttributes( Attributes.getAttributes( go ) )
+			);
+		}
+
+		return specialist;
+	}
+	
+	@Override
+	public boolean hasChildren()
+	{
+		return false;
+	}	
 
 	@Override
 	public void buildProperties( Element element, Map< String, Object > options )
@@ -46,46 +87,6 @@ public class TableGuiObject< T extends org.eclipse.swt.widgets.Table > extends W
 				( item, index ) -> onDisplayThread( ( TableItem ) item, go -> go.getText( index ) ) );
 
 		addTableAction( element, options );
-	}
-
-	@SuppressWarnings( "unchecked" )
-	@Override
-	public List< AttrSpec< T > > loadAttrSpec()
-	{
-		if ( attrSpec == null )
-		{
-			attrSpec = super.loadAttrSpec();
-			attrSpec.addAll( Arrays.asList( ( AttrSpec< T >[] ) Attr.values() ) );
-		}
-
-		return attrSpec;
-	}
-
-	static enum Attr implements AttrSpec< org.eclipse.swt.widgets.Table >
-	{
-		SIZE( "size", go -> "" + go.getItemCount() ),
-		SELECTED_INDEX( "selected-index", go -> "" + go.getSelectionIndex() );
-
-		final String n;
-		final Function< org.eclipse.swt.widgets.Table, Object > f;
-
-		Attr( String name, Function< org.eclipse.swt.widgets.Table, Object > f )
-		{
-			this.n = name;
-			this.f = f;
-		}
-
-		@Override
-		public String getName()
-		{
-			return n;
-		}
-
-		@Override
-		public String getAttribute( org.eclipse.swt.widgets.Table go )
-		{
-			return onSwtDisplayThreadAsText( go, f );
-		}
 	}
 
 	@Override

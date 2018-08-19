@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.xpath.XPathConstants;
@@ -18,13 +17,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.ToolItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.brentcroft.gtd.adapter.model.GuiObject;
-import com.brentcroft.gtd.camera.model.swt.TabItemGuiObject;
 import com.brentcroft.gtd.camera.model.swt.WidgetGuiObject;
 import com.brentcroft.gtd.driver.utils.DataLimit;
 import com.brentcroft.gtd.swt.SwtApplication;
@@ -43,12 +42,6 @@ public class SwtCameraTest
 		app = new SwtApplication();
 		camera = new SwtCamera();
 
-		Properties properties = new Properties();
-
-		properties.setProperty( "camera.SWTWidget.widgetsToSpecialise", "*" );
-
-		camera.setProperties( properties );
-
 		new Thread( () -> app.run() ).start();
 
 		new Waiter8()
@@ -56,7 +49,7 @@ public class SwtCameraTest
 				.withTimeoutMillis( 5 * 1000 )
 				.until( () -> app.isStarted() );
 
-		System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
+		//System.out.println( XmlUtils.serialize( camera.takeSnapshot() ) );
 	}
 
 	@After
@@ -70,6 +63,43 @@ public class SwtCameraTest
 				.until( () -> !app.isStarted() );
 	}
 
+	@SuppressWarnings( "unchecked" )
+	@Test
+	public void testToolItemsExist()
+	{
+		for ( int i : new int[] { 0, 1, 2, 3, 4 } )
+		{
+			String xpath = format( "//ToolItem[@text='TI-%d']", i );
+
+			GuiObject< ToolItem > guiObject = ( GuiObject< ToolItem > ) camera.getGuiObject( 1, 5, xpath );
+
+			assertNotNull( guiObject );
+
+			final AtomicBoolean wasClicked = new AtomicBoolean( false );
+
+			WidgetGuiObject.onDisplayThread( guiObject.getObject(), go -> {
+				go.addSelectionListener( new SelectionAdapter()
+				{
+
+					@Override
+					public void widgetSelected( SelectionEvent e )
+					{
+						System.out.println( "widgetSelected: " + e );
+						wasClicked.set( true );
+					}
+				} );
+				return null;
+			} );
+
+			guiObject.asClick().click();
+
+			new Waiter8()
+					.withTimeoutMillis( 100 )
+					.onTimeout( timeout -> assertTrue( wasClicked.get() ) )
+					.until( () -> wasClicked.get() );
+		}
+	}
+
 	@Test
 	public void testButtonExists()
 	{
@@ -77,8 +107,7 @@ public class SwtCameraTest
 
 		assertNotNull( guiObject );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
 		assertEquals( SwtApplication.buttonName, guiObject.getAttribute( "text" ) );
 
@@ -112,6 +141,8 @@ public class SwtCameraTest
 			return null;
 		} );
 
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( null, null ) ) );
+
 		// TODO:
 		// since this activates shutdown on the target
 		// it's problematic to investigate the SWT DOM
@@ -128,6 +159,7 @@ public class SwtCameraTest
 		// .onTimeout( timeout -> assertTrue( wasClicked.get() ) )
 		// .until( () -> camera.getController().notExists( SwtApplication.buttonXPath,
 		// 5, 1 ) );
+
 	}
 
 	@Test
@@ -152,12 +184,11 @@ public class SwtCameraTest
 	@Test
 	public void testLabelExists()
 	{
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Label" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Label[ @guid = 'larryLabel' ]" );
 
 		assertNotNull( guiObject );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 	}
 
 	@Test
@@ -165,7 +196,7 @@ public class SwtCameraTest
 	{
 		Integer index = 2;
 
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Combo" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Combo[ @guid = 'carrieCombo' ]" );
 
 		assertNotNull( guiObject );
 
@@ -173,8 +204,7 @@ public class SwtCameraTest
 
 		assertEquals( index, guiObject.asIndex().getSelectedIndex() );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
 	}
 
@@ -182,8 +212,9 @@ public class SwtCameraTest
 	public void testComboText()
 	{
 		String text = "magnolia";
+		String xpath = "//Combo[ @guid = 'carrieCombo' ]";
 
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Combo" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, xpath );
 
 		assertNotNull( guiObject );
 
@@ -191,16 +222,16 @@ public class SwtCameraTest
 
 		assertEquals( text, guiObject.asText().getText() );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 	}
 
 	@Test
 	public void testListExists()
 	{
 		Integer index = 2;
+		String xpath = "//List[ @guid='lucasList' ]";
 
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//List" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, xpath );
 
 		assertNotNull( guiObject );
 
@@ -208,40 +239,48 @@ public class SwtCameraTest
 
 		assertEquals( index, guiObject.asIndex().getSelectedIndex() );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 	}
 
 	@Test
 	public void testTableExists()
 	{
 		Integer index = 2;
+		String xpath = "//Table[ @guid = 'theloniusTable' ]";
 
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Table" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, xpath );
 
 		assertNotNull( guiObject );
 
 		guiObject.asTable().selectRow( index );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
+		
+		assertEquals( "2", getComponentResult( camera, xpath, "@selected-index" ) );
 	}
 
 	@Test
 	public void testTreeExists()
 	{
 		String[] path = { "3:2:1" };
+		String xpath = "//Tree[ @guid = 'tommyTree' ]";
+		
+		// but not executed on display thread
+		String script = "print( 'hello from ' + guiObject );";
 
-		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//Tree" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, xpath );
 
 		assertNotNull( guiObject );
+		
+		System.out.println( XmlUtils.serialize( camera.takeSnapshot( guiObject.getObject(), null ) ) );
 
-		System.out.println( guiObject.asTree().getPath( path[ 0 ] ) );
+		System.out.println( "guiObject.asTree().getPath( path[ 0 ] ) -> " + guiObject.asTree().getPath( path[ 0 ] ) );
 
 		guiObject.asTree().selectPath( path[ 0 ] );
+		
+		camera.getController().execute( xpath, script, 1, 5 );
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot(
-		// guiObject.getObject(), null ) ) );
+		
 	}
 
 	@Test
@@ -249,17 +288,13 @@ public class SwtCameraTest
 	{
 		assertEquals( "0", getComponentResult( camera, "//TabFolder[1]", "@selected-index" ) );
 
-		@SuppressWarnings( "unchecked" )
-		TabItemGuiObject< TabItem > guiObject = ( TabItemGuiObject< TabItem > ) camera.getGuiObject( 1, 5, "//TabItem[@index=1]" );
+		GuiObject< ? > guiObject = camera.getGuiObject( 1, 5, "//TabItem[ @index = 1 ]" );
 
 		assertNotNull( guiObject );
 
-		TabItem tabItem = guiObject.getObject();
+		TabItem tabItem = ( TabItem ) guiObject.getObject();
 
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot( tabItem, null )
-		// ) );
-
-		TabItemGuiObject.onDisplayThread( tabItem, go -> {
+		WidgetGuiObject.onDisplayThread( tabItem, go -> {
 			go.addListener( -1, new Listener()
 			{
 				@Override
@@ -272,8 +307,6 @@ public class SwtCameraTest
 		} );
 
 		guiObject.asClick().click();
-
-		// System.out.println( XmlUtils.serialize( camera.takeSnapshot( ) ) );
 
 		assertEquals( "1", getComponentResult( camera, "//TabFolder", "@selected-index" ) );
 	}

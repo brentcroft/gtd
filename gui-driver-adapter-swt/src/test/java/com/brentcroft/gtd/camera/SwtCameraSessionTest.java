@@ -71,7 +71,7 @@ public class SwtCameraSessionTest
 	{
 		session.start();
 		
-		System.out.println( session.getDriver().getSnapshotXmlText() );
+		//System.out.println( session.getDriver().getSnapshotXmlText() );
 	}
 
 	@After
@@ -126,6 +126,22 @@ public class SwtCameraSessionTest
 			
 			session.getDriver().click( xpath );
 		}
+	}
+	
+	@Test
+	public void testListExists()
+	{
+		String xpath = "//List[ @guid='lucasList' ]";
+		
+		assertTrue( session.getDriver().exists( xpath ) );
+		
+		assertEquals( "0", session.getDriver().getComponentResultText( xpath, "@selected-index" ) );
+		
+		session.getDriver().setSelectedIndex( xpath, 2 );
+
+		assertEquals( "2", session.getDriver().getComponentResultText( xpath, "@selected-index" ) );
+		
+		System.out.println( session.getDriver().getSnapshotXmlText( xpath, null ) );		
 	}
 
 }
