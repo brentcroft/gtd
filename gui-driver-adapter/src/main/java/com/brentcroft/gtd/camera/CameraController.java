@@ -1,9 +1,8 @@
 package com.brentcroft.gtd.camera;
 
-import static com.brentcroft.gtd.driver.Backend.XML_NAMESPACE_TAG;
-import static com.brentcroft.gtd.driver.Backend.XML_NAMESPACE_URI;
 import static java.lang.String.format;
 
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,10 @@ import java.util.stream.Collectors;
 
 import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
+import javax.script.Bindings;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -29,7 +32,6 @@ import com.brentcroft.util.DateUtils;
 import com.brentcroft.util.Waiter8;
 import com.brentcroft.util.XmlUtils;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 
 public class CameraController extends NotificationBroadcasterSupport implements CameraControllerMBean
@@ -84,7 +86,7 @@ public class CameraController extends NotificationBroadcasterSupport implements 
 			logger.warn( "Error calling DocumentNotificationBuffer shutdown", e );
 		}
 
-		Platform.exit();
+		// Platform.exit();
 
 		// this is not kind to the harness
 
@@ -131,8 +133,8 @@ public class CameraController extends NotificationBroadcasterSupport implements 
 		GuiObject< ? > guiObject = getGuiObject( path, 0, 0 );
 
 		long started = System.currentTimeMillis();
-		
-		Document document = XmlUtils.newDocument();		
+
+		Document document = XmlUtils.newDocument();
 
 		guiObject.accept( new GuiObjectVisitor( document, options ) );
 
@@ -140,7 +142,7 @@ public class CameraController extends NotificationBroadcasterSupport implements 
 		long duration = (finished - started);
 
 		Element element = document.getDocumentElement();
-		
+
 		element.setAttribute( "duration", "" + duration );
 		XmlUtils.maybeSetElementAttribute( element, null, "options", options );
 		element.setAttribute( "timestamp", DateUtils.timestamp() );
@@ -392,10 +394,32 @@ public class CameraController extends NotificationBroadcasterSupport implements 
 	}
 
 	@Override
+	/**
+	 * You have to know that the object found at path is available in the script
+	 * using the name: <code>guiObject</code>.
+	 */
 	public void execute( String path, final String script, double timeout, double pollInterval )
 	{
-		// getGuiObject( path, timeout, pollInterval )
-		// .execute( this, script );
+		GuiObject< ? > go = getGuiObject( path, timeout, pollInterval );
+
+		try
+		{
+			ScriptEngine engine = new ScriptEngineManager().getEngineByName( "js" );
+
+			Bindings b = engine.createBindings();
+
+			b.put( "guiObject", go.getObject() );
+
+			engine.eval( new StringReader( format( "{\n%s\n}", script ) ), b );
+		}
+		catch ( ScriptException e )
+		{
+			throw new RuntimeException( format( "ScriptException file=[%s], line=[%s,%s]: %s",
+					e.getFileName(),
+					e.getLineNumber(),
+					e.getColumnNumber(),
+					e.getMessage() ) );
+		}
 	}
 
 	@Override

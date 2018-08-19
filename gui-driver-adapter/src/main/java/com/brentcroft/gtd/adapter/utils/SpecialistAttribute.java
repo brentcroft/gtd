@@ -1,6 +1,6 @@
 package com.brentcroft.gtd.adapter.utils;
 
-public interface SpecialistAttribute< T > extends SpecialistMethod
+public interface SpecialistAttribute extends SpecialistMethod
 {
 	String getName();
 }

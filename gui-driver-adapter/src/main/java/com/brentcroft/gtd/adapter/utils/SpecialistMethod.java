@@ -10,11 +10,17 @@ import com.brentcroft.util.TriFunction;
 
 public interface SpecialistMethod
 {
+	enum Type
+	{
+		REPLACE,
+		EXTEND,
+	}
+
 	String getMethodName();
 
 	Class< ? >[] getArgs();
 
-	//Object getFunctionFrom( Object owner );
+	// Object getFunctionFrom( Object owner );
 
 	default int compareTo( SpecialistMethod other )
 	{
@@ -23,17 +29,21 @@ public interface SpecialistMethod
 				: getMethodName().compareTo( other.getMethodName() );
 	}
 
-	default Object getFunction( Object owner, String methodName )
+	default Object getFunction( Object owner, String methodName, Class< ? >[] args )
 	{
 		return Optional
 				.ofNullable( ReflectionUtils.findMethod(
 						owner.getClass(),
 						methodName,
-						getArgs()
+						args
 				) )
 				.filter( Objects::nonNull )
 				.map( m -> {
-					switch ( getArgs().length )
+					if ( args == null )
+					{
+						return ( Function< Object, Object > ) t -> CameraObjectManager.valueOrRuntimeException( t, m );
+					}
+					switch ( args.length )
 					{
 						case 0:
 							return ( Function< Object, Object > ) t -> CameraObjectManager.valueOrRuntimeException( t, m );
@@ -50,6 +60,11 @@ public interface SpecialistMethod
 				} )
 				.orElse( null );
 
+	}
+
+	default Object getFunction( Object owner, String methodName )
+	{
+		return getFunction( owner, methodName, getArgs() );
 	}
 
 	default Object getFunction( Object owner )

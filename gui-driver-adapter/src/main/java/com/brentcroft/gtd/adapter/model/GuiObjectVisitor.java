@@ -158,8 +158,12 @@ public class GuiObjectVisitor implements ItemVisitor< GuiObject< ? > >
 		// it has an @duplicate attribute (only once its duplicated)
 		// that maintains the count of duplicates (including itself)
 		// each new duplicate receives an @duplicate attribute
-		// that is the index order of occurrence, beginning at 1.
-		Element duplicateMasterElement = componentIds.get( guiObject.getObject().hashCode() );
+		// that is the hash code of the duplicate master.
+		// only the duplicate master element has the hash attribute
+		
+		int hashCode = guiObject.getObject().hashCode();
+		
+		Element duplicateMasterElement = componentIds.get( hashCode );
 
 		if ( duplicateMasterElement.hasAttribute( DUPLICATE_ATTRIBUTE ) )
 		{
@@ -167,12 +171,12 @@ public class GuiObjectVisitor implements ItemVisitor< GuiObject< ? > >
 
 			int duplicates = Integer.valueOf( attrValue );
 
-			element.setAttribute( DUPLICATE_ATTRIBUTE, "" + duplicates );
+			element.setAttribute( DUPLICATE_ATTRIBUTE, "" + hashCode );
 			duplicateMasterElement.setAttribute( DUPLICATE_ATTRIBUTE, "" + (duplicates + 1) );
 		}
 		else
 		{
-			element.setAttribute( DUPLICATE_ATTRIBUTE, "1" );
+			element.setAttribute( DUPLICATE_ATTRIBUTE, "" + hashCode );
 			duplicateMasterElement.setAttribute( DUPLICATE_ATTRIBUTE, "2" );
 		}
 	}

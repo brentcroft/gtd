@@ -6,15 +6,17 @@ import static com.brentcroft.util.XmlUtils.maybeAppendElementAttribute;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.Element;
 
-import com.brentcroft.gtd.adapter.utils.Specialist;
 import com.brentcroft.gtd.adapter.utils.SpecialistMethod;
 import com.brentcroft.gtd.camera.CameraObjectManager;
 import com.brentcroft.util.xpath.gob.Gob;
@@ -78,7 +80,6 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 		{
 			spec.add( SpecialistAttributes.SELECTED_INDEX );
 		}
-
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 	{
 		super.buildProperties( element, options );
 
-		maybeAppendElementAttribute( options, element, XML_NAMESPACE_URI, "a:spec", "general" );
+		maybeAppendElementAttribute( options, element, XML_NAMESPACE_URI, "a:spec", "*" );
 
 		// the last action in the list is the prime action
 
@@ -142,6 +143,7 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 		return true;
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< GuiObject< ? > > loadChildren()
 	{
@@ -150,27 +152,49 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 			return super.loadChildren();
 		}
 
-		Object candidate = fn_loadChildren.apply( getObject() );
+		return ( List< GuiObject< ? > > ) fn_loadChildren.apply( getObject() );
+	}
 
-		if ( candidate == null )
+	protected static List< GuiObject< ? > > extend( Object go, GuiObject< ? > parent, List< GuiObject< ? > > gobs, Function< Object, Object > fn )
+	{
+		if ( gobs == null )
 		{
-			return null;
+			gobs = new ArrayList<>();
 		}
 
-		if ( candidate.getClass().isArray() )
+		Object candidate = fn.apply( go );
+
+		if ( candidate != null )
 		{
-			return Arrays
-					.asList( ( Object[] ) candidate )
-					.stream()
-					.map( child -> getManager().adapt( child, this ) )
-					.collect( Collectors.toList() );
+			if ( candidate.getClass().isArray() )
+			{
+				gobs.addAll(
+						Arrays
+								.asList( ( Object[] ) candidate )
+								.stream()
+								.map( child -> ( GuiObject< ? > ) parent.getManager().adapt( child, parent ) )
+								.collect( Collectors.toList() ) );
+			}
+			else if ( candidate instanceof Collection )
+			{
+				gobs.addAll(
+						(( Collection< ? > ) candidate)
+								.stream()
+								.map( child -> ( GuiObject< ? > ) parent.getManager().adapt( child, parent ) )
+								.collect( Collectors.toList() ) );
+			}
+			else
+			{
+				gobs.addAll(
+						Arrays
+								.asList( candidate )
+								.stream()
+								.map( child -> ( GuiObject< ? > ) parent.getManager().adapt( child, parent ) )
+								.collect( Collectors.toList() ) );
+			}
 		}
 
-		return Arrays
-				.asList( candidate )
-				.stream()
-				.map( child -> getManager().adapt( child, this ) )
-				.collect( Collectors.toList() );
+		return gobs;
 	}
 
 	@Override
@@ -232,13 +256,11 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 
 		final String n;
 		final Function< GuiObject< ? >, Object > f;
-		private final Class< ? >[] args;
 
-		SpecialistAttributes( String name, Function< GuiObject< ? >, Object > f, Class< ? >... args )
+		SpecialistAttributes( String name, Function< GuiObject< ? >, Object > f )
 		{
 			this.n = name;
 			this.f = f;
-			this.args = args;
 		}
 
 		@Override
@@ -270,7 +292,7 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 		GET_TEXT( "getText" ),
 		SET_TEXT( "setText", String.class ),
 		GET_SELECTED_INDEX( "getSelectedIndex" ),
-		SET_SELECTED_INDEX( "setSelectedIndex", Integer.class ),
+		SET_SELECTED_INDEX( "setSelectedIndex", int.class ),
 		GET_PATH( "getPath", String.class ),
 		SELECT_PATH( "selectPath", String.class ),
 		;
@@ -294,26 +316,21 @@ public class SpecialistGuiObject< T > extends DefaultGuiObject< T > implements G
 			return args;
 		}
 
-		// @Override
-		// public Object getFunctionFrom( Object owner )
-		// {
-		// return getFunction( owner );
-		// }
-
-		/**
-		 * Provides a map of named functions, as specified by this enum, on a "go".
-		 * <p/>
-		 * 
-		 * Essentially this calls <code>getFunctionFrom( go )</code> on each enum
-		 * member.
-		 * 
-		 * @param go
-		 *            the sample object (providing a class for method mining)
-		 * @return
-		 */
 		public static Map< String, Object > getSpecialistFunctions( Object go )
 		{
-			return Specialist.extractFunctions( go, Arrays.asList( values() ) );
+			Map< String, Object > functions = new LinkedHashMap<>();
+
+			Arrays
+					.asList( values() )
+					.stream()
+					.forEachOrdered( m -> Optional
+							.ofNullable( m.getFunction( go ) )
+							.ifPresent( functionFrom -> {
+								functions.remove( m.getMethodName() );
+								functions.put( m.getMethodName(), functionFrom );
+							} ) );
+
+			return functions;
 		}
 	}
 

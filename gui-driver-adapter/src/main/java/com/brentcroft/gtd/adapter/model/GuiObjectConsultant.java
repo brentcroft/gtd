@@ -18,4 +18,9 @@ public interface GuiObjectConsultant< T >
 	{
 		return false;
 	}
+
+	default boolean isListModel( T object )
+	{
+		return false;
+	}
 }

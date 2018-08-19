@@ -97,17 +97,17 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	@Override
 	public GuiObject< ? > adapt( Object object, Gob parent )
 	{
-		return findAdapter( object, parent ).adapt( object, parent );
+		return findFactory( object, parent ).adapt( object, parent );
 	}
 
-	public void addAdapter( GuiObjectFactory< ? > adapter )
+	public void addFactory( GuiObjectFactory< ? > adapter )
 	{
 		adaptersByClass.put( adapter.handler(), adapter );
 
-		linkSuperAdapters();
+		linkSuperFactories();
 	}
 
-	public void addAdapters( Collection< ? extends GuiObjectFactory< ? > > newAdapters )
+	public void addFactories( Collection< ? extends GuiObjectFactory< ? > > newAdapters )
 	{
 		newAdapters.forEach( adapter -> {
 			GuiObjectFactory< ? > replaced = adaptersByClass.put( adapter.handler(), adapter );
@@ -120,7 +120,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 
 		} );
 
-		linkSuperAdapters();
+		linkSuperFactories();
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	 * the adapter's handler, resolving the least super candidate which is assigned
 	 * to the adapter.
 	 */
-	private void linkSuperAdapters()
+	private void linkSuperFactories()
 	{
 		// distribute consultants
 
@@ -187,7 +187,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private < T > GuiObjectFactory< ? super T > findAdapter( T t, Gob parent )
+	private < T > GuiObjectFactory< ? super T > findFactory( T t, Gob parent )
 	{
 		GuiObjectFactory< T > specificHandler = ( GuiObjectFactory< T > ) usedAdaptersByClass.get( t.getClass() );
 
@@ -237,11 +237,11 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				// .forEach( adapter -> {
 				// adaptersByClass.put( adapter.handler(), adapter );
 				// } );
-				.forEach( adapter -> addAdapter( adapter ) );
+				.forEach( adapter -> addFactory( adapter ) );
 		// 1.9
 		// .forEach( this::addAdapter );
 
-		linkSuperAdapters();
+		linkSuperFactories();
 	}
 
 	public < C, H extends GuiObject< C > > FactorySpecification< C, H > newFactorySpecification(
@@ -308,7 +308,7 @@ public class CameraObjectManager implements GuiObjectManager< GuiObject< ? > >
 				}
 				catch ( IllegalAccessException | InstantiationException | InvocationTargetException e )
 				{
-					throw new RuntimeException( format( "Constructor [%s]", constructor ), e );
+					throw new RuntimeException( format( "Bad constructor call [%s]", constructor ), e );
 				}
 			}
 
