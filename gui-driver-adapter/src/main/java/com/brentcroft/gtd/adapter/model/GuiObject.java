@@ -78,7 +78,7 @@ public interface GuiObject< T > extends Gob
 	default String getAttribute( String name )
 	{
 		List< Attribute > attributes = getAttributes();
-
+		
 		return (attributes == null) || attributes.isEmpty()
 				? null
 				: attributes
@@ -86,7 +86,7 @@ public interface GuiObject< T > extends Gob
 						.filter( attribute -> name.equals( attribute.getName() ) )
 						.map( Attribute::getValue )
 						.findFirst()
-						.orElseGet( null );
+						.orElseGet( () -> null );
 	}
 
 	List< AttrSpec< T > > getAttrSpec();
@@ -226,7 +226,7 @@ public interface GuiObject< T > extends Gob
 			default:
 				boolean deep = !isShallow( visitor.getOptions() );
 				boolean parent = hasChildren();
-				
+
 				if ( deep && parent )
 				{
 					Optional
@@ -350,7 +350,7 @@ public interface GuiObject< T > extends Gob
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	interface Indexed
 	{
 		default Integer getItemCount()
